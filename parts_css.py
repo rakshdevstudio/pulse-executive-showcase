@@ -978,6 +978,96 @@ CSS_CONTENT = """
       font-size: 11px;
     }
 
+    /* Scripted Tour: A Day Inside PULSE */
+    .tour-banner-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 920px;
+      background: linear-gradient(135deg, #182631, #101923);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      padding: 16px 22px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.75), 0 0 35px rgba(198, 166, 117, 0.3);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      animation: tourSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes tourSlideUp {
+      from { opacity: 0; transform: translate(-50%, 20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    .tour-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tour-step-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gold);
+      background: var(--gold-dim);
+      padding: 3px 10px;
+      border-radius: 4px;
+      border: 1px solid var(--gold-border);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+    .tour-progress-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .tour-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(147, 163, 174, 0.3);
+      transition: all 0.25s ease;
+      cursor: pointer;
+    }
+    .tour-dot.active {
+      background: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+      transform: scale(1.25);
+    }
+    .tour-dot.completed {
+      background: #79D2B7;
+    }
+    .tour-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .tour-text {
+      flex: 1;
+    }
+    .tour-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tour-desc {
+      font-size: 13px;
+      color: var(--porcelain);
+      line-height: 1.45;
+    }
+    .tour-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     /* Modal System */
     .modal-backdrop {
       position: fixed;

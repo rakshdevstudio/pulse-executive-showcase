@@ -56,6 +56,11 @@ def get_product_views_html(dsm_logo_b64):
           </div>
         </div>
 
+        <button class="btn btn-gold btn-sm" onclick="startScriptedDemo()" title="Run scripted demonstration: A Day Inside PULSE" style="box-shadow: 0 0 16px rgba(198, 166, 117, 0.35); font-weight: 600; gap: 6px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          A Day Inside PULSE
+        </button>
+
         <button class="btn btn-outline btn-sm" onclick="resetDemoData()" title="Reset all demo data to pristine state">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
           Reset Demo
@@ -190,7 +195,7 @@ def get_product_views_html(dsm_logo_b64):
           </div>
 
           <!-- Active Shift Ribbon -->
-          <div class="card" style="margin-bottom: 24px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border);">
+          <div class="card" style="margin-bottom: 20px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="pulse-dot"></span>
@@ -211,6 +216,21 @@ def get_product_views_html(dsm_logo_b64):
             </div>
           </div>
 
+          <!-- Executive Showcase Directive Card -->
+          <div style="margin-bottom: 22px; padding: 14px 20px; background: rgba(198, 166, 117, 0.08); border: 1px solid var(--gold-border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="pulse-dot"></span>
+              <div>
+                <strong style="color: var(--white); font-size: 14px;">Executive Demonstration: A Day Inside PULSE</strong>
+                <div style="color: var(--steel); font-size: 12px;">Step through real operations: Employee arrival -> Attendance log -> Production entry -> Quality RCA -> Performance update -> Daily summary.</div>
+              </div>
+            </div>
+            <button class="btn btn-gold btn-sm" onclick="startScriptedDemo()" style="gap: 6px; font-weight: 600;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Start Guided Demonstration
+            </button>
+          </div>
+
           <!-- 4 Core Executive Summary Sections -->
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
             <!-- Group 1: EMPLOYEES -->
@@ -219,14 +239,14 @@ def get_product_views_html(dsm_logo_b64):
                 1. EMPLOYEES TODAY
               </div>
               <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <span style="font-size: 28px; font-weight: 600; color: var(--white); font-family: var(--font-serif);">36</span>
+                <span style="font-size: 28px; font-weight: 600; color: var(--white); font-family: var(--font-serif);" id="cc-emp-present-count">36</span>
                 <span style="font-size: 12px; color: #79D2B7;">Present / Clocked In</span>
               </div>
               <div style="font-size: 11px; color: var(--steel); display: flex; flex-direction: column; gap: 3px; padding-top: 8px; border-top: 1px solid rgba(147, 163, 174, 0.12);">
                 <div>Scheduled: <strong>40 total employees</strong></div>
-                <div>On Approved Leave: <strong style="color: var(--amber);">3 employees</strong></div>
-                <div>Unplanned Absent: <strong style="color: #FFA5A2;">1 employee</strong></div>
-                <div>Late Arrivals: <strong style="color: var(--steel);">2 (compensated)</strong></div>
+                <div>On Approved Leave: <strong style="color: var(--amber);" id="cc-emp-leave-count">3 employees</strong></div>
+                <div>Unplanned Absent: <strong style="color: #FFA5A2;" id="cc-emp-absent-count">1 employee</strong></div>
+                <div>Late Arrivals: <strong style="color: var(--steel);" id="cc-emp-late-count">2 (compensated)</strong></div>
               </div>
             </div>
 
@@ -236,13 +256,13 @@ def get_product_views_html(dsm_logo_b64):
                 2. WORK COMPLETED
               </div>
               <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <span style="font-size: 28px; font-weight: 600; color: var(--gold); font-family: var(--font-serif);">142</span>
+                <span style="font-size: 28px; font-weight: 600; color: var(--gold); font-family: var(--font-serif);" id="cc-orders-count">142</span>
                 <span style="font-size: 12px; color: var(--emerald);">Orders Keyed</span>
               </div>
               <div style="font-size: 11px; color: var(--steel); display: flex; flex-direction: column; gap: 3px; padding-top: 8px; border-top: 1px solid rgba(147, 163, 174, 0.12);">
-                <div>Flashings Detailed: <strong>1,840 linear metres</strong></div>
-                <div>Accessories & Bits: <strong>5,120 individual parts</strong></div>
-                <div>Double-Checks Done: <strong style="color: #79D2B7;">138 verified (97.2%)</strong></div>
+                <div>Flashings Detailed: <strong id="cc-flashings-count">1,840 linear metres</strong></div>
+                <div>Accessories & Bits: <strong id="cc-bits-count">5,120 individual parts</strong></div>
+                <div>Double-Checks Done: <strong style="color: #79D2B7;" id="cc-checks-count">138 verified (97.2%)</strong></div>
                 <div>Shift Target: <strong>135 orders (+5.2%)</strong></div>
               </div>
             </div>
@@ -253,14 +273,14 @@ def get_product_views_html(dsm_logo_b64):
                 3. QUALITY & ACCURACY
               </div>
               <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
-                <span style="font-size: 28px; font-weight: 600; color: #79D2B7; font-family: var(--font-serif);">98.6%</span>
+                <span style="font-size: 28px; font-weight: 600; color: #79D2B7; font-family: var(--font-serif);" id="cc-quality-pct">98.6%</span>
                 <span style="font-size: 12px; color: #79D2B7;">First-Pass Accuracy</span>
               </div>
               <div style="font-size: 11px; color: var(--steel); display: flex; flex-direction: column; gap: 3px; padding-top: 8px; border-top: 1px solid rgba(147, 163, 174, 0.12);">
-                <div>Open Error Cases: <strong style="color: var(--amber);">2 under review</strong></div>
+                <div>Open Error Cases: <strong style="color: var(--amber);" id="cc-open-cases-count">2 under review</strong></div>
                 <div>Resupplies Being Checked: <strong>1 Melbourne order</strong></div>
                 <div>Scrap Rework Cost: <strong>$280 AUD confirmed</strong></div>
-                <div>Resolved Today: <strong style="color: #79D2B7;">1 case closed</strong></div>
+                <div>Resolved Today: <strong style="color: #79D2B7;" id="cc-resolved-count">1 case closed</strong></div>
               </div>
             </div>
 
@@ -430,7 +450,10 @@ def get_product_views_html(dsm_logo_b64):
           <!-- Raw Punch Events Stream -->
           <div class="card">
             <div class="card-title">
-              <span>Today's Recorded Biometric Check-ins & Breaks</span>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span>Today's Recorded Biometric Check-ins & Breaks</span>
+                <span class="status-badge warning" style="font-size: 10px;">Demonstration Data • Simulated Feed</span>
+              </div>
               <div style="display: flex; gap: 8px;">
                 <button class="btn btn-outline btn-sm" onclick="filterPunchFeed('ALL')">All Events</button>
                 <button class="btn btn-outline btn-sm" onclick="filterPunchFeed('IN')">Office IN</button>
@@ -975,6 +998,34 @@ def get_product_views_html(dsm_logo_b64):
       </div>
     </div>
   </div>
+
+  <!-- 8. Quality Case Review / Resolve Modal -->
+  <div class="modal-backdrop" id="modal-resolve-quality">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Zero-Blame RCA: Review & Resolve Quality Case</h3>
+        <button class="modal-close" onclick="closeModal('modal-resolve-quality')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="resolve-quality-id" />
+        <div class="form-group">
+          <label class="form-label">Case Reference</label>
+          <div id="resolve-quality-desc" style="font-size: 13px; color: var(--porcelain); padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preventive Action / SOP Update</label>
+          <textarea class="form-textarea" id="resolve-quality-action" rows="3" placeholder="Detail the preventive measure taken so this variance cannot recur..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline btn-sm" onclick="closeModal('modal-resolve-quality')">Cancel</button>
+        <button class="btn btn-gold btn-sm" onclick="submitResolveQuality()">Mark Case Closed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripted Demonstration Tour Banner Container -->
+  <div id="tour-banner-container" class="tour-banner-container" style="display: none;"></div>
 
   <!-- Toast Notification Container -->
   <div id="toast-container"></div>

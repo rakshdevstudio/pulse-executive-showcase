@@ -16,6 +16,11 @@ JS_CONTENT = r"""
     let parsedImportRows = [];
 
     let lastVisitedScene = 1;
+    if (typeof window !== 'undefined') {
+      window.appState = appState;
+      window.currentRole = currentRole;
+      window.selected360EmpId = selected360EmpId;
+    }
 
     // Scene Meta for Overview
     const SCENES_META = [
@@ -294,6 +299,7 @@ JS_CONTENT = r"""
        ========================================================================== */
     function onRoleChange(role) {
       currentRole = role;
+      if (typeof window !== 'undefined') window.currentRole = role;
       const profiles = {
         'PRESENTER': { name: 'Rakshith', title: 'Operational Strategist', avatar: 'RK' },
         'MANAGEMENT': { name: 'David Harrison', title: 'Managing Director', avatar: 'DH' },
@@ -310,8 +316,11 @@ JS_CONTENT = r"""
       if (elRole) elRole.textContent = p.title;
       if (elAvatar) elAvatar.textContent = p.avatar;
 
-      // Re-render Employee 360 to reflect dynamic confidentiality lock
-      renderEmployee360(selected360EmpId);
+      const selRole = document.getElementById('role-select');
+      if (selRole && selRole.value !== role) selRole.value = role;
+
+      // Re-render views to reflect dynamic confidentiality & role permissions
+      renderAllViews();
       showToast(`Active Perspective: ${p.name} (${p.title})`);
     }
 
@@ -396,7 +405,48 @@ JS_CONTENT = r"""
        1. TODAY'S OPERATIONS RENDERER
        ========================================================================== */
     function renderCommandCentre() {
-      // Dynamic updates for Command Centre metrics are reflected via appState
+      const emps = appState.employees || [];
+      const presentEmps = emps.filter(e => e.status === 'Present');
+      const leaveEmps = emps.filter(e => e.status === 'On Leave');
+      const absentEmps = emps.filter(e => e.status === 'Absent');
+      const lateEmps = emps.filter(e => (e.lateMinutes || 0) > 0 || e.isLate);
+
+      const elPresent = document.getElementById('cc-emp-present-count');
+      if (elPresent) elPresent.textContent = presentEmps.length;
+      const elLeave = document.getElementById('cc-emp-leave-count');
+      if (elLeave) elLeave.textContent = `${leaveEmps.length} employees`;
+      const elAbsent = document.getElementById('cc-emp-absent-count');
+      if (elAbsent) elAbsent.textContent = `${absentEmps.length} employee`;
+      const elLate = document.getElementById('cc-emp-late-count');
+      if (elLate) elLate.textContent = `${lateEmps.length || 2} (compensated)`;
+
+      const prods = appState.productionRecords || [];
+      const totalOrders = prods.reduce((sum, p) => sum + (parseInt(p.orders, 10) || 0), 0);
+      const totalFlashings = prods.reduce((sum, p) => sum + (parseInt(p.flashings, 10) || 0), 0);
+      const totalBits = prods.reduce((sum, p) => sum + (parseInt(p.bits, 10) || 0), 0);
+      const totalChecks = prods.reduce((sum, p) => sum + (parseInt(p.doubleChecks, 10) || 0), 0);
+
+      const elOrders = document.getElementById('cc-orders-count');
+      if (elOrders) elOrders.textContent = totalOrders;
+      const elFlashings = document.getElementById('cc-flashings-count');
+      if (elFlashings) elFlashings.textContent = `${Math.round(totalFlashings * 1.87)} linear metres`;
+      const elBits = document.getElementById('cc-bits-count');
+      if (elBits) elBits.textContent = `${Math.round(totalBits * 18.4)} individual parts`;
+      const elChecks = document.getElementById('cc-checks-count');
+      if (elChecks) elChecks.textContent = `${totalChecks} verified (${totalOrders > 0 ? ((totalChecks / totalOrders) * 100).toFixed(1) : '97.2'}%)`;
+
+      const quality = appState.qualityCases || [];
+      const openCases = quality.filter(q => q.status !== 'Closed' && q.status !== 'Resolved');
+      const closedCases = quality.filter(q => q.status === 'Closed' || q.status === 'Resolved');
+
+      const elOpenQ = document.getElementById('cc-open-cases-count');
+      if (elOpenQ) elOpenQ.textContent = `${openCases.length} under review`;
+      const elResolvedQ = document.getElementById('cc-resolved-count');
+      if (elResolvedQ) elResolvedQ.textContent = `${closedCases.length} case closed`;
+      const elQualityPct = document.getElementById('cc-quality-pct');
+      if (elQualityPct) {
+        elQualityPct.textContent = openCases.length === 0 ? '99.4%' : openCases.length === 1 ? '99.0%' : '98.6%';
+      }
     }
 
     /* ==========================================================================
@@ -1756,6 +1806,8 @@ JS_CONTENT = r"""
       if (!container) return;
 
       const leaves = appState.leaveRequests || [];
+      const canApprove = (currentRole === 'MANAGEMENT' || currentRole === 'SUPER_ADMIN' || currentRole === 'PRESENTER' || currentRole === 'TEAM_LEADER');
+
       container.innerHTML = `
         <div class="data-table-container">
           <table class="data-table">
@@ -1765,27 +1817,41 @@ JS_CONTENT = r"""
                 <th>Employee Name</th>
                 <th>Leave Type</th>
                 <th>Requested Date</th>
-                <th>Reason</th>
+                <th>Reason / Purpose</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              ${leaves.map(l => `
-                <tr>
-                  <td><strong style="color: var(--steel); font-family: var(--font-mono);">${l.id}</strong></td>
-                  <td><strong>${l.empName}</strong> (${l.empId})</td>
-                  <td>${l.type}</td>
-                  <td style="font-family: var(--font-mono);">${l.dates || l.date || '2026-11-23'}</td>
-                  <td>${l.reason}</td>
-                  <td><span class="status-badge ${l.status === 'Approved' ? 'verified' : 'warning'}">${l.status}</span></td>
-                  <td>
-                    ${l.status === 'Pending' ? `
-                      <button class="btn btn-gold btn-sm" onclick="approveLeave('${l.id}')">Approve</button>
-                    ` : '<span style="color: var(--steel-dim); font-size: 11px;">Completed</span>'}
-                  </td>
-                </tr>
-              `).join('')}
+              ${leaves.map(l => {
+                let reasonDisplay = l.reason;
+                if (currentRole === 'EMPLOYEE') {
+                  if (l.empId !== 'EMP-101') {
+                    reasonDisplay = '<span style="color: var(--steel-dim); font-style: italic;">Confidential (HR Protected)</span>';
+                  }
+                } else if (currentRole === 'TEAM_LEADER') {
+                  if (l.team && !l.team.includes('Team Alpha')) {
+                    reasonDisplay = '<span style="color: var(--steel-dim); font-style: italic;">Confidential (Other Team)</span>';
+                  }
+                }
+
+                return `
+                  <tr>
+                    <td><strong style="color: var(--steel); font-family: var(--font-mono);">${l.id}</strong></td>
+                    <td><strong>${l.empName}</strong> <span style="font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">(${l.empId})</span></td>
+                    <td>${l.type}</td>
+                    <td style="font-family: var(--font-mono);">${l.dates || l.date || '2026-11-23'}</td>
+                    <td>${reasonDisplay}</td>
+                    <td><span class="status-badge ${l.status === 'Approved' ? 'verified' : 'warning'}">${l.status}</span></td>
+                    <td>
+                      ${l.status === 'Pending' ? (
+                        canApprove ? `<button class="btn btn-gold btn-sm" onclick="approveLeave('${l.id}')">Approve</button>` :
+                        `<span style="color: var(--steel-dim); font-size: 11px;">Pending Approval</span>`
+                      ) : '<span style="color: #79D2B7; font-size: 11px;">✓ Approved</span>'}
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
             </tbody>
           </table>
         </div>
@@ -1906,9 +1972,9 @@ JS_CONTENT = r"""
         <div style="display: flex; flex-direction: column; gap: 16px;">
           ${cases.map(c => {
             const caseId = c.id || 'QC-084';
-            const problem = c.problem || c.title || 'Tooling angle variance on radius flashing';
-            const orderRef = c.orderRef || 'DSM-MEL-8841';
-            const client = c.client || 'ProBuild Melbourne';
+            const problem = c.problem || c.issue || 'Tooling angle variance on radius flashing';
+            const orderRef = c.orderRef || c.orderNo || 'DSM-MEL-8841';
+            const client = c.client || c.customer || 'ProBuild Melbourne';
             const spec = c.spec || '0.9mm Colorbond Monument Flashing';
             const reported = c.jobDate || c.reportedDate || '23 Nov 2026';
             const investigator = c.investigator || 'Manoj Tiwari (Quality Lead)';
@@ -1923,7 +1989,7 @@ JS_CONTENT = r"""
                   <div>
                     <div style="display: flex; align-items: center; gap: 10px;">
                       <strong style="color: var(--white); font-size: 15px;">${caseId}: ${problem}</strong>
-                      <span class="status-badge ${status === 'Closed' ? 'verified' : 'warning'}">${status}</span>
+                      <span class="status-badge ${status === 'Closed' || status === 'Resolved' ? 'verified' : 'warning'}">${status}</span>
                     </div>
                     <div style="font-size: 12px; color: var(--steel); margin-top: 4px;">
                       Order: <strong>${orderRef}</strong> • Client: <strong>${client}</strong> • Spec: <strong>${spec}</strong>
@@ -1947,11 +2013,43 @@ JS_CONTENT = r"""
                     <div style="font-size: 11px; color: var(--gold); margin-top: 4px;">Cost: ${cost} (absorbed via drawing fix)</div>
                   </div>
                 </div>
+
+                <div style="display: flex; justify-content: flex-end; align-items: center; gap: 10px; padding-top: 10px; border-top: 1px solid var(--slate-border);">
+                  ${status !== 'Closed' && status !== 'Resolved' ? `
+                    <button class="btn btn-gold btn-sm" onclick="openResolveQualityModal('${caseId}')">Review & Close Case</button>
+                  ` : `
+                    <span style="font-size: 11px; color: #79D2B7; font-family: var(--font-mono);">✓ Preventive Action Implemented • Case Closed</span>
+                  `}
+                </div>
               </div>
             `;
           }).join('')}
         </div>
       `;
+    }
+
+    function openResolveQualityModal(caseId) {
+      const qc = (appState.qualityCases || []).find(q => q.id === caseId);
+      if (!qc) return;
+      document.getElementById('resolve-quality-id').value = qc.id;
+      document.getElementById('resolve-quality-desc').textContent = `${qc.id}: ${qc.problem || qc.issue || 'Drawing variance'} (${qc.orderRef || qc.orderNo})`;
+      document.getElementById('resolve-quality-action').value = qc.preventiveAction || 'Updated bending allowance table and published revised SOP.';
+      openModal('modal-resolve-quality');
+    }
+
+    function submitResolveQuality() {
+      const caseId = document.getElementById('resolve-quality-id').value;
+      const actionNote = document.getElementById('resolve-quality-action').value;
+      const qc = (appState.qualityCases || []).find(q => q.id === caseId);
+      if (qc) {
+        qc.status = 'Closed';
+        if (actionNote) qc.preventiveAction = actionNote;
+        closeModal('modal-resolve-quality');
+        renderQualityCases();
+        renderCommandCentre();
+        updateBadgeCounts();
+        showToast(`Quality Case #${caseId} marked Closed. Preventive action committed to operational record.`);
+      }
     }
 
     /* ==========================================================================
@@ -2108,9 +2206,271 @@ JS_CONTENT = r"""
       }, 3400);
     }
 
+    /* ==========================================================================
+       SCRIPTED DEMONSTRATION ENGINE: "A DAY INSIDE PULSE"
+       ========================================================================== */
+    let tourCurrentStep = 0;
+    let tourAutoPlayTimer = null;
+    const TOUR_TOTAL_STEPS = 6;
+
+    const TOUR_STEPS_CONFIG = [
+      {
+        step: 1,
+        title: "Step 1: Employee Arrives (Biometric Punch)",
+        badge: "05:54 AM IST • GATE 01",
+        desc: "Senior Keying Specialist Rohan Sharma (EMP-101) arrives at Bengaluru operations turnstile. Terminal 01 registers a verified 'Office IN' biometric punch.",
+        action: () => tourStep1_EmployeeArrives()
+      },
+      {
+        step: 2,
+        title: "Step 2: Attendance Reconciled Live",
+        badge: "06:00 AM IST • ATTENDANCE",
+        desc: "The digital attendance register reconciles Rohan to 'Present' with 7.8 attended hours. Headcount updates live to 36 Present (2 late), 3 Leave, 1 Absent out of 40 scheduled.",
+        action: () => tourStep2_AttendanceRecorded()
+      },
+      {
+        step: 3,
+        title: "Step 3: Team Leader Submits Production",
+        badge: "11:30 AM IST • PRODUCTION",
+        desc: "Priya Nair keys Team Alpha's morning detailing output: 28 purchase orders, 194m flashings, 58 bits, and 27 double-checks verified at 99.4% accuracy.",
+        action: () => tourStep3_ProductionSubmitted()
+      },
+      {
+        step: 4,
+        title: "Step 4: Quality Issue Reviewed & Resolved",
+        badge: "13:15 PM IST • ZERO-BLAME RCA",
+        desc: "Manoj Tiwari reviews case QC-084 (tooling springback variance). Preventive CAD folding compensation rule is applied and the case is closed.",
+        action: () => tourStep4_QualityReviewed()
+      },
+      {
+        step: 5,
+        title: "Step 5: Employee Performance Updates",
+        badge: "14:15 PM IST • EMPLOYEE 360°",
+        desc: "Rohan Sharma's 360° operational scorecard updates: 28 completed orders, 99.4% accuracy yield, 7.8 attended hours, and compliant attendance timeline.",
+        action: () => tourStep5_PerformanceUpdated()
+      },
+      {
+        step: 6,
+        title: "Step 6: Daily Management Summary Generated",
+        badge: "14:30 PM IST • DAILY SUMMARY",
+        desc: "At shift end, PULSE synthesizes attendance, production, and quality into the official Daily Operations Summary, digitally signed and ready for Melbourne leadership.",
+        action: () => tourStep6_DailySummaryGenerated()
+      }
+    ];
+
+    function startScriptedDemo() {
+      const storyCont = document.getElementById('story-mode-container');
+      if (storyCont && !storyCont.classList.contains('hidden')) {
+        switchToProductMode();
+      }
+      tourCurrentStep = 1;
+      executeTourStep(tourCurrentStep);
+    }
+
+    function executeTourStep(stepNum) {
+      tourCurrentStep = stepNum;
+      const config = TOUR_STEPS_CONFIG.find(s => s.step === stepNum);
+      if (config) {
+        config.action();
+        renderTourBanner(config);
+      }
+    }
+
+    function renderTourBanner(config) {
+      const container = document.getElementById('tour-banner-container');
+      if (!container) return;
+
+      container.style.display = 'flex';
+      container.innerHTML = `
+        <div class="tour-header">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="tour-step-badge">${config.badge}</span>
+            <span style="font-size: 12px; color: var(--steel); font-family: var(--font-mono);">A DAY INSIDE PULSE (${config.step} of ${TOUR_TOTAL_STEPS})</span>
+          </div>
+          <div class="tour-progress-dots">
+            ${TOUR_STEPS_CONFIG.map(s => `
+              <div class="tour-dot ${s.step === config.step ? 'active' : s.step < config.step ? 'completed' : ''}" 
+                   onclick="executeTourStep(${s.step})" 
+                   title="${s.title}"></div>
+            `).join('')}
+          </div>
+        </div>
+        <div class="tour-body">
+          <div class="tour-text">
+            <div class="tour-title">
+              <span class="pulse-dot"></span>
+              <span>${config.title}</span>
+            </div>
+            <div class="tour-desc">${config.desc}</div>
+          </div>
+          <div class="tour-actions">
+            ${config.step > 1 ? `
+              <button class="btn btn-outline btn-sm" onclick="prevTourStep()">← Previous</button>
+            ` : ''}
+            ${config.step < TOUR_TOTAL_STEPS ? `
+              <button class="btn btn-gold btn-sm" onclick="nextTourStep()">Next Action →</button>
+            ` : `
+              <button class="btn btn-gold btn-sm" onclick="closeTour()">Finish Tour ✓</button>
+            `}
+            <button class="btn btn-outline btn-sm" onclick="toggleAutoPlayTour()" id="tour-autoplay-btn">
+              ${tourAutoPlayTimer ? 'Pause' : 'Auto-Play'}
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="closeTour()" title="Close Guided Tour" style="color: var(--steel);">&times;</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function nextTourStep() {
+      if (tourCurrentStep < TOUR_TOTAL_STEPS) {
+        executeTourStep(tourCurrentStep + 1);
+      } else {
+        closeTour();
+      }
+    }
+
+    function prevTourStep() {
+      if (tourCurrentStep > 1) {
+        executeTourStep(tourCurrentStep - 1);
+      }
+    }
+
+    function toggleAutoPlayTour() {
+      if (tourAutoPlayTimer) {
+        clearInterval(tourAutoPlayTimer);
+        tourAutoPlayTimer = null;
+        renderTourBanner(TOUR_STEPS_CONFIG.find(s => s.step === tourCurrentStep));
+        showToast('Auto-play paused.');
+      } else {
+        showToast('Auto-playing A Day Inside PULSE (advancing every 4s)...');
+        tourAutoPlayTimer = setInterval(() => {
+          if (tourCurrentStep < TOUR_TOTAL_STEPS) {
+            nextTourStep();
+          } else {
+            clearInterval(tourAutoPlayTimer);
+            tourAutoPlayTimer = null;
+            closeTour();
+          }
+        }, 4000);
+        renderTourBanner(TOUR_STEPS_CONFIG.find(s => s.step === tourCurrentStep));
+      }
+    }
+
+    function closeTour() {
+      if (tourAutoPlayTimer) {
+        clearInterval(tourAutoPlayTimer);
+        tourAutoPlayTimer = null;
+      }
+      const container = document.getElementById('tour-banner-container');
+      if (container) container.style.display = 'none';
+    }
+
+    function tourStep1_EmployeeArrives() {
+      onRoleChange('EMPLOYEE');
+      switchView('biometric');
+      const existing = (appState.biometricPunches || []).find(p => p.id === 'PUN-1099');
+      if (!existing) {
+        appState.biometricPunches.unshift({
+          id: 'PUN-1099',
+          punchId: 'PUN-1099',
+          empId: 'EMP-101',
+          empName: 'Rohan Sharma',
+          timestamp: 'Today 05:54 AM IST',
+          timeIST: '05:54 AM IST',
+          timeAEST: '10:24 AEDT',
+          type: 'Office IN',
+          device: 'Terminal 01 (Gate 01)',
+          source: 'Biometric Scanner',
+          method: 'Biometric Scanner',
+          status: 'Verified'
+        });
+      }
+      renderPunchTable();
+      renderBiometricTimeline('EMP-101');
+      showToast('Step 1: Rohan Sharma (EMP-101) punched IN at Turnstile Gate 01 (05:54 AM IST).');
+    }
+
+    function tourStep2_AttendanceRecorded() {
+      onRoleChange('PRESENTER');
+      switchView('attendance');
+      const emp = (appState.employees || []).find(e => e.id === 'EMP-101');
+      if (emp) {
+        emp.status = 'Present';
+        emp.checkin = '05:54 AM';
+        emp.hours = 7.8;
+      }
+      renderAttendanceTable();
+      renderCommandCentre();
+      updateBadgeCounts();
+      showToast('Step 2: Attendance reconciled — 36 present, 3 on leave, 1 absent out of 40 scheduled.');
+    }
+
+    function tourStep3_ProductionSubmitted() {
+      onRoleChange('TEAM_LEADER');
+      switchView('production');
+      const existing = (appState.productionRecords || []).find(p => p.id === 'PR-901');
+      if (!existing) {
+        appState.productionRecords.unshift({
+          id: 'PR-901',
+          team: 'Team Alpha',
+          shift: 'Shift A',
+          orders: 28,
+          flashings: 194,
+          bits: 58,
+          doubleChecks: 27,
+          accuracy: '99.4%'
+        });
+      }
+      renderProductionTable();
+      renderCommandCentre();
+      showToast('Step 3: Team Leader Priya Nair logged Team Alpha batch: 28 orders, 194m flashings.');
+    }
+
+    function tourStep4_QualityReviewed() {
+      onRoleChange('PRESENTER');
+      switchView('quality');
+      const qc = (appState.qualityCases || []).find(q => q.id === 'QC-2026-084' || q.id === 'QC-084');
+      if (qc) {
+        qc.status = 'Closed';
+        qc.preventiveAction = 'Updated folding template library to automatically compensate for gauge springback.';
+      }
+      renderQualityCases();
+      renderCommandCentre();
+      updateBadgeCounts();
+      showToast('Step 4: Quality Case QC-2026-084 reviewed via zero-blame RCA and marked Closed.');
+    }
+
+    function tourStep5_PerformanceUpdated() {
+      onRoleChange('PRESENTER');
+      switchView('employee360');
+      selected360EmpId = 'EMP-101';
+      renderEmployee360('EMP-101');
+      showToast('Step 5: Rohan Sharma 360° scorecard updated (28 orders, 99.4% accuracy, 7.8h attended).');
+    }
+
+    function tourStep6_DailySummaryGenerated() {
+      onRoleChange('MANAGEMENT');
+      switchView('shift-report');
+      renderShiftReportView();
+      showToast('Step 6: Shift A Daily Management Summary compiled and ready for Executive Sign-off.');
+    }
+
     function resetDemoData() {
+      if (tourAutoPlayTimer) {
+        clearInterval(tourAutoPlayTimer);
+        tourAutoPlayTimer = null;
+      }
+      closeTour();
       appState = JSON.parse(JSON.stringify(MASTER_DATA));
+      if (typeof window !== 'undefined') window.appState = appState;
+      currentRole = 'PRESENTER';
+      const roleSel = document.getElementById('role-select');
+      if (roleSel) roleSel.value = 'PRESENTER';
+      onRoleChange('PRESENTER');
+      selected360EmpId = 'EMP-101';
+      currentEmpTab = 'overview';
+      populateDropdowns();
       renderAllViews();
-      showToast('Master demo data reset: All simulated records restored to pristine showcase state.');
+      showToast('Demo reset: All records restored to pristine initial state.');
     }
 """
