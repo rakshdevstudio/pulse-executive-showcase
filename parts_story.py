@@ -43,28 +43,29 @@ def get_story_html(dsm_logo_b64):
 
       <!-- SCENE 1: OPENING HOOK -->
       <section class="scene-slide active" id="scene-1">
-        <div style="text-align: center; max-width: 900px; margin: 0 auto;">
-          <div style="margin-bottom: 30px;">
-            <svg width="180" height="36" viewBox="0 0 180 36" fill="none" style="margin: 0 auto; display: block;">
-              <path d="M0 18 H60 L75 4 L90 32 L105 18 H180" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+        <div class="scene-1-container">
+          <div style="display: flex; justify-content: center; margin-bottom: 14px;">
+            <img src="data:image/png;base64,{dsm_logo_b64}" alt="Design Sheetmetal" class="dsm-logo-lg" />
           </div>
-          <h1 style="font-size: 52px; line-height: 1.15; margin-bottom: 20px; font-weight: 400;">
-            EVERY SHIFT TELLS A STORY.<br/>
-            <span style="color: var(--gold); font-style: italic;">BUT ARE WE SEEING THE WHOLE PICTURE?</span>
-          </h1>
-          <p style="font-size: 19px; line-height: 1.6; color: var(--steel); margin-bottom: 36px; max-width: 740px; margin-left: auto; margin-right: auto;">
-            A strategic opportunity to unite biometric workforce attendance, daily shopfloor production, and zero-blame quality intelligence across Design Sheetmetal's India operations.
-          </p>
+          <div style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px;">
+            Design Sheetmetal • Strategic Operations & Technology Proposal
+          </div>
+          <!-- Animated SVG Pulse Line -->
+          <svg class="scene-1-pulse-svg" viewBox="0 0 900 120" preserveAspectRatio="none">
+            <path class="pulse-path" d="M 0 60 L 280 60 L 310 60 L 330 20 L 350 100 L 370 10 L 390 110 L 410 40 L 430 80 L 450 60 L 900 60" />
+          </svg>
+          <h1 class="headline-line-1">Every Shift Tells a Story.</h1>
+          <h2 class="headline-line-2">But are we seeing the whole picture?</h2>
+          <p class="scene-1-subtext">A strategic operational proposal to unify workforce operations, keying velocity, and quality intelligence across Design Sheetmetal's India operations.</p>
           <div style="display: inline-flex; align-items: center; gap: 10px; padding: 7px 18px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border); border-radius: 20px; font-size: 13px; color: var(--porcelain); margin-bottom: 24px;">
             <span style="color: var(--gold);">Presented by</span>
             <strong>Rakshith</strong>
             <span style="color: var(--steel);">| Operational Strategist</span>
           </div>
-          <div>
-            <button class="btn btn-gold" onclick="nextScene()" style="padding: 12px 28px; font-size: 14px;">
-              Begin Strategic Briefing
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          <div class="scene-1-cta">
+            <button class="btn btn-gold" onclick="nextScene()">
+              Begin Executive Proposal
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
           </div>
         </div>

@@ -315,6 +315,76 @@ CSS_CONTENT = """
       color: var(--steel);
     }
 
+    /* Scene 1: Opening */
+    .scene-1-container {
+      max-width: 960px;
+      text-align: center;
+      position: relative;
+      margin: 0 auto;
+    }
+    .scene-1-pulse-svg {
+      width: 100%;
+      height: 110px;
+      margin-bottom: 24px;
+    }
+    .pulse-path {
+      stroke: var(--gold);
+      stroke-width: 2.2;
+      fill: none;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: drawPulse 3.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      filter: drop-shadow(0 0 10px rgba(198, 166, 117, 0.55));
+    }
+    @keyframes drawPulse {
+      0% { stroke-dashoffset: 1000; opacity: 0; }
+      20% { opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 1; }
+    }
+    .headline-line-1 {
+      font-size: 54px;
+      line-height: 1.15;
+      color: var(--porcelain);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 18px;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUpMask 0.7s 0.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .headline-line-2 {
+      font-size: 54px;
+      line-height: 1.15;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUpMask 0.7s 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .scene-1-subtext {
+      font-size: 19px;
+      color: var(--steel);
+      max-width: 720px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fadeUpMask 0.7s 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .scene-1-cta {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUpMask 0.6s 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeUpMask {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* Scene Specific Hero Styling */
     .scene-title-badge {
       font-family: var(--font-mono);
@@ -766,12 +836,24 @@ CSS_CONTENT = """
       text-decoration: none;
     }
     .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 28px;
+      font-size: 14px;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      border-radius: 4px;
+      border: 1px solid var(--gold);
+      cursor: pointer;
+      transition: var(--transition-smooth);
       background: var(--gold);
       color: var(--midnight);
     }
     .btn-gold:hover {
       background: #D4B688;
-      box-shadow: 0 0 12px var(--gold-dim);
+      box-shadow: 0 0 16px var(--gold-dim);
     }
     .btn-outline {
       background: transparent;
