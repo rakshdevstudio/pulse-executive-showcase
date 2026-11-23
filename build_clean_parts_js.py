@@ -17,42 +17,61 @@ JS_CONTENT = r"""
     let currentEmpTab = 'overview';
     let parsedImportRows = [];
 
+    let lastVisitedScene = 1;
+
     // Scene Meta for Overview
     const SCENES_META = [
       { id: 1, title: 'Strategic Imperative', desc: 'Opening Hook: Every Shift Tells a Story' },
-      { id: 2, title: 'Operational Diagnosis', desc: 'Cross-Border Realities in Sheet Metal' },
-      { id: 3, title: 'PULSE Architecture', desc: 'The Operational Nervous System' },
-      { id: 4, title: 'Biometric Precision', desc: 'Shift Inception, Breaks & Award Policy' },
-      { id: 5, title: 'In-Flight Production', desc: 'Real-time Floor Velocity & Double Checks' },
-      { id: 6, title: 'Unbroken Momentum', desc: 'Structured Shift Handovers & Cutoff Safety' },
-      { id: 7, title: 'Employee Performance', desc: '7-Point Skills Matrix & Zero-Blame RCA' },
-      { id: 8, title: 'Executive Operations', desc: 'Managing Director Real-Time Control' },
-      { id: 9, title: 'Implementation Asks', desc: 'Rakshith: 5 Strategic Directives' }
+      { id: 2, title: 'Current Operations', desc: 'Our Teams Work Hard. Our Reports Work Separately.' },
+      { id: 3, title: 'Introducing PULSE', desc: 'One Place for Everything That Matters' },
+      { id: 4, title: 'Attendance Records', desc: 'Know Who\'s Here. When They Arrived. And When They Leave.' },
+      { id: 5, title: 'Daily Work Output', desc: 'Every Order. Every Flashing. Every Contribution.' },
+      { id: 6, title: 'Shift Continuity', desc: 'When One Shift Ends, The Next Starts Informed.' },
+      { id: 7, title: 'Employee Development', desc: 'Understand Performance. Recognize Progress.' },
+      { id: 8, title: 'Executive View', desc: 'Your Entire Operation. One Clear View.' },
+      { id: 9, title: 'Internship Proposal', desc: 'Proposed MCA 4th-Semester Internship Project' }
     ];
 
     /* ==========================================================================
        INITIALIZATION
        ========================================================================== */
-    window.addEventListener('DOMContentLoaded', () => {
+    function initApp() {
       initDualClocks();
       initStoryMode();
       populateDropdowns();
       renderAllViews();
 
-      // Check URL hash for direct deep-linking
-      if (window.location.hash) {
-        const hash = window.location.hash.replace('#', '');
-        if (hash.startsWith('view-')) {
-          switchToProductMode();
-          switchView(hash.replace('view-', ''));
-        } else if (hash === 'product' || hash === 'prototype') {
-          switchToProductMode();
-        } else if (hash.startsWith('scene-')) {
-          const scNum = parseInt(hash.replace('scene-', ''), 10);
+      // Check URL parameters & hash for direct deep-linking
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const scParam = params.get('scene');
+        const viewParam = params.get('view');
+        if (scParam) {
+          const scNum = parseInt(scParam, 10);
           if (!isNaN(scNum)) goToScene(scNum);
+        } else if (viewParam) {
+          switchToProductMode();
+          switchView(viewParam);
+        } else if (window.location.hash) {
+          const hash = window.location.hash.replace('#', '');
+          if (hash.startsWith('view-')) {
+            switchToProductMode();
+            switchView(hash.replace('view-', ''));
+          } else if (hash === 'product' || hash === 'prototype') {
+            switchToProductMode();
+          } else if (hash.startsWith('scene-')) {
+            const scNum = parseInt(hash.replace('scene-', ''), 10);
+            if (!isNaN(scNum)) goToScene(scNum);
+          }
         }
-      }
-    });
+      } catch (err) {}
+    }
+
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
 
     /* ==========================================================================
        DUAL TIMEZONE ENGINE (MELBOURNE & INDIA)
@@ -139,7 +158,7 @@ JS_CONTENT = r"""
       const activeSc = document.getElementById(`scene-${currentScene}`);
       if (activeSc) activeSc.classList.add('active');
 
-      const indicator = document.getElementById('scene-indicator');
+      const indicator = document.getElementById('scene-counter-display');
       if (indicator) indicator.textContent = `SCENE 0${currentScene} / 0${TOTAL_SCENES}`;
 
       const dots = document.querySelectorAll('.story-dot');
@@ -152,7 +171,7 @@ JS_CONTENT = r"""
       });
 
       // Update scene progression bar
-      const prog = document.getElementById('story-progress-bar');
+      const prog = document.getElementById('story-progress-fill');
       if (prog) {
         prog.style.width = `${(currentScene / TOTAL_SCENES) * 100}%`;
       }
@@ -180,8 +199,14 @@ JS_CONTENT = r"""
     function goToScene(sceneNum) {
       if (sceneNum >= 1 && sceneNum <= TOTAL_SCENES) {
         currentScene = sceneNum;
+        lastVisitedScene = sceneNum;
         updateSceneDisplay();
-        switchToStoryMode();
+        const storyCont = document.getElementById('story-mode-container');
+        const prodCont = document.getElementById('product-mode-container');
+        if (storyCont && prodCont) {
+          prodCont.classList.add('hidden');
+          storyCont.classList.remove('hidden');
+        }
       }
     }
 
@@ -200,7 +225,14 @@ JS_CONTENT = r"""
     /* ==========================================================================
        VIEW & MODE SWITCHING
        ========================================================================== */
+    function exploreFeature(viewName) {
+      lastVisitedScene = currentScene;
+      switchToProductMode();
+      switchView(viewName);
+    }
+
     function switchToProductMode() {
+      lastVisitedScene = currentScene;
       const storyCont = document.getElementById('story-mode-container');
       const prodCont = document.getElementById('product-mode-container');
       if (storyCont && prodCont) {
@@ -216,7 +248,7 @@ JS_CONTENT = r"""
       if (storyCont && prodCont) {
         prodCont.classList.add('hidden');
         storyCont.classList.remove('hidden');
-        updateSceneDisplay();
+        goToScene(lastVisitedScene || 1);
       }
     }
 

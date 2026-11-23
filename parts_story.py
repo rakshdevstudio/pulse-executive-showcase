@@ -41,7 +41,7 @@ def get_story_html(dsm_logo_b64):
     <!-- Presentation Viewport -->
     <main class="story-viewport" id="story-viewport">
 
-      <!-- SCENE 1: OPENING HOOK -->
+      <!-- SCENE 1: OPENING HOOK (RESTORED EXACT APPROVED EXECUTIVE DESIGN) -->
       <section class="scene-slide active" id="scene-1">
         <div class="scene-1-container">
           <div style="display: flex; justify-content: center; margin-bottom: 14px;">
@@ -56,7 +56,7 @@ def get_story_html(dsm_logo_b64):
           </svg>
           <h1 class="headline-line-1">Every Shift Tells a Story.</h1>
           <h2 class="headline-line-2">But are we seeing the whole picture?</h2>
-          <p class="scene-1-subtext">A strategic operational proposal to unify workforce operations, keying velocity, and quality intelligence across Design Sheetmetal's India operations.</p>
+          <p class="scene-1-subtext">A proposal to bring together employee attendance, order keying, quality, and daily operational reports across Design Sheetmetal's India operations.</p>
           <div style="display: inline-flex; align-items: center; gap: 10px; padding: 7px 18px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border); border-radius: 20px; font-size: 13px; color: var(--porcelain); margin-bottom: 24px;">
             <span style="color: var(--gold);">Presented by</span>
             <strong>Rakshith</strong>
@@ -71,309 +71,618 @@ def get_story_html(dsm_logo_b64):
         </div>
       </section>
 
-      <!-- SCENE 2: THE OPERATIONAL CHALLENGE -->
+      <!-- SCENE 2: THE CURRENT CHALLENGE -->
       <section class="scene-slide" id="scene-2">
-        <div class="scene-title-badge">Operational Diagnosis</div>
-        <h2 class="scene-headline">The Reality of Cross-Border <span class="gold-highlight">Sheet-Metal Manufacturing</span></h2>
+        <div class="scene-title-badge">Current Operations</div>
+        <h2 class="scene-headline">Our Teams Work Hard. <span class="gold-highlight">Our Reports Work Separately.</span></h2>
         <p class="scene-narrative">
-          Operating high-precision sheet-metal detailing and order keying across three Indian shifts to serve Australian construction schedules creates three fundamental friction points:
+          Every day, our team leaders track attendance, order keying, flashings, double-checking, leave and quality issues. Much of this information is maintained through separate manual reports.
         </p>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 30px;">
-          <div class="card" style="border-top: 3px solid var(--amber);">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--amber); margin-bottom: 8px;">01. ISOLATED ATTENDANCE</div>
-            <h3 style="font-size: 17px; margin-bottom: 10px; color: var(--white);">Biometric Clock Disconnect</h3>
-            <p style="font-size: 13px; color: var(--steel); line-height: 1.6;">
-              Punch clocks record physical presence at turnstiles, but management has zero real-time visibility into shift keying velocity or whether staff are allocated to high-priority Melbourne jobs.
+
+        <!-- 3 Visual Report Cards -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 24px;">
+          <div class="card" style="border-top: 3px solid var(--amber); background: rgba(24, 38, 49, 0.7);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--amber);">01 — ATTENDANCE & LEAVE</span>
+              <span style="font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">Daily Shift Sheets</span>
+            </div>
+            <h3 style="font-size: 17px; margin-bottom: 8px; color: var(--white);">Who is present? Who is away?</h3>
+            <p style="font-size: 13px; color: var(--steel); line-height: 1.6; margin-bottom: 12px;">
+              Who is present today? Who is on approved leave? Who is available for the next shift?
             </p>
+            <div style="padding: 8px 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px; font-size: 11px; color: var(--porcelain);">
+              Current: Separate time clock entries & manual supervisor logs.
+            </div>
           </div>
-          <div class="card" style="border-top: 3px solid var(--crimson);">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--crimson); margin-bottom: 8px;">02. SHIFT BLIND SPOTS</div>
-            <h3 style="font-size: 17px; margin-bottom: 10px; color: var(--white);">Fragmented TL Handovers</h3>
-            <p style="font-size: 13px; color: var(--steel); line-height: 1.6;">
-              When Shift A departs at 14:30 and Shift B arrives, pending Melbourne delivery cutoffs and machine maintenance statuses are lost in informal messaging channels.
+
+          <div class="card" style="border-top: 3px solid var(--gold); background: rgba(24, 38, 49, 0.7);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--gold);">02 — DAILY WORK REPORTS</span>
+              <span style="font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">End-of-Shift Logs</span>
+            </div>
+            <h3 style="font-size: 17px; margin-bottom: 8px; color: var(--white);">What was completed today?</h3>
+            <p style="font-size: 13px; color: var(--steel); line-height: 1.6; margin-bottom: 12px;">
+              How many orders, flashings, bits and double-checks were completed across detailing cells?
             </p>
+            <div style="padding: 8px 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px; font-size: 11px; color: var(--porcelain);">
+              Current: Disconnected end-of-shift spreadsheets and keying tallies.
+            </div>
           </div>
-          <div class="card" style="border-top: 3px solid var(--gold);">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 8px;">03. QUALITY SILOS</div>
-            <h3 style="font-size: 17px; margin-bottom: 10px; color: var(--white);">Delayed Resupply Feedback</h3>
-            <p style="font-size: 13px; color: var(--steel); line-height: 1.6;">
-              Fabrication variances identified during site dry-fit in Melbourne often take days to trace back to shopfloor drawing revisions in India, preventing rapid root-cause learning.
+
+          <div class="card" style="border-top: 3px solid #79D2B7; background: rgba(24, 38, 49, 0.7);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <span style="font-family: var(--font-mono); font-size: 11px; color: #79D2B7;">03 — ERRORS & RESUPPLIES</span>
+              <span style="font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">Quality Tracking</span>
+            </div>
+            <h3 style="font-size: 17px; margin-bottom: 8px; color: var(--white);">What went wrong and why?</h3>
+            <p style="font-size: 13px; color: var(--steel); line-height: 1.6; margin-bottom: 12px;">
+              What went wrong, what caused it, and what action was taken to prevent it from happening again?
             </p>
+            <div style="padding: 8px 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px; font-size: 11px; color: var(--porcelain);">
+              Current: Isolated email threads and informal chat handovers.
+            </div>
           </div>
+        </div>
+
+        <!-- Closing Opportunity Message Banner -->
+        <div style="padding: 16px 24px; background: rgba(198, 166, 117, 0.08); border: 1px solid var(--gold-border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+              <span class="pulse-dot"></span>
+              <strong style="color: var(--white); font-size: 15px;">The information exists. The opportunity is to bring it together.</strong>
+            </div>
+            <div style="font-size: 13px; color: var(--steel); line-height: 1.5;">
+              This proposal originated directly from our floor manager's request to digitize manually prepared reports into one reliable operational system.
+            </div>
+          </div>
+          <button class="btn btn-gold btn-sm" onclick="nextScene()">
+            See the Solution →
+          </button>
         </div>
       </section>
 
-      <!-- SCENE 3: THE PULSE ARCHITECTURE -->
+      <!-- SCENE 3: THE PRODUCT REVEAL -->
       <section class="scene-slide" id="scene-3">
-        <div class="scene-title-badge">System Architecture</div>
-        <h2 class="scene-headline">Introducing <span class="gold-highlight">PULSE</span>: The Operational Nervous System</h2>
+        <div class="scene-title-badge">Proposed Solution</div>
+        <h2 class="scene-headline">Introducing PULSE. <span class="gold-highlight">One Place for Everything That Matters.</span></h2>
         <p class="scene-narrative">
-          A single glass pane uniting time & attendance hardware, daily shopfloor production logs, zero-blame quality control, and cross-border management intelligence.
+          A proposed digital workplace for managing employee attendance, daily work, quality, leave and operational reporting.
         </p>
-        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: center;">
-          <div class="card" style="background: rgba(24, 38, 49, 0.6);">
-            <div style="display: flex; flex-direction: column; gap: 14px;">
-              <div style="display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-                <div style="width: 36px; height: 36px; border-radius: 6px; background: var(--emerald-dim); border: 1px solid var(--emerald); display: flex; align-items: center; justify-content: center; color: var(--emerald); font-weight: bold;">01</div>
-                <div>
-                  <div style="font-weight: 600; color: var(--white);">Biometric & Break Intelligence</div>
-                  <div style="font-size: 12px; color: var(--steel);">Simulated punch ingestion, tea/lunch duration tracking, net attended duration vs award policy.</div>
-                </div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-                <div style="width: 36px; height: 36px; border-radius: 6px; background: var(--gold-dim); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold); font-weight: bold;">02</div>
-                <div>
-                  <div style="font-weight: 600; color: var(--white);">Live Shopfloor Keying & Output</div>
-                  <div style="font-size: 12px; color: var(--steel);">Real-time tracking of orders keyed, flashing meters, accessories, and double-check verifications.</div>
-                </div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-                <div style="width: 36px; height: 36px; border-radius: 6px; background: var(--amber-dim); border: 1px solid var(--amber); display: flex; align-items: center; justify-content: center; color: var(--amber); font-weight: bold;">03</div>
-                <div>
-                  <div style="font-weight: 600; color: var(--white);">Zero-Blame Quality & Resupply RCA</div>
-                  <div style="font-size: 12px; color: var(--steel);">Constructive case investigations connecting Australian field resupplies directly to drawing revisions.</div>
-                </div>
-              </div>
-              <div style="display: flex; align-items: center; gap: 16px; padding: 12px 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-                <div style="width: 36px; height: 36px; border-radius: 6px; background: rgba(155, 89, 182, 0.2); border: 1px solid #9B59B6; display: flex; align-items: center; justify-content: center; color: #D2B4DE; font-weight: bold;">04</div>
-                <div>
-                  <div style="font-weight: 600; color: var(--white);">Cross-Border Command Centre</div>
-                  <div style="font-size: 12px; color: var(--steel);">Dual-clock real-time dashboard synchronizing India shift teams with Melbourne delivery deadlines.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="padding: 24px; border: 1px solid var(--gold-border); border-radius: 8px; background: rgba(198, 166, 117, 0.04);">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 8px;">STRATEGIC PRINCIPLE</div>
-            <h3 style="font-size: 20px; color: var(--white); margin-bottom: 14px;">Operational Clarity Over Punitive Surveillance</h3>
-            <p style="font-size: 13px; color: var(--steel); line-height: 1.7; margin-bottom: 18px;">
-              PULSE is engineered to empower operators and team leaders with instant self-awareness, seamless handovers, and transparent operational data — not fear-driven rankings.
+
+        <!-- 4 Core Pillars Grid -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 24px;">
+          <div class="card" style="padding: 20px; border-top: 3px solid var(--emerald); background: rgba(24, 38, 49, 0.7);">
+            <div style="width: 38px; height: 38px; border-radius: 6px; background: var(--emerald-dim); border: 1px solid var(--emerald); display: flex; align-items: center; justify-content: center; color: var(--emerald); font-weight: bold; font-family: var(--font-mono); margin-bottom: 12px;">01</div>
+            <h3 style="font-size: 17px; color: var(--white); margin-bottom: 8px;">Our People</h3>
+            <p style="font-size: 13px; color: var(--steel); line-height: 1.6;">
+              Attendance, approved leave, assigned shifts, and team availability across all detailing cells.
             </p>
-            <div style="font-size: 12px; color: var(--gold); font-family: var(--font-mono);">Design Sheetmetal India • Strategic Operations Roadmap</div>
           </div>
+
+          <div class="card" style="padding: 20px; border-top: 3px solid var(--gold); background: rgba(24, 38, 49, 0.7);">
+            <div style="width: 38px; height: 38px; border-radius: 6px; background: var(--gold-dim); border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold); font-weight: bold; font-family: var(--font-mono); margin-bottom: 12px;">02</div>
+            <h3 style="font-size: 17px; color: var(--white); margin-bottom: 8px;">Our Work</h3>
+            <p style="font-size: 13px; color: var(--steel); line-height: 1.6;">
+              Customer purchase orders keyed, flashing linear metres, accessory bits, and peer double-checks.
+            </p>
+          </div>
+
+          <div class="card" style="padding: 20px; border-top: 3px solid var(--amber); background: rgba(24, 38, 49, 0.7);">
+            <div style="width: 38px; height: 38px; border-radius: 6px; background: var(--amber-dim); border: 1px solid var(--amber); display: flex; align-items: center; justify-content: center; color: var(--amber); font-weight: bold; font-family: var(--font-mono); margin-bottom: 12px;">03</div>
+            <h3 style="font-size: 17px; color: var(--white); margin-bottom: 8px;">Our Quality</h3>
+            <p style="font-size: 13px; color: var(--steel); line-height: 1.6;">
+              Order errors, resupply reviews, verified root causes, and zero-blame improvement actions.
+            </p>
+          </div>
+
+          <div class="card" style="padding: 20px; border-top: 3px solid #9B59B6; background: rgba(24, 38, 49, 0.7);">
+            <div style="width: 38px; height: 38px; border-radius: 6px; background: rgba(155, 89, 182, 0.2); border: 1px solid #9B59B6; display: flex; align-items: center; justify-content: center; color: #D2B4DE; font-weight: bold; font-family: var(--font-mono); margin-bottom: 12px;">04</div>
+            <h3 style="font-size: 17px; color: var(--white); margin-bottom: 8px;">Our Management</h3>
+            <p style="font-size: 13px; color: var(--steel); line-height: 1.6;">
+              Clear operational summaries, shift handover dossiers, and pending items requiring attention.
+            </p>
+          </div>
+        </div>
+
+        <!-- Teaser Preview Ribbon -->
+        <div style="padding: 18px 24px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 13px; color: var(--porcelain);">
+            <strong style="color: var(--gold);">Simulated Architecture:</strong> Designed specifically for Design Sheetmetal India Operations without third-party subscriptions or vendor lock-in.
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="switchToProductMode()">
+            Preview Prototype Interface →
+          </button>
         </div>
       </section>
 
-      <!-- SCENE 4: BIOMETRIC PRECISION -->
+      <!-- SCENE 4: ATTENDANCE & BIOMETRICS -->
       <section class="scene-slide" id="scene-4">
-        <div class="scene-title-badge">Chapter 01 • Shift Inception</div>
-        <h2 class="scene-headline">From the First Turnstile Punch: <span class="gold-highlight">Biometric Precision</span></h2>
+        <div class="scene-title-badge">Pillar 01 • Attendance Records</div>
+        <h2 class="scene-headline">Know Who's Here. When They Arrived. <span class="gold-highlight">And When They Leave.</span></h2>
         <p class="scene-narrative">
-          Every shift begins with biometric verification at our facility gates. PULSE ingests raw hardware punch feeds while maintaining clear boundaries between physical presence and payable hours.
+          PULSE is designed to connect with the company's existing attendance system, making entry, exit, breaks and working-time records easier to review.
         </p>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-          <div class="card">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--emerald); margin-bottom: 6px;">HARDWARE AGNOSTIC</div>
-            <h4 style="color: var(--white); margin-bottom: 8px;">Universal Gateway Adapter</h4>
+
+        <!-- 3 Feature Cards -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 22px;">
+          <div class="card" style="padding: 16px;">
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--emerald); margin-bottom: 6px;">01 — ENTRY & EXIT</div>
+            <h4 style="color: var(--white); margin-bottom: 6px;">Verified Timestamps</h4>
             <p style="font-size: 12px; color: var(--steel); line-height: 1.6;">
-              Engineered to support any TCP/IP biometric terminal via webhook, push SDK, or scheduled CSV export without vendor lock-in.
+              See each employee's recorded arrival and departure times clearly across shifts.
             </p>
           </div>
-          <div class="card">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 6px;">TIMELINE VISUALIZATION</div>
-            <h4 style="color: var(--white); margin-bottom: 8px;">Break & Tea Cycle Tracking</h4>
+          <div class="card" style="padding: 16px;">
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 6px;">02 — BREAK TRACKING</div>
+            <h4 style="color: var(--white); margin-bottom: 6px;">Tea & Lunch Duration</h4>
             <p style="font-size: 12px; color: var(--steel); line-height: 1.6;">
-              Differentiates Office IN/OUT from tea and lunch pauses. Calculates exact net attended duration and flags missing return punches.
+              Review lunch and morning tea breaks where the attendance device supports recorded events.
             </p>
           </div>
-          <div class="card">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--amber); margin-bottom: 6px;">AWARD COMPLIANCE</div>
-            <h4 style="color: var(--white); margin-bottom: 8px;">Policy-Driven Regularization</h4>
+          <div class="card" style="padding: 16px;">
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--amber); margin-bottom: 6px;">03 — CORRECTIONS</div>
+            <h4 style="color: var(--white); margin-bottom: 6px;">Transparent Regularization</h4>
             <p style="font-size: 12px; color: var(--steel); line-height: 1.6;">
-              Time on premises is never falsely equated with payable hours. Structured exception approvals protect both employees and company policy.
+              Handle missing punches, discrepancies and supervisor-approved changes with a clear audit history.
             </p>
           </div>
         </div>
+
+        <!-- Animated Employee Attendance Timeline -->
+        <div class="card" style="background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border); margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <strong style="color: var(--white); font-size: 14px;">Sample Timeline: Rohan Sharma (Senior Detailing Specialist • Shift A)</strong>
+            <span class="status-badge verified">Verified Compliant</span>
+          </div>
+
+          <!-- Step-by-Step Flow Line -->
+          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 14px; text-align: center;">
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--emerald); border-radius: 6px;">
+              <div style="font-size: 10px; color: var(--steel); text-transform: uppercase;">1. Office Entry</div>
+              <strong style="font-size: 14px; color: #79D2B7; font-family: var(--font-mono);">05:58 AM</strong>
+              <div style="font-size: 10px; color: var(--steel-dim);">On-Time (2m early)</div>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 10px; color: var(--steel); text-transform: uppercase;">2. Morning Tea</div>
+              <strong style="font-size: 14px; color: var(--amber); font-family: var(--font-mono);">09:15 AM</strong>
+              <div style="font-size: 10px; color: var(--steel-dim);">Break Start</div>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 10px; color: var(--steel); text-transform: uppercase;">3. Tea Return</div>
+              <strong style="font-size: 14px; color: #79D2B7; font-family: var(--font-mono);">09:30 AM</strong>
+              <div style="font-size: 10px; color: var(--steel-dim);">15m Elapsed</div>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 10px; color: var(--steel); text-transform: uppercase;">4. Lunch Break</div>
+              <strong style="font-size: 14px; color: var(--amber); font-family: var(--font-mono);">12:10 PM</strong>
+              <div style="font-size: 10px; color: var(--steel-dim);">Break Start</div>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 10px; color: var(--steel); text-transform: uppercase;">5. Lunch Return</div>
+              <strong style="font-size: 14px; color: #79D2B7; font-family: var(--font-mono);">12:40 PM</strong>
+              <div style="font-size: 10px; color: var(--steel-dim);">30m Elapsed</div>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--gold); border-radius: 6px;">
+              <div style="font-size: 10px; color: var(--steel); text-transform: uppercase;">6. Shift Handover</div>
+              <strong style="font-size: 14px; color: var(--gold); font-family: var(--font-mono);">14:30 PM</strong>
+              <div style="font-size: 10px; color: var(--steel-dim);">Net: 7h 47m</div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--slate-border); font-size: 12px; color: var(--steel);">
+            <div>
+              Time on Premises: <strong style="color: var(--white);">8h 32m</strong> • Recorded Breaks: <strong style="color: var(--amber);">45m</strong> • Net Attended: <strong style="color: var(--gold);">7h 47m</strong>
+            </div>
+            <div style="color: var(--gold); font-style: italic;">
+              *Biometric integration is proposed and subject to existing device capabilities. Illustrative demonstration.
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <button class="btn btn-gold btn-sm" onclick="exploreFeature('biometric')">
+            Explore Attendance in Prototype →
+          </button>
+        </div>
       </section>
 
-      <!-- SCENE 5: IN-FLIGHT PRODUCTION -->
+      <!-- SCENE 5: DAILY WORK & PRODUCTIVITY -->
       <section class="scene-slide" id="scene-5">
-        <div class="scene-title-badge">Chapter 02 • Operational Execution</div>
-        <h2 class="scene-headline">In-Flight Production Velocity & <span class="gold-highlight">Quality Assurance</span></h2>
+        <div class="scene-title-badge">Pillar 02 • Daily Work Output</div>
+        <h2 class="scene-headline">Every Order. Every Flashing. <span class="gold-highlight">Every Contribution.</span></h2>
         <p class="scene-narrative">
-          As sheet-metal detailers key orders, PULSE monitors throughput, flashing complexity, and double-check verifications in real-time, catching discrepancies before metal is cut in Tullamarine.
+          A simpler way to record and understand the work completed across our teams.
         </p>
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
-          <div class="metric-card">
-            <div class="metric-label">Daily Orders Keyed</div>
+
+        <!-- 4 Sample Metric Cards -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 22px;">
+          <div class="metric-card" style="padding: 18px;">
+            <div class="metric-label">Orders Keyed</div>
             <div class="metric-value">142</div>
-            <div class="metric-context" style="color: var(--emerald);">+8.4% vs Shift Baseline</div>
+            <div class="metric-context" style="color: var(--gold);">Customer Orders Processed</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">Flashings & Trims</div>
-            <div class="metric-value">1,840</div>
-            <div class="metric-context">Linear Metres Detailed</div>
+          <div class="metric-card" style="padding: 18px;">
+            <div class="metric-label">Flashing Lengths Recorded</div>
+            <div class="metric-value">1,840m</div>
+            <div class="metric-context" style="color: var(--emerald);">Linear Metres Detailed</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">Double-Check Rate</div>
-            <div class="metric-value">97.2%</div>
-            <div class="metric-context" style="color: var(--emerald);">138 of 142 Orders Verified</div>
+          <div class="metric-card" style="padding: 18px;">
+            <div class="metric-label">Bits Processed</div>
+            <div class="metric-value">5,120</div>
+            <div class="metric-context" style="color: var(--porcelain);">Accessories & Brackets</div>
           </div>
-          <div class="metric-card">
-            <div class="metric-label">First-Pass Accuracy</div>
-            <div class="metric-value">98.6%</div>
-            <div class="metric-context">Australian Dry-Fit Benchmark</div>
+          <div class="metric-card" style="padding: 18px;">
+            <div class="metric-label">Double-Checks Completed</div>
+            <div class="metric-value">138</div>
+            <div class="metric-context" style="color: #79D2B7;">Peer Quality Verifications (97.2%)</div>
           </div>
+        </div>
+
+        <!-- Team Comparison Table -->
+        <div class="card" style="background: rgba(24, 38, 49, 0.7); margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <strong style="color: var(--white); font-size: 14px;">Work Completed Across Detailing Cells (Sample Reporting Day)</strong>
+            <span style="font-size: 11px; color: var(--gold); font-family: var(--font-mono);">Illustrative Sample Figures</span>
+          </div>
+          <div class="data-table-container">
+            <table class="data-table" style="font-size: 12px;">
+              <thead>
+                <tr>
+                  <th>Detailing Cell</th>
+                  <th>Product Focus</th>
+                  <th>Orders Keyed</th>
+                  <th>Flashings Detailed</th>
+                  <th>Accessories / Bits</th>
+                  <th>Double-Checks Completed</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Team Alpha</strong></td>
+                  <td>Parapet Flashings & Roof Trims</td>
+                  <td><strong style="color: var(--gold);">42</strong></td>
+                  <td>680 metres</td>
+                  <td>1,850 parts</td>
+                  <td><span style="color: #79D2B7;">42 of 42 (100%)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Team Beta</strong></td>
+                  <td>Architectural Cladding Panels</td>
+                  <td><strong style="color: var(--gold);">34</strong></td>
+                  <td>410 metres</td>
+                  <td>1,120 parts</td>
+                  <td><span style="color: #79D2B7;">33 of 34 (97.1%)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Team Gamma</strong></td>
+                  <td>Rainwater Goods & Downpipes</td>
+                  <td><strong style="color: var(--gold);">38</strong></td>
+                  <td>450 metres</td>
+                  <td>1,250 parts</td>
+                  <td><span style="color: #79D2B7;">36 of 38 (94.7%)</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Team Delta</strong></td>
+                  <td>Special Structural Assemblies</td>
+                  <td><strong style="color: var(--gold);">28</strong></td>
+                  <td>300 metres</td>
+                  <td>900 parts</td>
+                  <td><span style="color: #79D2B7;">27 of 28 (96.4%)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div style="font-size: 12px; color: var(--steel);">
+            Team leaders enter daily work in under 60 seconds • Management sees instantly updated totals.
+          </div>
+          <button class="btn btn-gold btn-sm" onclick="exploreFeature('production')">
+            Explore Daily Work Report in Prototype →
+          </button>
         </div>
       </section>
 
-      <!-- SCENE 6: SEAMLESS HANDOVERS -->
+      <!-- SCENE 6: SHIFT HANDOVER -->
       <section class="scene-slide" id="scene-6">
-        <div class="scene-title-badge">Chapter 03 • Shift Continuity</div>
-        <h2 class="scene-headline">Unbroken Momentum: <span class="gold-highlight">Structured Handovers</span></h2>
+        <div class="scene-title-badge">Pillar 03 • Shift Continuity</div>
+        <h2 class="scene-headline">When One Shift Ends, <span class="gold-highlight">The Next Starts Informed.</span></h2>
         <p class="scene-narrative">
-          Shift transitions are no longer informal handshakes. PULSE mandates a digital handover dossier capturing urgent Melbourne dispatch orders, machine statuses, and upcoming staffing gaps.
+          Important work, pending checks, customer clarifications and team updates can be passed to the next shift in one organized handover.
         </p>
-        <div class="card" style="background: rgba(24, 38, 49, 0.7); border: 1px solid var(--slate-border-light); margin-bottom: 20px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--slate-border);">
+
+        <!-- Step-by-Step Handover Workflow -->
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px; align-items: center;">
+          <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px; text-align: center;">
+            <div style="font-size: 10px; color: var(--gold); text-transform: uppercase; font-family: var(--font-mono);">Step 1</div>
+            <strong style="font-size: 12px; color: var(--white);">Outgoing TL</strong>
+            <div style="font-size: 11px; color: var(--steel);">Prepares handover</div>
+          </div>
+          <div style="text-align: center; color: var(--gold); font-size: 18px;">→</div>
+          <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px; text-align: center;">
+            <div style="font-size: 10px; color: var(--gold); text-transform: uppercase; font-family: var(--font-mono);">Step 2</div>
+            <strong style="font-size: 12px; color: var(--white);">Records Items</strong>
+            <div style="font-size: 11px; color: var(--steel);">Pending checks & RFIs</div>
+          </div>
+          <div style="text-align: center; color: var(--gold); font-size: 18px;">→</div>
+          <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--emerald); border-radius: 6px; text-align: center;">
+            <div style="font-size: 10px; color: var(--emerald); text-transform: uppercase; font-family: var(--font-mono);">Step 3</div>
+            <strong style="font-size: 12px; color: #79D2B7;">Incoming TL</strong>
+            <div style="font-size: 11px; color: var(--steel);">Acknowledges & Continues</div>
+          </div>
+        </div>
+
+        <!-- Sample Handover Card -->
+        <div class="card" style="background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border); margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--slate-border);">
             <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="status-badge verified">Digital Handover Active</span>
-              <strong style="color: var(--white); font-size: 15px;">Shift A (Day) → Shift B (Afternoon) Transfer Dossier</strong>
+              <span class="status-badge warning">Awaiting Acknowledgment</span>
+              <strong style="color: var(--white); font-size: 15px;">Shift A → Shift B Handover Note</strong>
             </div>
-            <div style="font-family: var(--font-mono); font-size: 12px; color: var(--gold);">Cutoff Target: 16:00 AEDT Melbourne Express</div>
+            <div style="font-family: var(--font-mono); font-size: 12px; color: var(--gold);">
+              Monday, 23 Nov 2026 • 14:15 IST
+            </div>
           </div>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; font-size: 13px;">
-            <div>
-              <div style="color: var(--steel); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Outgoing Team Leader</div>
-              <div style="color: var(--white); font-weight: 500;">Priya Nair (Shift A Lead)</div>
-              <div style="color: var(--steel-dim); font-size: 11px;">Signed & Staged: 14:28 IST</div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; font-size: 13px;">
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div>
+                <span style="color: var(--steel); font-size: 11px; text-transform: uppercase;">From Outgoing Leader:</span>
+                <div style="color: var(--white); font-weight: 500;">Priya Nair (Shift A Lead)</div>
+              </div>
+              <div>
+                <span style="color: var(--steel); font-size: 11px; text-transform: uppercase;">To Incoming Leader:</span>
+                <div style="color: var(--white); font-weight: 500;">Rajesh Kumar (Shift B Lead)</div>
+              </div>
+              <div style="padding: 8px 12px; background: var(--midnight); border-radius: 4px; font-size: 12px; color: #79D2B7;">
+                ✓ All 36 operators logged & attendance closed.
+              </div>
             </div>
-            <div>
-              <div style="color: var(--steel); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Incoming Team Leader</div>
-              <div style="color: var(--white); font-weight: 500;">Rajesh Kumar (Shift B Lead)</div>
-              <div style="color: var(--emerald); font-size: 11px;">Acknowledged in System: 14:32 IST</div>
-            </div>
-            <div>
-              <div style="color: var(--steel); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Urgent Jobs Handed Over</div>
-              <div style="color: var(--gold); font-weight: 500;">DSM-MEL-8841 (Bayside Commercial)</div>
-              <div style="color: var(--steel-dim); font-size: 11px;">280 flashings cut; bending in progress</div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <span style="color: var(--steel); font-size: 11px; text-transform: uppercase;">Pending Work Items to Transfer:</span>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--porcelain);">
+                <li style="padding: 6px 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                  • <strong>4 orders awaiting double-check:</strong> Orders #8841, #8842, #8845, #8849.
+                </li>
+                <li style="padding: 6px 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                  • <strong>2 customer clarifications:</strong> Builder RFI response expected on roof pitch angle.
+                </li>
+                <li style="padding: 6px 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                  • <strong>1 urgent follow-up:</strong> Bayside Commercial flashing batch priority queue.
+                </li>
+                <li style="padding: 6px 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                  • <strong>1 resupply investigation:</strong> Tooling clearance check on 0.9mm Colorbond.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+          <button class="btn btn-gold btn-sm" onclick="exploreFeature('handover')">
+            Explore Shift Handover in Prototype →
+          </button>
+        </div>
       </section>
 
-      <!-- SCENE 7: EMPLOYEE 360 & MERIT -->
+      <!-- SCENE 7: EMPLOYEE PERFORMANCE -->
       <section class="scene-slide" id="scene-7">
-        <div class="scene-title-badge">Chapter 04 • Human Capital</div>
-        <h2 class="scene-headline">Employee 360° & <span class="gold-highlight">Sheet-Metal Craftsmanship</span></h2>
+        <div class="scene-title-badge">Pillar 04 • Employee Development</div>
+        <h2 class="scene-headline">Understand Performance. <span class="gold-highlight">Recognize Progress.</span></h2>
         <p class="scene-narrative">
-          Building operational capability rather than punitive rankings. Individual 360° dossiers synthesize attendance regularity, output velocity, zero-blame quality learning, and technical sheet-metal certifications.
+          Give employees and management a clearer view of attendance, work completed, quality and professional development.
         </p>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-          <div class="card">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 6px;">SKILLS & MASTERY</div>
-            <h4 style="color: var(--white); margin-bottom: 8px;">7-Point Technical Matrix</h4>
-            <p style="font-size: 12px; color: var(--steel); line-height: 1.6;">
-              Tracks verified proficiencies across slitting, CNC turret punching, press brake bending, corner notching, TIG/MIG welding, and powder coating.
-            </p>
-          </div>
-          <div class="card">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--emerald); margin-bottom: 6px;">ZERO-BLAME RCA</div>
-            <h4 style="color: var(--white); margin-bottom: 8px;">Resupply Learning Ingestion</h4>
-            <p style="font-size: 12px; color: var(--steel); line-height: 1.6;">
-              Australian site feedback loops are translated into constructive drawing tips and mentorship notes, fostering craftsmanship and ownership.
-            </p>
-          </div>
-          <div class="card">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--steel); margin-bottom: 6px;">ROLE PRIVACY</div>
-            <h4 style="color: var(--white); margin-bottom: 8px;">Confidential Mentorship</h4>
-            <p style="font-size: 12px; color: var(--steel); line-height: 1.6;">
-              Private coaching records and developmental reviews remain securely masked from general staff views, visible only to authorized leadership.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      <!-- SCENE 8: EXECUTIVE COMMAND CENTRE -->
-      <section class="scene-slide" id="scene-8">
-        <div class="scene-title-badge">Chapter 05 • Executive Control</div>
-        <h2 class="scene-headline">The Managing Director's <span class="gold-highlight">Command Centre</span></h2>
-        <p class="scene-narrative">
-          A real-time command dashboard giving the India Managing Director and operations executives instant cross-border visibility into attendance health, floor velocity, and unresolved alerts.
-        </p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center;">
-          <div class="card" style="border: 1px solid var(--gold-border);">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 10px;">EXECUTIVE CONTROLS AT A GLANCE</div>
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 13px; color: var(--porcelain);">
-              <li style="display: flex; align-items: center; gap: 10px;">
-                <span class="pulse-dot"></span>
-                <span><strong>Dual Timezone Synchrony:</strong> Melbourne AEDT and India IST running simultaneously.</span>
-              </li>
-              <li style="display: flex; align-items: center; gap: 10px;">
-                <span class="pulse-dot"></span>
-                <span><strong>Instant Attendance Tally:</strong> Scheduled (40) vs Present (34) vs Leave (3) vs Late (2).</span>
-              </li>
-              <li style="display: flex; align-items: center; gap: 10px;">
-                <span class="pulse-dot"></span>
-                <span><strong>High-Priority Melbourne Orders:</strong> Direct visibility into critical construction jobs.</span>
-              </li>
-              <li style="display: flex; align-items: center; gap: 10px;">
-                <span class="pulse-dot"></span>
-                <span><strong>Exceptions Inbox:</strong> One-click acknowledgment and resolution of operational alerts.</span>
-              </li>
-            </ul>
-          </div>
-          <div style="text-align: center; padding: 24px;">
-            <div style="font-size: 48px; color: var(--gold); font-family: var(--font-serif); margin-bottom: 10px;">100%</div>
-            <div style="font-size: 16px; color: var(--white); margin-bottom: 8px;">Operational Transparency</div>
-            <div style="font-size: 12px; color: var(--steel); max-width: 340px; margin: 0 auto 20px;">
-              Zero guesswork. Complete alignment between Bengaluru shopfloor execution and Australian customer commitments.
-            </div>
-            <button class="btn btn-gold" onclick="switchToProductMode()">
-              Launch Live Command Centre
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- SCENE 9: PROPOSAL & INVESTMENT ASKS -->
-      <section class="scene-slide" id="scene-9">
-        <div class="scene-title-badge">Leadership Decision</div>
-        <h2 class="scene-headline">Strategic Proposal & <span class="gold-highlight">Implementation Directives</span></h2>
-        <p class="scene-narrative">
-          Presented by <strong>Rakshith</strong> (Operational Strategist) to the Managing Director and Executive Leadership of Design Sheetmetal.
-        </p>
-        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px;">
-          <div class="card" style="padding: 16px; border-top: 3px solid var(--gold);">
-            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--gold); margin-bottom: 6px;">ASK 01 • PILOT</div>
-            <h4 style="font-size: 14px; color: var(--white); margin-bottom: 6px;">60-Day Shopfloor Pilot</h4>
-            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
-              Deploy PULSE Phase 1 with Team Alpha across Shift A & B to validate keying telemetry.
-            </p>
-          </div>
+        <!-- 4 Visual Cards -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
           <div class="card" style="padding: 16px; border-top: 3px solid var(--emerald);">
-            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--emerald); margin-bottom: 6px;">ASK 02 • BIOMETRICS</div>
-            <h4 style="font-size: 14px; color: var(--white); margin-bottom: 6px;">Hardware Connector</h4>
-            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
-              Commission local biometric gateway bridge to ingest turnstile punches in real-time.
-            </p>
-          </div>
-          <div class="card" style="padding: 16px; border-top: 3px solid var(--amber);">
-            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--amber); margin-bottom: 6px;">ASK 03 • HARDWARE</div>
-            <h4 style="font-size: 14px; color: var(--white); margin-bottom: 6px;">Shopfloor Tablets</h4>
-            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
-              Provision 4 ruggedized tablets at folding stations for instant digital shift handovers.
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--emerald); margin-bottom: 4px;">01 — ATTENDANCE</div>
+            <h4 style="color: var(--white); margin-bottom: 6px; font-size: 14px;">Reliability & Presence</h4>
+            <p style="font-size: 12px; color: var(--steel); line-height: 1.5;">
+              Entry and exit records, approved leave history, and monthly attendance trends.
             </p>
           </div>
           <div class="card" style="padding: 16px; border-top: 3px solid var(--gold);">
-            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--gold); margin-bottom: 6px;">ASK 04 • DATA FEED</div>
-            <h4 style="font-size: 14px; color: var(--white); margin-bottom: 6px;">Melbourne RCA Link</h4>
-            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
-              Formalize weekly Australian dry-fit resupply logging into the zero-blame learning feed.
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 4px;">02 — WORK COMPLETED</div>
+            <h4 style="color: var(--white); margin-bottom: 6px; font-size: 14px;">Orders & Output</h4>
+            <p style="font-size: 12px; color: var(--steel); line-height: 1.5;">
+              Orders keyed, flashings detailed, bits processed, and peer double-check completion.
+            </p>
+          </div>
+          <div class="card" style="padding: 16px; border-top: 3px solid #79D2B7;">
+            <div style="font-family: var(--font-mono); font-size: 11px; color: #79D2B7; margin-bottom: 4px;">03 — QUALITY</div>
+            <h4 style="color: var(--white); margin-bottom: 6px; font-size: 14px;">Errors & Learnings</h4>
+            <p style="font-size: 12px; color: var(--steel); line-height: 1.5;">
+              Verified drawing corrections, resupply investigations, and constructive learnings.
             </p>
           </div>
           <div class="card" style="padding: 16px; border-top: 3px solid #9B59B6;">
-            <div style="font-family: var(--font-mono); font-size: 10px; color: #D2B4DE; margin-bottom: 6px;">ASK 05 • COUNCIL</div>
-            <h4 style="font-size: 14px; color: var(--white); margin-bottom: 6px;">Steering Council</h4>
-            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
-              Bi-weekly executive steering sessions to review velocity, quality gains, and operator feedback.
+            <div style="font-family: var(--font-mono); font-size: 11px; color: #D2B4DE; margin-bottom: 4px;">04 — DEVELOPMENT</div>
+            <h4 style="color: var(--white); margin-bottom: 6px; font-size: 14px;">Skills & Training</h4>
+            <p style="font-size: 12px; color: var(--steel); line-height: 1.5;">
+              Core sheetmetal skills, peer recognition awards, and supervisory coaching notes.
             </p>
           </div>
         </div>
+
+        <!-- Fictional Employee Profile Showcase -->
+        <div class="card" style="background: rgba(24, 38, 49, 0.7); border: 1px solid var(--slate-border); margin-bottom: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 42px; height: 42px; border-radius: 50%; background: var(--gold-dim); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold); font-weight: bold;">RS</div>
+              <div>
+                <strong style="color: var(--white); font-size: 15px;">Rohan Sharma</strong>
+                <span style="font-size: 12px; color: var(--steel);"> • Senior Detailing Specialist • Team Alpha</span>
+              </div>
+            </div>
+            <span class="status-badge verified">Demonstration Profile</span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; font-size: 12px; margin-bottom: 10px;">
+            <div style="padding: 10px; background: var(--midnight); border-radius: 4px;">
+              <div style="color: var(--steel);">Monthly Attendance</div>
+              <strong style="color: #79D2B7; font-size: 14px;">22 / 23 Days</strong>
+              <div style="color: var(--steel-dim); font-size: 10px;">1 Day Approved Annual Leave</div>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border-radius: 4px;">
+              <div style="color: var(--steel);">Daily Output Average</div>
+              <strong style="color: var(--gold); font-size: 14px;">16 Orders / Shift</strong>
+              <div style="color: var(--steel-dim); font-size: 10px;">210m Flashings Detailed</div>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border-radius: 4px;">
+              <div style="color: var(--steel);">Quality Accuracy</div>
+              <strong style="color: #79D2B7; font-size: 14px;">99.4% First-Pass</strong>
+              <div style="color: var(--steel-dim); font-size: 10px;">Zero-Blame Learning Action</div>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border-radius: 4px;">
+              <div style="color: var(--steel);">Double-Check Rigor</div>
+              <strong style="color: var(--white); font-size: 14px;">100% Peer Verified</strong>
+              <div style="color: var(--steel-dim); font-size: 10px;">All jobs formally checked</div>
+            </div>
+          </div>
+
+          <div style="font-size: 11px; color: var(--steel-dim); line-height: 1.4; padding-top: 6px;">
+            *Privacy Protected: Confidential supervisory coaching notes are accessible only to team leaders and management, protecting individual employee privacy.
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+          <button class="btn btn-gold btn-sm" onclick="exploreFeature('employee360')">
+            Explore Employee Performance in Prototype →
+          </button>
+        </div>
+      </section>
+
+      <!-- SCENE 8: MANAGEMENT OVERVIEW -->
+      <section class="scene-slide" id="scene-8">
+        <div class="scene-title-badge">Executive View</div>
+        <h2 class="scene-headline">Your Entire Operation. <span class="gold-highlight">One Clear View.</span></h2>
+        <p class="scene-narrative">
+          See attendance, daily work, pending approvals and quality issues in one management dashboard.
+        </p>
+
+        <!-- Mini Dashboard Preview -->
+        <div class="card" style="background: rgba(24, 38, 49, 0.85); border: 1px solid var(--gold-border); margin-bottom: 20px; padding: 22px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--slate-border);">
+            <div>
+              <strong style="color: var(--white); font-size: 16px;">Management Summary Dashboard</strong>
+              <div style="font-size: 12px; color: var(--steel);">Monday, 23 November 2026 • Shift A Operations</div>
+            </div>
+            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--gold);">Management visibility based on latest approved records</span>
+          </div>
+
+          <!-- Numbers at the Top -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px;">
+            <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Employees Present</div>
+              <div style="font-size: 22px; font-weight: 600; color: #79D2B7; font-family: var(--font-serif); margin: 2px 0;">36 / 40</div>
+              <div style="font-size: 10px; color: var(--steel-dim);">3 Leave • 1 Absent • 2 Late (ok)</div>
+            </div>
+            <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Orders Keyed</div>
+              <div style="font-size: 22px; font-weight: 600; color: var(--gold); font-family: var(--font-serif); margin: 2px 0;">142 Orders</div>
+              <div style="font-size: 10px; color: var(--steel-dim);">1,840m Flashings • 5,120 Bits</div>
+            </div>
+            <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Double-Checks Done</div>
+              <div style="font-size: 22px; font-weight: 600; color: var(--white); font-family: var(--font-serif); margin: 2px 0;">138 (97.2%)</div>
+              <div style="font-size: 10px; color: var(--steel-dim);">Peer quality verifications</div>
+            </div>
+            <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Items For Attention</div>
+              <div style="font-size: 22px; font-weight: 600; color: var(--amber); font-family: var(--font-serif); margin: 2px 0;">2 Items</div>
+              <div style="font-size: 10px; color: var(--steel-dim);">1 Punch Fix • 1 Leave Request</div>
+            </div>
+          </div>
+
+          <!-- Two Practical Alerts -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div style="padding: 10px 14px; background: rgba(196, 140, 73, 0.12); border: 1px solid var(--amber); border-radius: 6px; font-size: 12px;">
+              <strong style="color: var(--amber);">Notice:</strong> One attendance record needs supervisor correction (EMP-114 missing exit punch).
+            </div>
+            <div style="padding: 10px 14px; background: rgba(70, 139, 119, 0.12); border: 1px solid var(--emerald); border-radius: 6px; font-size: 12px;">
+              <strong style="color: #79D2B7;">Reporting:</strong> Four daily work reports from Shift A await final management approval.
+            </div>
+          </div>
+        </div>
+
+        <!-- Big Primary Action Button -->
+        <div style="text-align: center; margin-top: 10px;">
+          <button class="btn btn-gold" onclick="exploreFeature('command-centre')" style="padding: 14px 36px; font-size: 15px; font-weight: 600;">
+            EXPLORE MANAGEMENT DASHBOARD
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- SCENE 9: PROPOSED MCA INTERNSHIP PROJECT & APPROVAL REQUEST -->
+      <section class="scene-slide" id="scene-9">
+        <div class="scene-title-badge">Internship Project Approval Request</div>
+        <h2 class="scene-headline">Proposed MCA Fourth-Semester <span class="gold-highlight">Internship Project</span></h2>
+        <p class="scene-narrative">
+          Presented by <strong>Rakshith</strong> (Operational Strategist & MCA Final-Semester Candidate) to the Managing Director and Operational Leadership of Design Sheetmetal.
+        </p>
+
+        <!-- Project Origin Note -->
+        <div class="card" style="margin-bottom: 20px; background: rgba(24, 38, 49, 0.7); border-left: 4px solid var(--gold);">
+          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 4px;">PROJECT ORIGIN & PURPOSE</div>
+          <p style="font-size: 13px; color: var(--porcelain); line-height: 1.6; margin: 0;">
+            This project proposal originated directly from our floor manager's request to digitize manually prepared attendance, daily work, and shift handover reports into one reliable operational system for our India operations.
+          </p>
+        </div>
+
+        <!-- 6 Clear Asks Grid -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
+          <div class="card" style="padding: 14px; border-top: 2px solid var(--gold);">
+            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--gold); margin-bottom: 4px;">01 • AUTHORIZATION</div>
+            <h4 style="font-size: 13px; color: var(--white); margin-bottom: 4px;">Project Sponsorship</h4>
+            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
+              Formal approval to develop PULSE as the official MCA 4th-semester final project.
+            </p>
+          </div>
+          <div class="card" style="padding: 14px; border-top: 2px solid var(--emerald);">
+            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--emerald); margin-bottom: 4px;">02 • MENTORSHIP</div>
+            <h4 style="font-size: 13px; color: var(--white); margin-bottom: 4px;">Company Supervisor</h4>
+            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
+              Appointment of an internal operations lead to review technical milestones and project progress.
+            </p>
+          </div>
+          <div class="card" style="padding: 14px; border-top: 2px solid var(--amber);">
+            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--amber); margin-bottom: 4px;">03 • REQUIREMENTS</div>
+            <h4 style="font-size: 13px; color: var(--white); margin-bottom: 4px;">Access to Formats</h4>
+            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
+              Permission to study current manual report sheets, spreadsheets, and shift handover formats.
+            </p>
+          </div>
+          <div class="card" style="padding: 14px; border-top: 2px solid #79D2B7;">
+            <div style="font-family: var(--font-mono); font-size: 10px; color: #79D2B7; margin-bottom: 4px;">04 • COLLABORATION</div>
+            <h4 style="font-size: 13px; color: var(--white); margin-bottom: 4px;">Floor Validation</h4>
+            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
+              Working sessions with floor management and team leaders to validate workflow usability.
+            </p>
+          </div>
+          <div class="card" style="padding: 14px; border-top: 2px solid #9B59B6;">
+            <div style="font-family: var(--font-mono); font-size: 10px; color: #D2B4DE; margin-bottom: 4px;">05 • PILOT</div>
+            <h4 style="font-size: 13px; color: var(--white); margin-bottom: 4px;">Supervised Trial</h4>
+            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
+              Permission to pilot the prototype with a single detailing cell under operational supervision.
+            </p>
+          </div>
+          <div class="card" style="padding: 14px; border-top: 2px solid var(--gold);">
+            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--gold); margin-bottom: 4px;">06 • DOCUMENTATION</div>
+            <h4 style="font-size: 13px; color: var(--white); margin-bottom: 4px;">Confirmation Letter</h4>
+            <p style="font-size: 11px; color: var(--steel); line-height: 1.5;">
+              Issuance of the institutional internship confirmation letter for college academic records.
+            </p>
+          </div>
+        </div>
+
+        <!-- Big Launch Prototype Button -->
         <div style="text-align: center;">
-          <button class="btn btn-gold" onclick="switchToProductMode()" style="padding: 12px 32px; font-size: 14px;">
-            Proceed to Interactive Working Prototype
+          <button class="btn btn-gold" onclick="switchToProductMode()" style="padding: 14px 38px; font-size: 15px; font-weight: 600;">
+            Launch Interactive Working Prototype
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
         </div>
@@ -402,5 +711,3 @@ def get_story_html(dsm_logo_b64):
     </footer>
   </div>
 """
-
-print("parts_story.py created successfully.")
