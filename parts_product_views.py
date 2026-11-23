@@ -1,21 +1,28 @@
 # Explore Product Mode Application Views and Modals
+# Human-Centered Plain-Language Design for Design Sheetmetal India Operations
 
 def get_product_views_html(dsm_logo_b64):
     return f"""
   <!-- =========================================================================
-       2. EXPLORE PRODUCT MODE (INTERACTIVE WORKFORCE OPERATIONS PLATFORM)
+       2. EXPLORE PRODUCT MODE (WORKFORCE OPERATIONS PLATFORM)
        ========================================================================= -->
   <div id="product-mode-container" class="hidden">
     <!-- Application Top Bar -->
     <header class="app-topbar">
       <div class="topbar-left">
         <img src="data:image/png;base64,{dsm_logo_b64}" alt="Design Sheetmetal" class="dsm-logo" />
-        <span style="display: inline-block; width: 1px; height: 20px; background: rgba(147, 163, 174, 0.25); margin: 0 2px;"></span>
+        <span style="display: inline-block; width: 1px; height: 20px; background: rgba(147, 163, 174, 0.25); margin: 0 4px;"></span>
         <div style="display: flex; align-items: center; gap: 8px;">
           <span class="pulse-dot"></span>
           <span style="font-family: var(--font-serif); font-size: 16px; letter-spacing: 0.16em; font-weight: 600; color: var(--white);">PULSE</span>
           <span class="presenter-pill">Presented by Rakshith</span>
         </div>
+        
+        <div style="display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: rgba(198, 166, 117, 0.1); border: 1px solid var(--gold-border); border-radius: 14px; font-size: 11px; color: var(--gold); font-family: var(--font-mono);">
+          <span>Demo Shift:</span>
+          <strong>Monday, 23 Nov 2026</strong>
+        </div>
+
         <div class="topbar-clocks">
           <div class="clock-item">
             <span>MELBOURNE:</span>
@@ -34,7 +41,7 @@ def get_product_views_html(dsm_logo_b64):
           <span class="role-label">Active Role:</span>
           <select class="role-select" id="role-select" onchange="onRoleChange(this.value)">
             <option value="PRESENTER" selected>Presenter (Rakshith, Operational Strategist)</option>
-            <option value="MANAGEMENT">Management (David Harrison, MD)</option>
+            <option value="MANAGEMENT">Managing Director (David Harrison)</option>
             <option value="TEAM_LEADER">Team Leader (Priya Nair, Shift A)</option>
             <option value="EMPLOYEE">Employee (Rohan Sharma, Keying Specialist)</option>
             <option value="SUPER_ADMIN">System Admin (Alex Vance)</option>
@@ -63,64 +70,64 @@ def get_product_views_html(dsm_logo_b64):
 
     <!-- Workspace Layout -->
     <div class="app-workspace">
-      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation with Human-Centered Names -->
       <aside class="app-sidebar">
-        <div class="nav-section-title">Executive Command</div>
+        <div class="nav-section-title">Management</div>
         <ul class="sidebar-menu">
           <li class="menu-item active" onclick="switchView('command-centre')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 6 12 12 16 14"/></svg>
-            <span>Live Command Centre</span>
+            <span>Today's Operations</span>
             <span class="menu-badge gold">LIVE</span>
           </li>
           <li class="menu-item" onclick="switchView('dashboard')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-            <span>Operations Dashboard</span>
+            <span>Performance Overview</span>
           </li>
           <li class="menu-item" onclick="switchView('exceptions')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-            <span>Exceptions & Alerts</span>
+            <span>Issues & Alerts</span>
             <span class="menu-badge alert" id="badge-alerts-count">5</span>
           </li>
         </ul>
 
-        <div class="nav-section-title">Biometrics & Workforce</div>
+        <div class="nav-section-title">Workforce & Attendance</div>
         <ul class="sidebar-menu">
           <li class="menu-item" onclick="switchView('biometric')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 0-10 10c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
-            <span>Biometric & Breaks</span>
+            <span>Entry, Exit & Breaks</span>
             <span class="menu-badge">SIM</span>
           </li>
           <li class="menu-item" onclick="switchView('employee360')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
-            <span>Employee 360° Profile</span>
+            <span>Employee Performance</span>
             <span class="menu-badge gold">360°</span>
           </li>
           <li class="menu-item" onclick="switchView('attendance')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            <span>Attendance Registry</span>
-            <span class="menu-badge" id="badge-present-count">34</span>
+            <span>Attendance Register</span>
+            <span class="menu-badge" id="badge-present-count">36</span>
           </li>
           <li class="menu-item" onclick="switchView('leave')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
             <span>Leave Management</span>
-            <span class="menu-badge alert" id="badge-leave-pending">2 pending</span>
+            <span class="menu-badge alert" id="badge-leave-pending">1 pending</span>
           </li>
           <li class="menu-item" onclick="switchView('capacity')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            <span>Capacity & Coverage</span>
+            <span>Staff Availability</span>
           </li>
         </ul>
 
-        <div class="nav-section-title">Manufacturing & Quality</div>
+        <div class="nav-section-title">Daily Work & Quality</div>
         <ul class="sidebar-menu">
           <li class="menu-item" onclick="switchView('production')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-            <span>Daily Production Log</span>
+            <span>Daily Work Report</span>
           </li>
           <li class="menu-item" onclick="switchView('quality')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            <span>Quality & Resupply</span>
-            <span class="menu-badge alert" id="badge-quality-active">2 active</span>
+            <span>Errors & Resupplies</span>
+            <span class="menu-badge alert" id="badge-quality-active">2 open</span>
           </li>
           <li class="menu-item" onclick="switchView('handover')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
@@ -128,32 +135,32 @@ def get_product_views_html(dsm_logo_b64):
           </li>
           <li class="menu-item" onclick="switchView('shift-report')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            <span>End-of-Shift Report</span>
+            <span>Daily Summary</span>
             <span class="menu-badge">PDF</span>
           </li>
         </ul>
 
-        <div class="nav-section-title">Capability & Analytics</div>
+        <div class="nav-section-title">Skills & Tools</div>
         <ul class="sidebar-menu">
           <li class="menu-item" onclick="switchView('skills')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <span>Skills Matrix (7-Point)</span>
+            <span>Skills & Training</span>
           </li>
           <li class="menu-item" onclick="switchView('report-builder')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-            <span>Custom Report Builder</span>
+            <span>Reports & Exports</span>
           </li>
           <li class="menu-item" onclick="switchView('import')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span>CSV / Excel Import</span>
+            <span>Import Data</span>
           </li>
           <li class="menu-item" onclick="switchView('recognition')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-            <span>Recognition & Merit</span>
+            <span>Employee Recognition</span>
           </li>
           <li class="menu-item" onclick="switchView('roles')">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Role Permissions</span>
+            <span>Users & Permissions</span>
           </li>
         </ul>
       </aside>
@@ -161,146 +168,159 @@ def get_product_views_html(dsm_logo_b64):
       <!-- Main Application Content Area -->
       <main class="app-main">
 
-        <!-- 1. LIVE SHIFT COMMAND CENTRE -->
+        <!-- 1. TODAY'S OPERATIONS (FORMERLY COMMAND CENTRE) -->
         <div class="view-panel active" id="view-command-centre">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Live Shift Command Centre</h1>
+              <h1 class="view-header-title">Today's Operations</h1>
               <div class="view-header-subtitle">
-                Real-time operational nerve centre synchronizing India manufacturing shifts with Melbourne delivery schedules.
+                Monday, 23 November 2026 • Shift A (Day Shift: 06:00 – 14:30 IST) • Real-time overview of attendance, completed work, and items needing attention.
               </div>
             </div>
             <div style="display: flex; gap: 10px;">
               <button class="btn btn-outline btn-sm" onclick="switchView('shift-report')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Shift Dossier
+                Daily Summary (PDF)
               </button>
               <button class="btn btn-gold btn-sm" onclick="switchView('handover')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/></svg>
-                Initiate Handover
+                Shift Handover
               </button>
             </div>
           </div>
 
-          <!-- Live Shift Status Strip -->
+          <!-- Active Shift Ribbon -->
           <div class="card" style="margin-bottom: 24px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
               <div style="display: flex; align-items: center; gap: 12px;">
                 <span class="pulse-dot"></span>
-                <strong style="color: var(--white); font-size: 15px;">ACTIVE SHIFT: SHIFT A (DAY SHIFT)</strong>
-                <span class="status-badge in">06:00 — 14:30 IST</span>
+                <strong style="color: var(--white); font-size: 15px;">Shift A (Day Shift: 06:00 — 14:30 IST)</strong>
+                <span class="status-badge in">Active on Shopfloor</span>
               </div>
               <div style="font-family: var(--font-mono); font-size: 12px; color: var(--gold);">
-                Shift Progress: 82% (6h 58m elapsed)
+                Shift Progress: 82% completed • Handover to Shift B at 14:30 IST
               </div>
             </div>
-            <div style="height: 6px; background: rgba(147, 163, 174, 0.15); border-radius: 3px; overflow: hidden; margin-bottom: 12px;">
+            <div style="height: 6px; background: rgba(147, 163, 174, 0.15); border-radius: 3px; overflow: hidden; margin-bottom: 10px;">
               <div style="width: 82%; height: 100%; background: linear-gradient(90deg, var(--gold), #79D2B7); border-radius: 3px;"></div>
             </div>
-            <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--steel-dim); font-family: var(--font-mono);">
-              <span>06:00 IST Shift Commenced</span>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">
+              <span>06:00 IST Shift Started</span>
               <span>12:10 — 12:40 Lunch Window Completed</span>
-              <span style="color: var(--gold);">14:30 IST Scheduled Handover to Shift B</span>
+              <span style="color: var(--gold);">14:30 IST Next Shift Starts</span>
             </div>
           </div>
 
-          <!-- Staffing Health Metrics Grid -->
-          <div class="metric-grid">
-            <div class="metric-card">
-              <div class="metric-label">Scheduled Workforce</div>
-              <div class="metric-value">40</div>
-              <div class="metric-context">Full India Complement</div>
+          <!-- 4 Core Executive Summary Sections -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+            <!-- Group 1: EMPLOYEES -->
+            <div class="card" style="padding: 16px;">
+              <div style="font-size: 11px; font-family: var(--font-mono); color: var(--gold); text-transform: uppercase; margin-bottom: 8px;">
+                1. EMPLOYEES TODAY
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                <span style="font-size: 28px; font-weight: 600; color: var(--white); font-family: var(--font-serif);">36</span>
+                <span style="font-size: 12px; color: #79D2B7;">Present / Clocked In</span>
+              </div>
+              <div style="font-size: 11px; color: var(--steel); display: flex; flex-direction: column; gap: 3px; padding-top: 8px; border-top: 1px solid rgba(147, 163, 174, 0.12);">
+                <div>Scheduled: <strong>40 total employees</strong></div>
+                <div>On Approved Leave: <strong style="color: var(--amber);">3 employees</strong></div>
+                <div>Unplanned Absent: <strong style="color: #FFA5A2;">1 employee</strong></div>
+                <div>Late Arrivals: <strong style="color: var(--steel);">2 (compensated)</strong></div>
+              </div>
             </div>
-            <div class="metric-card">
-              <div class="metric-label">Clocked In (Present)</div>
-              <div class="metric-value" style="color: #79D2B7;">34</div>
-              <div class="metric-context" style="color: var(--emerald);">Active on Shopfloor</div>
+
+            <!-- Group 2: WORK COMPLETED -->
+            <div class="card" style="padding: 16px;">
+              <div style="font-size: 11px; font-family: var(--font-mono); color: var(--gold); text-transform: uppercase; margin-bottom: 8px;">
+                2. WORK COMPLETED
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                <span style="font-size: 28px; font-weight: 600; color: var(--gold); font-family: var(--font-serif);">142</span>
+                <span style="font-size: 12px; color: var(--emerald);">Orders Keyed</span>
+              </div>
+              <div style="font-size: 11px; color: var(--steel); display: flex; flex-direction: column; gap: 3px; padding-top: 8px; border-top: 1px solid rgba(147, 163, 174, 0.12);">
+                <div>Flashings Detailed: <strong>1,840 linear metres</strong></div>
+                <div>Accessories & Bits: <strong>5,120 individual parts</strong></div>
+                <div>Double-Checks Done: <strong style="color: #79D2B7;">138 verified (97.2%)</strong></div>
+                <div>Shift Target: <strong>135 orders (+5.2%)</strong></div>
+              </div>
             </div>
-            <div class="metric-card">
-              <div class="metric-label">Approved Leave</div>
-              <div class="metric-value">3</div>
-              <div class="metric-context">Planned & Covered</div>
+
+            <!-- Group 3: QUALITY -->
+            <div class="card" style="padding: 16px;">
+              <div style="font-size: 11px; font-family: var(--font-mono); color: var(--gold); text-transform: uppercase; margin-bottom: 8px;">
+                3. QUALITY & ACCURACY
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                <span style="font-size: 28px; font-weight: 600; color: #79D2B7; font-family: var(--font-serif);">98.6%</span>
+                <span style="font-size: 12px; color: #79D2B7;">First-Pass Accuracy</span>
+              </div>
+              <div style="font-size: 11px; color: var(--steel); display: flex; flex-direction: column; gap: 3px; padding-top: 8px; border-top: 1px solid rgba(147, 163, 174, 0.12);">
+                <div>Open Error Cases: <strong style="color: var(--amber);">2 under review</strong></div>
+                <div>Resupplies Being Checked: <strong>1 Melbourne order</strong></div>
+                <div>Scrap Rework Cost: <strong>$280 AUD confirmed</strong></div>
+                <div>Resolved Today: <strong style="color: #79D2B7;">1 case closed</strong></div>
+              </div>
             </div>
-            <div class="metric-card">
-              <div class="metric-label">Unplanned Absence</div>
-              <div class="metric-value" style="color: #FFA5A2;">1</div>
-              <div class="metric-context" style="color: var(--crimson);">Team Beta (Backup Assigned)</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Late Arrivals</div>
-              <div class="metric-value" style="color: var(--amber);">2</div>
-              <div class="metric-context">Transit Regularized</div>
+
+            <!-- Group 4: NEEDS ATTENTION -->
+            <div class="card" style="padding: 16px; border: 1px solid var(--gold-border);">
+              <div style="font-size: 11px; font-family: var(--font-mono); color: var(--amber); text-transform: uppercase; margin-bottom: 8px;">
+                4. NEEDS ATTENTION
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px;">
+                <span style="font-size: 28px; font-weight: 600; color: var(--amber); font-family: var(--font-serif);">4</span>
+                <span style="font-size: 12px; color: var(--amber);">Pending Items</span>
+              </div>
+              <div style="font-size: 11px; color: var(--porcelain); display: flex; flex-direction: column; gap: 3px; padding-top: 8px; border-top: 1px solid rgba(147, 163, 174, 0.12);">
+                <div>• Missing Exit Punch: <strong style="color: var(--gold);">1 employee</strong></div>
+                <div>• Leave Request: <strong style="color: var(--gold);">1 pending review</strong></div>
+                <div>• Urgent Melbourne Cutoff: <strong style="color: #FFA5A2;">Order #8841 (16:00)</strong></div>
+                <div>• Quality Case Review: <strong>QC-2026-084</strong></div>
+              </div>
             </div>
           </div>
 
-          <!-- Operational Keying & Quality Ticker -->
-          <div class="metric-grid">
-            <div class="metric-card">
-              <div class="metric-label">Orders Processed Today</div>
-              <div class="metric-value">142</div>
-              <div class="metric-context" style="color: var(--emerald);">Target: 135 (+5.2%)</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Total Flashings Detailed</div>
-              <div class="metric-value">1,840</div>
-              <div class="metric-context">Linear Metres Processed</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Bits & Accessories</div>
-              <div class="metric-value">5,120</div>
-              <div class="metric-context">Brackets, End Caps, Clips</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">Double-Check Rate</div>
-              <div class="metric-value" style="color: #79D2B7;">97.2%</div>
-              <div class="metric-context">138 Orders Formally Verified</div>
-            </div>
-            <div class="metric-card">
-              <div class="metric-label">First-Pass Quality</div>
-              <div class="metric-value" style="color: var(--gold);">98.6%</div>
-              <div class="metric-context">Australian Tolerance Spec</div>
-            </div>
-          </div>
-
-          <!-- Dual Column: Urgent Melbourne Orders & Quality Radar -->
+          <!-- Urgent Melbourne Orders and Open Issues -->
           <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; margin-bottom: 24px;">
             <!-- Urgent Melbourne Orders -->
             <div class="card">
               <div class="card-title">
-                <span>Critical Melbourne Dispatch Orders (Cutoff Risk)</span>
-                <span class="status-badge warning">3 High Priority</span>
+                <span>Orders Requiring Melbourne Dispatch Approval Today</span>
+                <span class="status-badge warning">Deadline: 16:00 AEDT</span>
               </div>
               <div class="data-table-container" style="margin-bottom: 0;">
                 <table class="data-table">
                   <thead>
                     <tr>
-                      <th>Job Order #</th>
+                      <th>Order #</th>
                       <th>Project / Client</th>
-                      <th>Items</th>
+                      <th>Work Required</th>
                       <th>Current Stage</th>
-                      <th>Cutoff Target</th>
+                      <th>Cutoff Time</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td><strong style="color: var(--gold);">DSM-MEL-8841</strong></td>
-                      <td>Bayside Commercial Office</td>
+                      <td>St. Vincent Hospital Roof Cappings</td>
                       <td>280 Flashings</td>
-                      <td><span class="status-badge in">Bending (Brake #2)</span></td>
-                      <td><span style="color: #FFA5A2; font-family: var(--font-mono);">15:30 AEDT</span></td>
+                      <td><span class="status-badge in">Bending on Press #2</span></td>
+                      <td><span style="color: #FFA5A2; font-family: var(--font-mono);">16:00 AEDT</span></td>
                     </tr>
                     <tr>
                       <td><strong style="color: var(--gold);">DSM-MEL-8849</strong></td>
                       <td>Docklands High-Rise Facade</td>
                       <td>42 Wall Panels</td>
-                      <td><span class="status-badge warning">Double-Check Pending</span></td>
-                      <td><span style="color: #FFA5A2; font-family: var(--font-mono);">16:00 AEDT</span></td>
+                      <td><span class="status-badge warning">Double-Check in Progress</span></td>
+                      <td><span style="color: #FFA5A2; font-family: var(--font-mono);">16:30 AEDT</span></td>
                     </tr>
                     <tr>
                       <td><strong style="color: var(--gold);">DSM-MEL-8854</strong></td>
                       <td>Monash Health Specialty Ward</td>
                       <td>120 Parapet Cappings</td>
-                      <td><span class="status-badge verified">Verified Ready</span></td>
+                      <td><span class="status-badge verified">Verified & Ready</span></td>
                       <td><span style="color: #79D2B7; font-family: var(--font-mono);">17:30 AEDT</span></td>
                     </tr>
                   </tbody>
@@ -308,36 +328,36 @@ def get_product_views_html(dsm_logo_b64):
               </div>
             </div>
 
-            <!-- Quality Radar & Live Incidents -->
+            <!-- Active Quality & Resupply Cases -->
             <div class="card">
               <div class="card-title">
-                <span>Active Quality & Resupply Cases</span>
-                <span class="status-badge alert" id="cmd-quality-count">2 Active</span>
+                <span>Errors & Resupplies Requiring Action</span>
+                <span class="status-badge alert">2 Open Cases</span>
               </div>
               <div style="display: flex; flex-direction: column; gap: 12px;">
                 <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
                   <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                    <strong style="color: var(--white); font-size: 13px;">#QC-2027-084: Angle Clearance Variance</strong>
-                    <span class="status-badge alert">Under Review</span>
+                    <strong style="color: var(--white); font-size: 13px;">QC-2026-084: Flashing Angle Variance (+3°)</strong>
+                    <span class="status-badge alert">Cause Confirmed</span>
                   </div>
                   <div style="font-size: 12px; color: var(--steel); margin-bottom: 6px;">
-                    Melbourne Tullamarine dry-fit observed 93° vs 90° specification on radius parapet flashing.
+                    Melbourne warehouse observed 93° angle instead of 90° specification on bend 3. Conflicting customer markup identified.
                   </div>
                   <div style="font-size: 11px; color: var(--gold); font-family: var(--font-mono);">
-                    Assigned: Team Alpha • Corrective revision B validated
+                    Investigator: Manoj Tiwari • Corrective action prompt active
                   </div>
                 </div>
 
                 <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
                   <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                    <strong style="color: var(--white); font-size: 13px;">#QC-2027-081: Notch Corner Interference</strong>
-                    <span class="status-badge verified">Corrected</span>
+                    <strong style="color: var(--white); font-size: 13px;">QC-2026-081: Corner Notch Gap Discrepancy</strong>
+                    <span class="status-badge verified">Action Taken</span>
                   </div>
                   <div style="font-size: 12px; color: var(--steel); margin-bottom: 6px;">
-                    Corner notching clearance on cladding cassette panel adjusted for 2.0mm aluminum bend radius.
+                    Corner notch gap was 1.5mm instead of 2.5mm required for bend radius. Standard CAD library updated.
                   </div>
                   <div style="font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">
-                    Assigned: Team Gamma • Drawing template updated
+                    Investigator: Priya Nair • Closed for production
                   </div>
                 </div>
               </div>
@@ -345,51 +365,31 @@ def get_product_views_html(dsm_logo_b64):
           </div>
         </div>
 
-        <!-- 2. BIOMETRIC ATTENDANCE & BREAK MANAGEMENT -->
+        <!-- 2. ENTRY, EXIT & BREAKS (FORMERLY BIOMETRIC ATTENDANCE) -->
         <div class="view-panel" id="view-biometric">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Biometric Attendance & Break Management</h1>
+              <h1 class="view-header-title">Entry, Exit & Breaks</h1>
               <div class="view-header-subtitle">
-                Simulated biometric hardware punch feed, tea/lunch break duration tracking, and policy-driven regularization workflows.
+                Review employee turnstile check-ins, tea breaks, lunch breaks, and verified attendance times.
               </div>
             </div>
             <div style="display: flex; gap: 10px;">
               <button class="btn btn-outline btn-sm" onclick="openModal('modal-biometric-punch')">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Log Manual Regularization
+                Log Manual Punch Correction
               </button>
             </div>
           </div>
 
-          <!-- Hardware Diagnostics Banner -->
-          <div class="card" style="margin-bottom: 24px; background: rgba(24, 38, 49, 0.6); border: 1px solid var(--slate-border-light);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-              <div style="display: flex; align-items: center; gap: 12px;">
-                <span class="status-badge verified">Hardware Online</span>
-                <strong style="color: var(--white); font-size: 14px;">Terminal 01: DSM-BIO-BLR-MAIN (Main Entry Turnstile)</strong>
-              </div>
-              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold);">
-                Demo Mode — Simulated Biometric Event Feed
-              </div>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; font-family: var(--font-mono); font-size: 12px; color: var(--steel);">
-              <div>IP: <strong style="color: var(--porcelain);">192.168.10.45</strong></div>
-              <div>Firmware: <strong style="color: var(--porcelain);">v4.8.2-DSM</strong></div>
-              <div>Heartbeat: <strong style="color: #79D2B7;">2m ago (OK)</strong></div>
-              <div>Clock Drift: <strong style="color: var(--porcelain);">+0.4s</strong></div>
-              <div>Sync Protocol: <strong style="color: var(--porcelain);">Push SDK / Webhook</strong></div>
-            </div>
-          </div>
-
-          <!-- Employee Visual Attendance Timeline & Break Analyzer -->
+          <!-- Employee Attendance Timeline (SHOWN FIRST) -->
           <div class="card" style="margin-bottom: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
               <div>
-                <span style="font-size: 15px; font-weight: 600; color: var(--white);">Employee Visual Attendance Timeline</span>
-                <span style="font-size: 12px; color: var(--steel); margin-left: 8px;">Select employee to inspect punch events & break intervals:</span>
+                <span style="font-size: 15px; font-weight: 600; color: var(--white);">Employee Daily Attendance Timeline</span>
+                <span style="font-size: 12px; color: var(--steel); margin-left: 8px;">Select an employee to see their recorded check-ins and breaks:</span>
               </div>
-              <select class="form-select" id="timeline-emp-select" style="width: 280px;" onchange="renderBiometricTimeline(this.value)">
+              <select class="form-select" id="timeline-emp-select" style="width: 300px;" onchange="renderBiometricTimeline(this.value)">
                 <!-- Injected via JS -->
               </select>
             </div>
@@ -399,40 +399,57 @@ def get_product_views_html(dsm_logo_b64):
               <!-- Injected via JS -->
             </div>
 
-            <!-- Disclaimer Banner -->
+            <!-- Plain-Language Policy Note -->
             <div style="padding: 10px 16px; background: rgba(16, 25, 35, 0.7); border: 1px solid var(--slate-border); border-radius: 6px; font-size: 12px; color: var(--steel); margin-bottom: 20px;">
-              <strong style="color: var(--gold);">Fairness & Policy Note:</strong> Biometric timestamps establish physical entry and exit records. Recorded presence does not automatically equate to productive hours or payable time. Overtime eligibility and payable hours strictly follow configured enterprise award rules and supervisor sign-off.
+              <strong style="color: var(--gold);">Attendance Policy Note:</strong> Turnstile timestamps record when employees enter and leave the office. Time spent on premises does not automatically equate to productive hours or payable overtime, which follows standard company approval rules.
             </div>
 
-            <!-- Visual SVG/CSS Timeline -->
+            <!-- Visual Timeline -->
             <div id="timeline-visual-container">
               <!-- Injected via JS -->
             </div>
+
+            <!-- Technical Diagnostics under Expandable Details (Section 8) -->
+            <details style="margin-top: 20px; padding: 12px 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px; cursor: pointer;">
+              <summary style="font-family: var(--font-mono); font-size: 12px; color: var(--steel); outline: none;">
+                Advanced: Device Information & Technical Diagnostics
+              </summary>
+              <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(147, 163, 174, 0.15); display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; font-size: 12px; font-family: var(--font-mono); color: var(--steel);">
+                <div>Terminal: <strong style="color: var(--white);">DSM-BIO-BLR-01 (Main Turnstile)</strong></div>
+                <div>IP Address: <strong style="color: var(--porcelain);">192.168.10.45</strong></div>
+                <div>Firmware: <strong style="color: var(--porcelain);">v4.8.2-DSM</strong></div>
+                <div>Sync Protocol: <strong style="color: var(--porcelain);">Push SDK / Webhook</strong></div>
+                <div>Status: <strong style="color: #79D2B7;">Online (Latency: 18ms)</strong></div>
+                <div>Heartbeat: <strong style="color: var(--porcelain);">2 minutes ago</strong></div>
+                <div>Clock Drift: <strong style="color: var(--porcelain);">+0.4 seconds</strong></div>
+                <div>Integration Mode: <strong style="color: var(--gold);">Simulated Hardware Feed</strong></div>
+              </div>
+            </details>
           </div>
 
-          <!-- Raw Biometric Punch Stream -->
+          <!-- Raw Punch Events Stream -->
           <div class="card">
             <div class="card-title">
-              <span>Live Ingested Biometric Punch Event Feed</span>
+              <span>Today's Recorded Biometric Check-ins & Breaks</span>
               <div style="display: flex; gap: 8px;">
                 <button class="btn btn-outline btn-sm" onclick="filterPunchFeed('ALL')">All Events</button>
                 <button class="btn btn-outline btn-sm" onclick="filterPunchFeed('IN')">Office IN</button>
                 <button class="btn btn-outline btn-sm" onclick="filterPunchFeed('OUT')">Office OUT</button>
                 <button class="btn btn-outline btn-sm" onclick="filterPunchFeed('BREAK')">Breaks</button>
-                <button class="btn btn-outline btn-sm" onclick="filterPunchFeed('EXCEPTION')">Exceptions</button>
+                <button class="btn btn-outline btn-sm" onclick="filterPunchFeed('EXCEPTION')">Corrections</button>
               </div>
             </div>
             <div class="data-table-container">
               <table class="data-table" id="biometric-punches-table">
                 <thead>
                   <tr>
-                    <th>Punch ID</th>
+                    <th>Record ID</th>
                     <th>Employee ID</th>
-                    <th>Name</th>
-                    <th>Timestamp (IST)</th>
+                    <th>Employee Name</th>
+                    <th>Time (IST)</th>
                     <th>Event Type</th>
-                    <th>Terminal / Device</th>
-                    <th>Auth Method</th>
+                    <th>Location / Gate</th>
+                    <th>Verification Method</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -444,54 +461,53 @@ def get_product_views_html(dsm_logo_b64):
           </div>
         </div>
 
-        <!-- 3. EMPLOYEE 360-DEGREE DASHBOARD -->
+        <!-- 3. EMPLOYEE PERFORMANCE (FORMERLY EMPLOYEE 360°) -->
         <div class="view-panel" id="view-employee360">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Employee 360° Intelligence Profile</h1>
+              <h1 class="view-header-title">Employee Performance</h1>
               <div class="view-header-subtitle">
-                Holistic capability, attendance regularity, shopfloor output velocity, and confidential development reviews.
+                Work completed, attendance history, quality records, and skill training for each team member.
               </div>
             </div>
             <div style="display: flex; align-items: center; gap: 12px;">
-              <span class="form-label" style="margin-bottom: 0;">Select Profile:</span>
+              <span class="form-label" style="margin-bottom: 0;">Choose Employee:</span>
               <select class="form-select" id="emp360-selector" style="width: 320px;" onchange="renderEmployee360(this.value)">
                 <!-- Injected via JS -->
               </select>
             </div>
           </div>
 
-          <!-- Flagship 360 Content Container -->
+          <!-- 360 Content Container -->
           <div id="emp360-content-container">
             <!-- Injected via JS -->
           </div>
         </div>
 
-        <!-- 4. OPERATIONS DASHBOARD (EXISTING) -->
+        <!-- 4. PERFORMANCE OVERVIEW (FORMERLY OPERATIONS DASHBOARD) -->
         <div class="view-panel" id="view-dashboard">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Operations Performance Dashboard</h1>
+              <h1 class="view-header-title">Performance Overview</h1>
               <div class="view-header-subtitle">
-                Aggregate team metrics across Flashings, Architectural Panels, Rainwater Goods, and Special Assemblies.
+                Weekly team performance trends across Flashings, Architectural Panels, Rainwater Goods, and Special Assemblies.
               </div>
             </div>
           </div>
-          <!-- Injected via JS -->
           <div id="dashboard-content-container"></div>
         </div>
 
-        <!-- 5. ATTENDANCE REGISTRY (40 EMPLOYEES) -->
+        <!-- 5. ATTENDANCE REGISTER (FORMERLY ATTENDANCE REGISTRY) -->
         <div class="view-panel" id="view-attendance">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Attendance & Shift Registry</h1>
+              <h1 class="view-header-title">Attendance Register</h1>
               <div class="view-header-subtitle">
-                Comprehensive 40-employee roster tracking shift allocations, punch regularity, and attendance status.
+                Complete list of all 40 employees showing scheduled shift, arrival time, departure time, and today's status.
               </div>
             </div>
             <div style="display: flex; gap: 10px;">
-              <input type="text" id="attendance-search" class="form-input" style="width: 220px;" placeholder="Search employee..." onkeyup="filterAttendanceTable()" />
+              <input type="text" id="attendance-search" class="form-input" style="width: 220px;" placeholder="Search by name or ID..." onkeyup="filterAttendanceTable()" />
               <select id="attendance-filter-team" class="form-select" style="width: 180px;" onchange="filterAttendanceTable()">
                 <option value="ALL">All Teams</option>
                 <option value="Team Alpha">Team Alpha</option>
@@ -505,13 +521,13 @@ def get_product_views_html(dsm_logo_b64):
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Emp ID</th>
+                  <th>Employee ID</th>
                   <th>Employee Name</th>
-                  <th>Team & Department</th>
+                  <th>Team & Role</th>
                   <th>Assigned Shift</th>
-                  <th>Entry Punch</th>
-                  <th>Exit Punch</th>
-                  <th>Attended Hours</th>
+                  <th>Entry Time</th>
+                  <th>Exit Time</th>
+                  <th>Hours Worked</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -526,92 +542,92 @@ def get_product_views_html(dsm_logo_b64):
         <div class="view-panel" id="view-leave">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Leave Management & Regularization</h1>
+              <h1 class="view-header-title">Leave Management</h1>
               <div class="view-header-subtitle">
-                Structured approvals, team coverage impact checks, and leave ledger records.
+                Review and approve employee leave requests while maintaining required shift coverage.
               </div>
             </div>
             <button class="btn btn-gold btn-sm" onclick="openApplyLeaveModal()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Apply Leave Request
+              Apply for Leave
             </button>
           </div>
           <div id="leave-content-container"></div>
         </div>
 
-        <!-- 7. CAPACITY & COVERAGE PLANNER -->
+        <!-- 7. STAFF AVAILABILITY (FORMERLY CAPACITY & COVERAGE) -->
         <div class="view-panel" id="view-capacity">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Workforce Capacity & Coverage Planner</h1>
+              <h1 class="view-header-title">Staff Availability</h1>
               <div class="view-header-subtitle">
-                14-day forward schedule heatmap, minimum staffing threshold guards, and cross-trained backup recommendations.
+                Weekly team staffing calendar with shortage warnings and recommended certified backup operators.
               </div>
             </div>
           </div>
           <div id="capacity-content-container"></div>
         </div>
 
-        <!-- 8. DAILY PRODUCTION ENTRY -->
+        <!-- 8. DAILY WORK REPORT (FORMERLY PRODUCTION ENTRY) -->
         <div class="view-panel" id="view-production">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Daily Production Entry & Floor Log</h1>
+              <h1 class="view-header-title">Daily Work Report</h1>
               <div class="view-header-subtitle">
-                Shopfloor keying volume, linear meters of flashings, bits detailed, and double-check records.
+                Record and review daily sheetmetal orders keyed, linear metres of flashings, and double-checks completed.
               </div>
             </div>
             <button class="btn btn-gold btn-sm" onclick="openProductionModal()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Log Daily Output
+              Record Today's Work
             </button>
           </div>
           <div id="production-content-container"></div>
         </div>
 
-        <!-- 9. QUALITY & RESUPPLY CASES -->
+        <!-- 9. ERRORS & RESUPPLIES (FORMERLY QUALITY ASSURANCE & RCA) -->
         <div class="view-panel" id="view-quality">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Quality Assurance & Zero-Blame Resupply RCA</h1>
+              <h1 class="view-header-title">Errors & Resupplies</h1>
               <div class="view-header-subtitle">
-                Connecting Australian field variances to root-cause drawings for continuous operational learning.
+                Plain-language tracking of drawing variances, customer reported issues, and preventive actions.
               </div>
             </div>
           </div>
           <div id="quality-content-container"></div>
         </div>
 
-        <!-- 10. SHIFT HANDOVER MODULE -->
+        <!-- 10. SHIFT HANDOVER -->
         <div class="view-panel" id="view-handover">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Shift Handover Experience</h1>
+              <h1 class="view-header-title">Shift Handover</h1>
               <div class="view-header-subtitle">
-                Structured digital handover dossiers transferring WIP jobs, Melbourne order priorities, and equipment status.
+                Seamless transition between shifts: Transfer urgent Melbourne orders, in-progress jobs, and machine maintenance notes.
               </div>
             </div>
             <button class="btn btn-gold btn-sm" onclick="openModal('modal-create-handover')">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Create Handover Dossier
+              Create Handover
             </button>
           </div>
           <div id="handover-content-container"></div>
         </div>
 
-        <!-- 11. END-OF-SHIFT REPORT -->
+        <!-- 11. DAILY SUMMARY (FORMERLY END-OF-SHIFT REPORT) -->
         <div class="view-panel" id="view-shift-report">
           <div class="view-header no-print">
             <div>
-              <h1 class="view-header-title">End-of-Shift Intelligence Report</h1>
+              <h1 class="view-header-title">Daily Operations Summary</h1>
               <div class="view-header-subtitle">
-                Formatted executive summary report for shift performance, attendance reconciliation, and printable archiving.
+                End-of-shift operational overview ready for management review, CSV download, and printing.
               </div>
             </div>
             <div style="display: flex; gap: 10px;">
               <button class="btn btn-outline btn-sm" onclick="exportShiftReportCSV()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Export CSV
+                Download CSV
               </button>
               <button class="btn btn-gold btn-sm" onclick="printShiftReport()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -622,70 +638,70 @@ def get_product_views_html(dsm_logo_b64):
           <div id="shift-report-content-container"></div>
         </div>
 
-        <!-- 12. MANAGEMENT EXCEPTIONS & ALERTS -->
+        <!-- 12. ISSUES & ALERTS (FORMERLY MANAGEMENT EXCEPTIONS) -->
         <div class="view-panel" id="view-exceptions">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Management Exceptions & Alerts Inbox</h1>
+              <h1 class="view-header-title">Issues & Alerts</h1>
               <div class="view-header-subtitle">
-                Triage missing punches, late arrivals, quality discrepancies, and staffing threshold risks.
+                Review and resolve missing punches, delayed jobs, quality checks, and staffing alerts.
               </div>
             </div>
           </div>
           <div id="exceptions-content-container"></div>
         </div>
 
-        <!-- 13. SKILLS & TRAINING MATRIX -->
+        <!-- 13. SKILLS & TRAINING (FORMERLY SKILLS MATRIX) -->
         <div class="view-panel" id="view-skills">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Employee Skills & Training Matrix</h1>
+              <h1 class="view-header-title">Skills & Training</h1>
               <div class="view-header-subtitle">
-                7-point sheet-metal operational proficiency matrix tracking operator mastery from Trainee to Master Trainer.
+                Design Sheetmetal tracks 7 core sheetmetal manufacturing skills across 4 recognized proficiency levels.
               </div>
             </div>
           </div>
           <div id="skills-content-container"></div>
         </div>
 
-        <!-- 14. CUSTOM REPORT BUILDER -->
+        <!-- 14. REPORTS & EXPORTS (FORMERLY CUSTOM REPORT BUILDER) -->
         <div class="view-panel" id="view-report-builder">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Custom Report Builder & Data Query</h1>
+              <h1 class="view-header-title">Reports & Exports</h1>
               <div class="view-header-subtitle">
-                Filter by team, shift, date range, and operational metrics with on-the-fly table generation and CSV export.
+                Create simple custom reports by selecting your team, date range, and information type.
               </div>
             </div>
           </div>
           <div id="report-builder-content-container"></div>
         </div>
 
-        <!-- 15. CSV / EXCEL IMPORT CENTRE -->
+        <!-- 15. IMPORT DATA (FORMERLY CSV / EXCEL IMPORT) -->
         <div class="view-panel" id="view-import">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Excel & CSV Data Import Centre</h1>
+              <h1 class="view-header-title">Import Data</h1>
               <div class="view-header-subtitle">
-                Upload raw punch logs or shopfloor rosters, preview parsed rows, map fields, and execute live state updates.
+                Upload CSV spreadsheets from biometric turnstiles or shift rosters to update records.
               </div>
             </div>
           </div>
           <div id="import-content-container"></div>
         </div>
 
-        <!-- 16. RECOGNITION & ROLES -->
+        <!-- 16. EMPLOYEE RECOGNITION & PERMISSIONS -->
         <div class="view-panel" id="view-recognition">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Merit, Recognition & Peer Awards</h1>
+              <h1 class="view-header-title">Employee Recognition</h1>
               <div class="view-header-subtitle">
-                Monthly craftsmanship awards, safety badges, and peer commendations.
+                Monthly peer commendations, craftsmanship stars, and safety milestones.
               </div>
             </div>
             <button class="btn btn-gold btn-sm" onclick="openNominationModal()">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Nominate Colleague
+              Nominate a Colleague
             </button>
           </div>
           <div id="recognition-content-container"></div>
@@ -694,9 +710,9 @@ def get_product_views_html(dsm_logo_b64):
         <div class="view-panel" id="view-roles">
           <div class="view-header">
             <div>
-              <h1 class="view-header-title">Role & Security Permissions Matrix</h1>
+              <h1 class="view-header-title">Users & Permissions</h1>
               <div class="view-header-subtitle">
-                Granular access control ensuring operational visibility while strictly protecting confidential development notes.
+                Role-based privacy controls ensuring employees only see appropriate information while leaders access supervisory tools.
               </div>
             </div>
           </div>
@@ -708,13 +724,13 @@ def get_product_views_html(dsm_logo_b64):
   </div>
 
   <!-- =========================================================================
-       MODALS
+       MODALS (Plain Language, Practical Form Labels)
        ========================================================================= -->
   <!-- 1. Biometric Regularization Modal -->
   <div class="modal-backdrop" id="modal-biometric-punch">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 class="modal-title">Log Biometric Regularization / Manual Punch</h3>
+        <h3 class="modal-title">Record Manual Punch Correction</h3>
         <button class="modal-close" onclick="closeModal('modal-biometric-punch')">&times;</button>
       </div>
       <div class="modal-body">
@@ -726,13 +742,13 @@ def get_product_views_html(dsm_logo_b64):
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
           <div class="form-group">
-            <label class="form-label">Punch Event Type</label>
+            <label class="form-label">Punch Type</label>
             <select class="form-select" id="manual-punch-type">
               <option value="Office IN">Office IN (Shift Entry)</option>
               <option value="Office OUT">Office OUT (Shift Departure)</option>
               <option value="Break START">Break START (Tea / Lunch)</option>
               <option value="Break END">Break END (Break Return)</option>
-              <option value="Manual Regularization">Manual Regularization / Drift Correction</option>
+              <option value="Manual Correction">Manual Correction</option>
             </select>
           </div>
           <div class="form-group">
@@ -741,22 +757,22 @@ def get_product_views_html(dsm_logo_b64):
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Reason for Manual Entry</label>
+          <label class="form-label">Reason for Correction</label>
           <select class="form-select" id="manual-punch-reason">
-            <option value="Hardware Reader Time Drift">Hardware Reader Time Drift</option>
-            <option value="Sensor Missed Scan">Sensor Missed Scan</option>
-            <option value="Approved Off-Site Transit">Approved Off-Site Transit</option>
-            <option value="Emergency Shift Overtime">Emergency Shift Overtime</option>
+            <option value="Turnstile Sensor Missed Scan">Turnstile Sensor Missed Scan</option>
+            <option value="Approved Transit Between Plants">Approved Transit Between Plants</option>
+            <option value="Authorized Overtime Extension">Authorized Overtime Extension</option>
+            <option value="Card Reader Offline">Card Reader Offline</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Manager Verification Note</label>
-          <textarea class="form-textarea" id="manual-punch-note" rows="2" placeholder="e.g. Verified by Team Leader Priya Nair via turnstile gate log."></textarea>
+          <label class="form-label">Supervisor Approval Note</label>
+          <textarea class="form-textarea" id="manual-punch-note" rows="2" placeholder="e.g. Verified by Team Leader Priya Nair via security log."></textarea>
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-outline btn-sm" onclick="closeModal('modal-biometric-punch')">Cancel</button>
-        <button class="btn btn-gold btn-sm" onclick="submitManualBiometricPunch()">Commit Regularization</button>
+        <button class="btn btn-gold btn-sm" onclick="submitManualBiometricPunch()">Save Correction</button>
       </div>
     </div>
   </div>
@@ -765,31 +781,31 @@ def get_product_views_html(dsm_logo_b64):
   <div class="modal-backdrop" id="modal-create-handover">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 class="modal-title">Create Shift Handover Dossier</h3>
+        <h3 class="modal-title">Create Shift Handover</h3>
         <button class="modal-close" onclick="closeModal('modal-create-handover')">&times;</button>
       </div>
       <div class="modal-body">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
           <div class="form-group">
-            <label class="form-label">Outgoing Shift</label>
-            <input type="text" class="form-input" id="handover-out-shift" value="Shift A (Day)" readonly />
+            <label class="form-label">From Shift</label>
+            <input type="text" class="form-input" id="handover-out-shift" value="Shift A (Day: 06:00 — 14:30)" readonly />
           </div>
           <div class="form-group">
-            <label class="form-label">Incoming Shift</label>
-            <input type="text" class="form-input" id="handover-in-shift" value="Shift B (Afternoon)" readonly />
+            <label class="form-label">To Shift</label>
+            <input type="text" class="form-input" id="handover-in-shift" value="Shift B (Afternoon: 14:00 — 22:30)" readonly />
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">Critical Melbourne Orders Transferred</label>
-          <input type="text" class="form-input" id="handover-urgent-jobs" value="DSM-MEL-8841 (Bayside Commercial, 280 pcs)" />
+          <label class="form-label">Urgent Melbourne Orders</label>
+          <input type="text" class="form-input" id="handover-urgent-jobs" value="DSM-MEL-8841 (St. Vincent Hospital Roof Cappings, 280 pcs)" />
         </div>
         <div class="form-group">
-          <label class="form-label">Shopfloor Machinery & Maintenance Notes</label>
-          <textarea class="form-textarea" id="handover-machinery-notes" rows="2" placeholder="e.g. Brake Press #2 hydraulic check completed; Guillotine #1 blade alignment verified."></textarea>
+          <label class="form-label">Machinery & Tooling Notes</label>
+          <textarea class="form-textarea" id="handover-machinery-notes" rows="2" placeholder="e.g. Brake Press #2 hydraulic check completed; slitter ready for next run."></textarea>
         </div>
         <div class="form-group">
-          <label class="form-label">Staffing & Skill Handover Observations</label>
-          <textarea class="form-textarea" id="handover-staffing-notes" rows="2" placeholder="e.g. Night shift requires 1 backup keyer for custom radii flashings."></textarea>
+          <label class="form-label">Staffing & Shift Observations</label>
+          <textarea class="form-textarea" id="handover-staffing-notes" rows="2" placeholder="e.g. Night shift requires 1 backup detailer for custom curved profiles."></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -803,18 +819,18 @@ def get_product_views_html(dsm_logo_b64):
   <div class="modal-backdrop" id="modal-resolve-alert">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 class="modal-title">Resolve Management Exception</h3>
+        <h3 class="modal-title">Resolve Issue</h3>
         <button class="modal-close" onclick="closeModal('modal-resolve-alert')">&times;</button>
       </div>
       <div class="modal-body">
         <input type="hidden" id="resolve-alert-id" />
         <div class="form-group">
-          <label class="form-label">Exception Details</label>
+          <label class="form-label">Issue Summary</label>
           <div id="resolve-alert-desc" style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px; font-size: 13px; color: var(--porcelain);"></div>
         </div>
         <div class="form-group">
-          <label class="form-label">Resolution Action & Leadership Notes</label>
-          <textarea class="form-textarea" id="resolve-alert-notes" rows="3" placeholder="Describe corrective action taken..."></textarea>
+          <label class="form-label">Action Taken & Leadership Notes</label>
+          <textarea class="form-textarea" id="resolve-alert-notes" rows="3" placeholder="Describe the corrective action taken to close this issue..."></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -828,7 +844,7 @@ def get_product_views_html(dsm_logo_b64):
   <div class="modal-backdrop" id="modal-apply-leave">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 class="modal-title">Apply Leave Request</h3>
+        <h3 class="modal-title">Apply for Leave</h3>
         <button class="modal-close" onclick="closeModal('modal-apply-leave')">&times;</button>
       </div>
       <div class="modal-body">
@@ -849,18 +865,18 @@ def get_product_views_html(dsm_logo_b64):
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Date</label>
-            <input type="date" class="form-input" id="leave-date-input" value="2027-03-26" />
+            <label class="form-label">Leave Date</label>
+            <input type="date" class="form-input" id="leave-date-input" value="2026-11-27" />
           </div>
         </div>
         <div class="form-group">
           <label class="form-label">Reason (Confidential HR Protected)</label>
-          <input type="text" class="form-input" id="leave-reason-input" placeholder="e.g. Scheduled medical appointment" />
+          <input type="text" class="form-input" id="leave-reason-input" placeholder="e.g. Scheduled personal appointment" />
         </div>
       </div>
       <div class="modal-footer">
         <button class="btn btn-outline btn-sm" onclick="closeModal('modal-apply-leave')">Cancel</button>
-        <button class="btn btn-gold btn-sm" onclick="submitLeaveRequest()">Submit Request</button>
+        <button class="btn btn-gold btn-sm" onclick="submitLeaveRequest()">Submit Leave Request</button>
       </div>
     </div>
   </div>
@@ -869,43 +885,43 @@ def get_product_views_html(dsm_logo_b64):
   <div class="modal-backdrop" id="modal-production-entry">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 class="modal-title">Log Daily Production Output</h3>
+        <h3 class="modal-title">Record Today's Work</h3>
         <button class="modal-close" onclick="closeModal('modal-production-entry')">&times;</button>
       </div>
       <div class="modal-body">
         <div class="form-group">
           <label class="form-label">Team & Shift</label>
           <select class="form-select" id="prod-team-select">
-            <option value="Team Alpha">Team Alpha — Shift A</option>
-            <option value="Team Beta">Team Beta — Shift A</option>
-            <option value="Team Gamma">Team Gamma — Shift B</option>
-            <option value="Team Delta">Team Delta — Shift C (Night)</option>
+            <option value="Team Alpha">Team Alpha (Flashings & Trims) — Shift A</option>
+            <option value="Team Beta">Team Beta (Architectural Panels) — Shift A</option>
+            <option value="Team Gamma">Team Gamma (Rainwater Goods) — Shift B</option>
+            <option value="Team Delta">Team Delta (Structural Trims) — Shift C</option>
           </select>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
           <div class="form-group">
-            <label class="form-label">Orders Processed</label>
-            <input type="number" class="form-input" id="prod-orders-input" value="24" />
+            <label class="form-label">Orders Keyed (Total Orders)</label>
+            <input type="number" class="form-input" id="prod-orders-input" value="26" />
           </div>
           <div class="form-group">
-            <label class="form-label">Flashings Detailed (m)</label>
+            <label class="form-label">Flashings Detailed (Linear Metres)</label>
             <input type="number" class="form-input" id="prod-flashings-input" value="380" />
           </div>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
           <div class="form-group">
-            <label class="form-label">Bits & Accessories</label>
+            <label class="form-label">Accessories & Bits (Individual Parts)</label>
             <input type="number" class="form-input" id="prod-bits-input" value="950" />
           </div>
           <div class="form-group">
-            <label class="form-label">Double-Checks Done</label>
-            <input type="number" class="form-input" id="prod-checks-input" value="23" />
+            <label class="form-label">Double-Checks Completed</label>
+            <input type="number" class="form-input" id="prod-checks-input" value="25" />
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-outline btn-sm" onclick="closeModal('modal-production-entry')">Cancel</button>
-        <button class="btn btn-gold btn-sm" onclick="submitProductionEntry()">Record Output</button>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('modal-production-entry')">Save Draft</button>
+        <button class="btn btn-gold btn-sm" onclick="submitProductionEntry()">Submit Report</button>
       </div>
     </div>
   </div>
@@ -914,7 +930,7 @@ def get_product_views_html(dsm_logo_b64):
   <div class="modal-backdrop" id="modal-nominate">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 class="modal-title">Nominate for Craftsmanship & Merit</h3>
+        <h3 class="modal-title">Nominate a Colleague for Recognition</h3>
         <button class="modal-close" onclick="closeModal('modal-nominate')">&times;</button>
       </div>
       <div class="modal-body">
@@ -925,17 +941,17 @@ def get_product_views_html(dsm_logo_b64):
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Category</label>
+          <label class="form-label">Recognition Category</label>
           <select class="form-select" id="nominate-category">
             <option value="Precision Craftsmanship">Precision Craftsmanship (Zero-Defect Detailing)</option>
             <option value="Shopfloor Safety Guardian">Shopfloor Safety Guardian</option>
-            <option value="Cross-Border Collaboration">Cross-Border Collaboration Excellence</option>
-            <option value="Technical Mentorship">Technical Mentorship & Peer Growth</option>
+            <option value="Team Support & Mentorship">Team Support & Mentorship</option>
+            <option value="On-Time Attendance Star">On-Time Attendance Star</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Citation & Justification</label>
-          <textarea class="form-textarea" id="nominate-citation" rows="3" placeholder="Describe the specific contribution..."></textarea>
+          <label class="form-label">Why are you nominating them?</label>
+          <textarea class="form-textarea" id="nominate-citation" rows="3" placeholder="Describe the specific work, teamwork, or milestone they achieved..."></textarea>
         </div>
       </div>
       <div class="modal-footer">
@@ -945,11 +961,11 @@ def get_product_views_html(dsm_logo_b64):
     </div>
   </div>
 
-  <!-- 7. Scene Navigation Overview Modal -->
+  <!-- 7. Presentation Overview Modal -->
   <div class="modal-backdrop" id="modal-scene-overview">
     <div class="modal-box" style="max-width: 780px;">
       <div class="modal-header">
-        <h3 class="modal-title">Executive Presentation Outline</h3>
+        <h3 class="modal-title">Presentation Overview</h3>
         <button class="modal-close" onclick="closeModal('modal-scene-overview')">&times;</button>
       </div>
       <div class="modal-body" style="padding: 16px;">
@@ -963,5 +979,3 @@ def get_product_views_html(dsm_logo_b64):
   <!-- Toast Notification Container -->
   <div id="toast-container"></div>
 """
-
-print("parts_product_views.py created successfully.")

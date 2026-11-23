@@ -1,6 +1,6 @@
 # Complete JavaScript Operational Engine for PULSE Executive Showcase
 
-JS_CONTENT = """
+JS_CONTENT = r"""
     /* ==========================================================================
        PULSE OPERATIONAL ENGINE & STATE MANAGEMENT
        ========================================================================== */
@@ -12,6 +12,7 @@ JS_CONTENT = """
     const TOTAL_SCENES = 9;
     let activePunchFilter = 'ALL';
     let selected360EmpId = 'EMP-101';
+    let currentEmpTab = 'overview';
     let parsedImportRows = [];
 
     // Scene Meta for Overview
@@ -22,8 +23,8 @@ JS_CONTENT = """
       { id: 4, title: 'Biometric Precision', desc: 'Shift Inception, Breaks & Award Policy' },
       { id: 5, title: 'In-Flight Production', desc: 'Real-time Floor Velocity & Double Checks' },
       { id: 6, title: 'Unbroken Momentum', desc: 'Structured Shift Handovers & Cutoff Safety' },
-      { id: 7, title: 'Employee 360° Profile', desc: '7-Point Skills Matrix & Zero-Blame RCA' },
-      { id: 8, title: 'Executive Command Centre', desc: 'Managing Director Real-Time Control' },
+      { id: 7, title: 'Employee Performance', desc: '7-Point Skills Matrix & Zero-Blame RCA' },
+      { id: 8, title: 'Executive Operations', desc: 'Managing Director Real-Time Control' },
       { id: 9, title: 'Implementation Asks', desc: 'Rakshith: 5 Strategic Directives' }
     ];
 
@@ -84,7 +85,7 @@ JS_CONTENT = """
 
     /* ==========================================================================
        PRESENTATION STORY MODE ENGINE
-       ========================================================================= */
+       ========================================================================== */
     function initStoryMode() {
       const dotsContainer = document.getElementById('story-pagination-dots');
       if (dotsContainer) {
@@ -114,7 +115,7 @@ JS_CONTENT = """
 
     function handlePresentationKeydown(e) {
       const storyContainer = document.getElementById('story-mode-container');
-      if (storyContainer.classList.contains('hidden')) return;
+      if (storyContainer && storyContainer.classList.contains('hidden')) return;
 
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
         e.preventDefault();
@@ -128,37 +129,34 @@ JS_CONTENT = """
     }
 
     function updateSceneDisplay() {
-      // Hide all scenes
       for (let i = 1; i <= TOTAL_SCENES; i++) {
         const sc = document.getElementById(`scene-${i}`);
         if (sc) sc.classList.remove('active');
       }
-      // Show active scene
+
       const activeSc = document.getElementById(`scene-${currentScene}`);
       if (activeSc) activeSc.classList.add('active');
 
-      // Update counter & progress fill
-      const counter = document.getElementById('scene-counter-display');
-      if (counter) counter.textContent = `SCENE 0${currentScene} / 0${TOTAL_SCENES}`;
+      const indicator = document.getElementById('scene-indicator');
+      if (indicator) indicator.textContent = `SCENE 0${currentScene} / 0${TOTAL_SCENES}`;
 
-      const progressFill = document.getElementById('story-progress-fill');
-      if (progressFill) {
-        const pct = (currentScene / TOTAL_SCENES) * 100;
-        progressFill.style.width = `${pct}%`;
-      }
-
-      // Update dots
       const dots = document.querySelectorAll('.story-dot');
-      dots.forEach((d, idx) => {
-        if (idx + 1 === currentScene) d.classList.add('active');
-        else d.classList.remove('active');
+      dots.forEach((dot, idx) => {
+        if (idx === currentScene - 1) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
       });
 
-      // Update nav arrows
-      const btnPrev = document.getElementById('btn-prev-scene');
-      const btnNext = document.getElementById('btn-next-scene');
-      if (btnPrev) btnPrev.disabled = (currentScene === 1);
-      if (btnNext) btnNext.disabled = (currentScene === TOTAL_SCENES);
+      // Update scene progression bar
+      const prog = document.getElementById('story-progress-bar');
+      if (prog) {
+        prog.style.width = `${(currentScene / TOTAL_SCENES) * 100}%`;
+      }
+
+      // Update URL hash without scroll
+      history.replaceState(null, null, `#scene-${currentScene}`);
     }
 
     function nextScene() {
@@ -181,6 +179,7 @@ JS_CONTENT = """
       if (sceneNum >= 1 && sceneNum <= TOTAL_SCENES) {
         currentScene = sceneNum;
         updateSceneDisplay();
+        switchToStoryMode();
       }
     }
 
@@ -196,34 +195,41 @@ JS_CONTENT = """
       }
     }
 
+    /* ==========================================================================
+       VIEW & MODE SWITCHING
+       ========================================================================== */
     function switchToProductMode() {
-      document.getElementById('story-mode-container').classList.add('hidden');
-      document.getElementById('product-mode-container').classList.remove('hidden');
-      window.scrollTo(0, 0);
-      showToast('Switched to Interactive Prototype Mode. Full live operations active.');
+      const storyCont = document.getElementById('story-mode-container');
+      const prodCont = document.getElementById('product-mode-container');
+      if (storyCont && prodCont) {
+        storyCont.classList.add('hidden');
+        prodCont.classList.remove('hidden');
+        history.replaceState(null, null, '#product');
+      }
     }
 
     function switchToStoryMode() {
-      document.getElementById('product-mode-container').classList.add('hidden');
-      document.getElementById('story-mode-container').classList.remove('hidden');
-      window.scrollTo(0, 0);
+      const storyCont = document.getElementById('story-mode-container');
+      const prodCont = document.getElementById('product-mode-container');
+      if (storyCont && prodCont) {
+        prodCont.classList.add('hidden');
+        storyCont.classList.remove('hidden');
+        updateSceneDisplay();
+      }
     }
 
-    /* ==========================================================================
-       VIEW SWITCHER & SIDEBAR
-       ========================================================================== */
     function switchView(viewName) {
       const menuItems = document.querySelectorAll('.app-sidebar .menu-item');
       menuItems.forEach(item => item.classList.remove('active'));
 
       // Highlight clicked sidebar item
-      const clicked = event ? event.currentTarget : null;
-      if (clicked && clicked.classList.contains('menu-item')) {
+      const clicked = window.event ? window.event.currentTarget : null;
+      if (clicked && clicked.classList && clicked.classList.contains('menu-item')) {
         clicked.classList.add('active');
       } else {
-        // Fallback: match by onclick attribute
         menuItems.forEach(item => {
-          if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(viewName)) {
+          const oc = item.getAttribute('onclick') || '';
+          if (oc.includes(`'${viewName}'`) || oc.includes(`"${viewName}"`)) {
             item.classList.add('active');
           }
         });
@@ -235,7 +241,8 @@ JS_CONTENT = """
       const target = document.getElementById(`view-${viewName}`);
       if (target) {
         target.classList.add('active');
-        document.querySelector('.app-main').scrollTop = 0;
+        const main = document.querySelector('.app-main');
+        if (main) main.scrollTop = 0;
       }
     }
 
@@ -253,9 +260,12 @@ JS_CONTENT = """
       };
 
       const p = profiles[role] || profiles['PRESENTER'];
-      document.getElementById('user-name-display').textContent = p.name;
-      document.getElementById('user-role-display').textContent = p.title;
-      document.getElementById('user-avatar-badge').textContent = p.avatar;
+      const elName = document.getElementById('user-name-display');
+      const elRole = document.getElementById('user-role-display');
+      const elAvatar = document.getElementById('user-avatar-badge');
+      if (elName) elName.textContent = p.name;
+      if (elRole) elRole.textContent = p.title;
+      if (elAvatar) elAvatar.textContent = p.avatar;
 
       // Re-render Employee 360 to reflect dynamic confidentiality lock
       renderEmployee360(selected360EmpId);
@@ -280,7 +290,7 @@ JS_CONTENT = """
       const emp360Select = document.getElementById('emp360-selector');
       if (emp360Select) {
         emp360Select.innerHTML = emps.map(e => `
-          <option value="${e.id}">${e.name} (${e.id}) — ${e.designation}</option>
+          <option value="${e.id}">${e.name} (${e.id}) — ${e.designation || e.role || 'Specialist'}</option>
         `).join('');
       }
 
@@ -325,24 +335,29 @@ JS_CONTENT = """
 
       const alerts = appState.alerts || [];
       const openAlerts = alerts.filter(a => a.status !== 'Resolved').length;
-      const elAlerts = document.getElementById('badge-alerts-count');
-      if (elAlerts) elAlerts.textContent = openAlerts;
+      const elAlerts = document.getElementById('badge-alert-count');
+      if (elAlerts) elAlerts.textContent = `${openAlerts} open`;
+
+      const leaves = appState.leaveRequests || [];
+      const pendingLeaves = leaves.filter(l => l.status === 'Pending').length;
+      const elLeaves = document.getElementById('badge-leave-count');
+      if (elLeaves) elLeaves.textContent = `${pendingLeaves} pending`;
 
       const quality = appState.qualityCases || [];
-      const activeQ = quality.filter(q => q.status !== 'Resolved').length;
+      const activeQ = quality.filter(q => q.status !== 'Closed' && q.status !== 'Resolved').length;
       const elQ = document.getElementById('badge-quality-active');
       if (elQ) elQ.textContent = `${activeQ} active`;
     }
 
     /* ==========================================================================
-       1. LIVE SHIFT COMMAND CENTRE RENDERER
+       1. TODAY'S OPERATIONS RENDERER
        ========================================================================== */
     function renderCommandCentre() {
       // Dynamic updates for Command Centre metrics are reflected via appState
     }
 
     /* ==========================================================================
-       2. BIOMETRIC ATTENDANCE & BREAKS RENDERER
+       2. ENTRY, EXIT & BREAKS (BIOMETRIC ATTENDANCE) RENDERER
        ========================================================================== */
     function renderBiometricView() {
       renderPunchTable();
@@ -365,28 +380,37 @@ JS_CONTENT = """
       } else if (activePunchFilter === 'OUT') {
         punches = punches.filter(p => p.type === 'Office OUT');
       } else if (activePunchFilter === 'BREAK') {
-        punches = punches.filter(p => p.type.includes('Break'));
+        punches = punches.filter(p => (p.type || '').includes('Break'));
       } else if (activePunchFilter === 'EXCEPTION') {
-        punches = punches.filter(p => p.type.includes('Manual') || p.type.includes('Adjustment'));
+        punches = punches.filter(p => (p.type || '').includes('Manual') || (p.type || '').includes('Adjustment'));
       }
 
       tbody.innerHTML = punches.map(p => {
         let badgeClass = 'verified';
-        if (p.type === 'Office IN') badgeClass = 'in';
-        else if (p.type === 'Office OUT') badgeClass = 'out';
-        else if (p.type.includes('Break')) badgeClass = 'break';
+        const pType = p.type || 'Office IN';
+        if (pType === 'Office IN') badgeClass = 'in';
+        else if (pType === 'Office OUT') badgeClass = 'out';
+        else if (pType.includes('Break')) badgeClass = 'break';
         else badgeClass = 'exception';
+
+        const punchId = p.punchId || p.id || 'PUN-1001';
+        const empId = p.empId || 'EMP-101';
+        const empName = p.empName || 'Employee';
+        const timeStr = p.timeIST || p.timestamp || '06:00 AM IST';
+        const device = p.device || 'Terminal 01 (Gate)';
+        const method = p.source || p.method || 'Biometric Scanner';
+        const status = p.status || 'Verified';
 
         return `
           <tr>
-            <td><strong style="color: var(--steel); font-family: var(--font-mono);">${p.id}</strong></td>
-            <td><span style="font-family: var(--font-mono); color: var(--gold);">${p.empId}</span></td>
-            <td><strong>${p.empName}</strong></td>
-            <td><span style="font-family: var(--font-mono); color: var(--white);">${p.timestamp}</span></td>
-            <td><span class="status-badge ${badgeClass}">${p.type}</span></td>
-            <td>${p.device}</td>
-            <td><span style="color: var(--steel); font-size: 12px;">${p.method}</span></td>
-            <td><span class="status-badge verified">${p.status}</span></td>
+            <td><strong style="color: var(--steel); font-family: var(--font-mono);">${punchId}</strong></td>
+            <td><span style="font-family: var(--font-mono); color: var(--gold);">${empId}</span></td>
+            <td><strong>${empName}</strong></td>
+            <td><span style="font-family: var(--font-mono); color: var(--white);">${timeStr}</span></td>
+            <td><span class="status-badge ${badgeClass}">${pType}</span></td>
+            <td>${device}</td>
+            <td><span style="color: var(--steel); font-size: 12px;">${method}</span></td>
+            <td><span class="status-badge verified">${status}</span></td>
           </tr>
         `;
       }).join('');
@@ -397,10 +421,11 @@ JS_CONTENT = """
       const visualContainer = document.getElementById('timeline-visual-container');
       if (!visualContainer) return;
 
+      const emp = (appState.employees || []).find(e => e.id === empId) || (appState.employees && appState.employees[0]) || { name: 'Rohan Sharma', id: 'EMP-101' };
       const timelineData = (appState.employeeAttendanceTimelines && appState.employeeAttendanceTimelines[empId]) || {
         empId: empId,
         firstEntry: '05:58 AM',
-        lastExit: 'In Progress (Active Shift)',
+        lastExit: 'In Progress (Shift A)',
         expectedStart: '06:00 AM',
         expectedEnd: '14:30 PM',
         timeOnPremises: '7h 12m',
@@ -416,48 +441,50 @@ JS_CONTENT = """
         ]
       };
 
-      summaryContainer.innerHTML = `
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; background: var(--midnight); padding: 16px; border: 1px solid var(--slate-border); border-radius: 6px;">
-          <div>
-            <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">First Entry Punch</div>
-            <div style="font-size: 16px; font-weight: 600; color: #79D2B7; font-family: var(--font-mono);">${timelineData.firstEntry}</div>
-            <div style="font-size: 10px; color: var(--steel-dim);">Assigned: ${timelineData.expectedStart}</div>
+      if (summaryContainer) {
+        summaryContainer.innerHTML = `
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; background: var(--midnight); padding: 16px; border: 1px solid var(--slate-border); border-radius: 6px;">
+            <div>
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">First Entry Punch</div>
+              <div style="font-size: 18px; font-weight: 600; color: #79D2B7; font-family: var(--font-mono);">${timelineData.firstEntry || '05:58 AM'}</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">Expected: ${timelineData.expectedStart || '06:00 AM'}</div>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Time on Premises</div>
+              <div style="font-size: 18px; font-weight: 600; color: var(--white); font-family: var(--font-mono);">${timelineData.timeOnPremises || '7h 12m'}</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">Gate Entry to Current</div>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Recorded Breaks</div>
+              <div style="font-size: 18px; font-weight: 600; color: var(--amber); font-family: var(--font-mono);">${timelineData.recordedBreakDuration || '45m'}</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">Tea (15m) + Lunch (30m)</div>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Net Attended Duration</div>
+              <div style="font-size: 18px; font-weight: 600; color: var(--gold); font-family: var(--font-mono);">${timelineData.netAttendedDuration || '6h 27m'}</div>
+              <div style="font-size: 11px; color: #79D2B7;">Status: ${timelineData.regularizationStatus || 'Compliant'}</div>
+            </div>
           </div>
-          <div>
-            <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Time on Premises</div>
-            <div style="font-size: 16px; font-weight: 600; color: var(--white); font-family: var(--font-mono);">${timelineData.timeOnPremises}</div>
-            <div style="font-size: 10px; color: var(--steel-dim);">Gross Gate Time</div>
-          </div>
-          <div>
-            <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Recorded Breaks</div>
-            <div style="font-size: 16px; font-weight: 600; color: var(--amber); font-family: var(--font-mono);">${timelineData.recordedBreakDuration}</div>
-            <div style="font-size: 10px; color: var(--steel-dim);">Morning Tea + Lunch</div>
-          </div>
-          <div>
-            <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Net Attended Duration</div>
-            <div style="font-size: 16px; font-weight: 600; color: var(--gold); font-family: var(--font-mono);">${timelineData.netAttendedDuration}</div>
-            <div style="font-size: 10px; color: #79D2B7;">Status: ${timelineData.regularizationStatus}</div>
-          </div>
-        </div>
-      `;
+        `;
+      }
 
       visualContainer.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 12px; position: relative; padding-left: 30px;">
           <div style="position: absolute; left: 11px; top: 12px; bottom: 12px; width: 2px; background: rgba(147, 163, 174, 0.25);"></div>
-          ${timelineData.events.map(ev => {
+          ${(timelineData.events || []).map(ev => {
             let dotColor = 'var(--emerald)';
-            if (ev.type.includes('OUT')) dotColor = 'var(--crimson)';
-            else if (ev.type.includes('Break')) dotColor = 'var(--amber)';
+            if ((ev.type || '').includes('OUT')) dotColor = 'var(--crimson)';
+            else if ((ev.type || '').includes('Break')) dotColor = 'var(--amber)';
 
             return `
               <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px; position: relative;">
                 <div style="position: absolute; left: -25px; width: 12px; height: 12px; border-radius: 50%; background: ${dotColor}; border: 2px solid var(--midnight);"></div>
                 <div style="display: flex; align-items: center; gap: 14px;">
                   <strong style="font-family: var(--font-mono); color: var(--white); font-size: 13px;">${ev.time} IST</strong>
-                  <span class="status-badge ${ev.type.includes('IN') ? 'in' : ev.type.includes('OUT') ? 'out' : 'break'}">${ev.type}</span>
+                  <span class="status-badge ${(ev.type || '').includes('IN') ? 'in' : (ev.type || '').includes('OUT') ? 'out' : 'break'}">${ev.type}</span>
                   <span style="color: var(--porcelain); font-size: 13px;">${ev.label}</span>
                 </div>
-                <span class="status-badge verified">${ev.status}</span>
+                <span class="status-badge verified">${ev.status || 'Verified'}</span>
               </div>
             `;
           }).join('')}
@@ -471,14 +498,18 @@ JS_CONTENT = """
       const time = document.getElementById('manual-punch-time').value;
       const reason = document.getElementById('manual-punch-reason').value;
 
-      const emp = appState.employees.find(e => e.id === empId);
+      const emp = (appState.employees || []).find(e => e.id === empId);
       const newPunch = {
         id: `PUN-${Math.floor(1000 + Math.random() * 9000)}`,
+        punchId: `PUN-${Math.floor(1000 + Math.random() * 9000)}`,
         empId: empId,
         empName: emp ? emp.name : 'Unknown',
         timestamp: `Today ${time} IST`,
+        timeIST: `${time} IST`,
+        timeAEST: '10:45 AEDT',
         type: type,
         device: 'Manual Regularization Interface',
+        source: 'Manager Approved Override',
         method: 'Manager Approved Override',
         status: 'Regularized'
       };
@@ -490,179 +521,355 @@ JS_CONTENT = """
     }
 
     /* ==========================================================================
-       3. EMPLOYEE 360-DEGREE DASHBOARD RENDERER
+       3. EMPLOYEE PERFORMANCE (5 CLEAR TABS)
        ========================================================================== */
+    function switchEmpTab(tabName) {
+      currentEmpTab = tabName;
+      renderEmployee360(selected360EmpId);
+    }
+
     function renderEmployee360(empId) {
       selected360EmpId = empId;
       const container = document.getElementById('emp360-content-container');
       if (!container) return;
 
-      const emp = appState.employees.find(e => e.id === empId) || appState.employees[0];
+      const emp = (appState.employees || []).find(e => e.id === empId) || (appState.employees && appState.employees[0]) || {
+        id: 'EMP-101',
+        name: 'Rohan Sharma',
+        role: 'Senior Detailing Specialist',
+        designation: 'Senior Detailing Specialist',
+        team: 'Team Alpha',
+        shift: 'Shift A (Day)',
+        manager: 'Priya Nair',
+        status: 'Present',
+        hours: 7.5,
+        accuracy: '99.2%',
+        accuracyText: '99.2%',
+        dailyTarget: { orders: 16, flashings: 210, bits: 480 }
+      };
+
       const isRestrictedRole = (currentRole === 'EMPLOYEE');
+      const initials = (emp.name || 'RS').split(' ').map(n => n[0]).join('');
+      const empRole = emp.designation || emp.role || 'Sheetmetal Specialist';
+      const empHours = emp.hours != null ? emp.hours : 7.5;
+      const empAcc = emp.accuracyText || emp.accuracy || '99.2%';
+      const dailyOrders = (emp.dailyTarget && emp.dailyTarget.orders) ? emp.dailyTarget.orders : 16;
+      const dailyFlashings = (emp.dailyTarget && emp.dailyTarget.flashings) ? emp.dailyTarget.flashings : 210;
+      const dailyBits = (emp.dailyTarget && emp.dailyTarget.bits) ? emp.dailyTarget.bits : 480;
 
-      const skillBadges = Array.isArray(emp.skills) 
-        ? emp.skills 
-        : Object.entries(emp.skills || {}).map(([k, v]) => `${k.replace(/([A-Z])/g, ' $1').toUpperCase()}: ${v}`);
+      // Clean skills list
+      let skillList = [];
+      if (Array.isArray(emp.skills)) {
+        skillList = emp.skills;
+      } else if (emp.skills && typeof emp.skills === 'object') {
+        skillList = Object.entries(emp.skills).map(([k, v]) => `${k.replace(/([A-Z])/g, ' $1').toUpperCase()}: ${v}`);
+      } else {
+        skillList = ['Order Keying (L4)', 'Flashing Detailing (L4)', 'Quality Review (L3)'];
+      }
 
-      container.innerHTML = `
-        <!-- Section A: Overview Header -->
-        <div class="card" style="margin-bottom: 24px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border);">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div style="display: flex; gap: 18px; align-items: center;">
-              <div style="width: 58px; height: 58px; border-radius: 50%; background: var(--gold-dim); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 20px; color: var(--gold); font-weight: bold;">
-                ${emp.name.split(' ').map(n => n[0]).join('')}
+      // Tab navigation HTML
+      const tabs = [
+        { id: 'overview', label: '1. Overview' },
+        { id: 'attendance', label: '2. Attendance' },
+        { id: 'work', label: '3. Work Completed' },
+        { id: 'quality', label: '4. Quality Record' },
+        { id: 'growth', label: '5. Growth & Mentorship' }
+      ];
+
+      const tabNavHtml = `
+        <div style="display: flex; gap: 8px; border-bottom: 1px solid var(--slate-border); margin-bottom: 20px;">
+          ${tabs.map(t => `
+            <button onclick="switchEmpTab('${t.id}')" style="background: none; border: none; padding: 10px 18px; font-size: 13px; font-weight: 500; cursor: pointer; color: ${currentEmpTab === t.id ? 'var(--gold)' : 'var(--steel)'}; border-bottom: 2px solid ${currentEmpTab === t.id ? 'var(--gold)' : 'transparent'}; transition: all 0.2s ease;">
+              ${t.label}
+            </button>
+          `).join('')}
+        </div>
+      `;
+
+      // Header Card (Common across all tabs)
+      const headerCard = `
+        <div class="card" style="margin-bottom: 20px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div style="display: flex; gap: 16px; align-items: center;">
+              <div style="width: 54px; height: 54px; border-radius: 50%; background: var(--gold-dim); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 18px; color: var(--gold); font-weight: bold;">
+                ${initials}
               </div>
               <div>
                 <div style="display: flex; align-items: center; gap: 10px;">
-                  <h2 style="font-size: 22px; color: var(--white);">${emp.name}</h2>
-                  <span class="status-badge verified">${emp.status}</span>
+                  <h2 style="font-size: 20px; color: var(--white);">${emp.name}</h2>
+                  <span class="status-badge ${emp.status === 'Present' ? 'verified' : emp.status === 'On Leave' ? 'warning' : 'out'}">${emp.status}</span>
                   <span style="font-family: var(--font-mono); font-size: 12px; color: var(--gold);">${emp.id}</span>
                 </div>
                 <div style="font-size: 13px; color: var(--steel); margin-top: 4px;">
-                  ${emp.designation} • ${emp.team} • Reports to <strong>${emp.manager}</strong>
+                  ${empRole} • ${emp.team} • Reports to <strong>${emp.manager || 'Priya Nair'}</strong>
                 </div>
               </div>
             </div>
             <div style="text-align: right; font-family: var(--font-mono); font-size: 12px;">
               <div style="color: var(--steel-dim);">Assigned Shift</div>
               <div style="color: var(--gold); font-weight: 600;">${emp.shift}</div>
+              <div style="color: var(--steel); margin-top: 2px;">Monday, 23 November 2026</div>
             </div>
           </div>
-          <!-- Skills Badges -->
-          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--slate-border);">
-            ${skillBadges.map(s => `
-              <span style="padding: 4px 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 12px; font-size: 11px; color: var(--porcelain); font-family: var(--font-mono);">
-                ${s}
-              </span>
-            `).join('')}
-          </div>
-        </div>
-
-        <!-- 3-Column Diagnostic Grid -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px;">
-          <!-- Section B: Attendance Intelligence -->
-          <div class="card">
-            <div class="card-title">
-              <span>Attendance & Reliability</span>
-              <span class="status-badge verified">98.2% Score</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Present Days</span>
-                <strong style="color: var(--white);">22 / 23 Days</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Approved Leave</span>
-                <strong style="color: var(--porcelain);">1 Day (Annual)</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Late Arrivals</span>
-                <strong style="color: var(--amber);">${emp.lateMinutes > 0 ? '1 (18m transit)' : '0 (On-Time)'}</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Net Attended Hours</span>
-                <strong style="color: var(--gold); font-family: var(--font-mono);">${emp.hours}h (Month)</strong>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section C: Daily Production Output -->
-          <div class="card">
-            <div class="card-title">
-              <span>Production Velocity</span>
-              <span class="status-badge in">104% Target</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Average Orders / Shift</span>
-                <strong style="color: var(--white);">${emp.dailyTarget ? emp.dailyTarget.orders : 14} Orders</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Flashings Detailed</span>
-                <strong style="color: var(--white);">${emp.dailyTarget ? emp.dailyTarget.flashings : 180} Metres</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Bits & Accessories</span>
-                <strong style="color: var(--white);">${emp.dailyTarget ? emp.dailyTarget.bits : 450} Units</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Double-Check Rigor</span>
-                <strong style="color: #79D2B7;">99.1% Compliance</strong>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section D: Quality & Zero-Blame RCA -->
-          <div class="card">
-            <div class="card-title">
-              <span>Quality Assurance & RCA</span>
-              <span class="status-badge verified">Zero-Defect Merit</span>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Resupply Involvement</span>
-                <strong style="color: var(--porcelain);">1 Case (Learning Logged)</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">First-Pass Accuracy</span>
-                <strong style="color: var(--gold); font-family: var(--font-mono);">99.2%</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
-                <span style="color: var(--steel);">Resolution Turnaround</span>
-                <strong style="color: #79D2B7;">45m (Drawing Rev B)</strong>
-              </div>
-              <div style="font-size: 11px; color: var(--steel-dim); line-height: 1.4; padding-top: 4px;">
-                *Zero-blame ethos: Resupply analysis focuses on tooling clearance & drawing markups, not individual fault.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Section E: Performance Insight Narrative -->
-        <div class="card" style="margin-bottom: 24px; border-left: 4px solid var(--gold);">
-          <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 6px;">AI PERFORMANCE INSIGHT ENGINE</div>
-          <p style="font-size: 14px; color: var(--porcelain); line-height: 1.6; margin-bottom: 8px;">
-            <strong>${emp.name}</strong> demonstrates exceptional proficiency in complex radius flashings and architectural capping profiles, maintaining a 99.2% first-pass accuracy rating over the last 90 operational days. Production throughput surged by 12% following recent CAD cross-training on 3D folding geometries.
-          </p>
-          <div style="font-size: 12px; color: var(--steel-dim); font-family: var(--font-mono);">
-            Recommended Milestone: Ready for Senior Operator Certification in NC Press Brake Folding.
-          </div>
-        </div>
-
-        <!-- Section G: Confidential Development & Mentorship (Role-Restricted) -->
-        <div class="card" style="position: relative; overflow: hidden;">
-          <div class="card-title">
-            <span>Confidential Leadership Mentorship & Development Reviews</span>
-            <span class="status-badge ${isRestrictedRole ? 'alert' : 'verified'}">
-              ${isRestrictedRole ? 'Privacy Protected (Locked)' : 'Authorized Access'}
-            </span>
-          </div>
-
-          ${isRestrictedRole ? `
-            <div style="padding: 30px; text-align: center; background: rgba(16, 25, 35, 0.9); border-radius: 6px; border: 1px dashed var(--slate-border);">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="margin-bottom: 10px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <div style="font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 6px;">
-                Restricted Confidential Section
-              </div>
-              <div style="font-size: 12px; color: var(--steel); max-width: 480px; margin: 0 auto;">
-                Individual supervisory mentorship notes, private development milestones, and salary reviews are restricted to Team Leaders, Management, and Operational Strategists.
-              </div>
-            </div>
-          ` : `
-            <div style="display: flex; flex-direction: column; gap: 14px; font-size: 13px;">
-              <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-                  <strong style="color: var(--white);">Quarterly Operational Review (Q1 2027)</strong>
-                  <span style="color: var(--steel-dim); font-family: var(--font-mono);">Reviewer: Priya Nair (TL)</span>
-                </div>
-                <div style="color: var(--steel); line-height: 1.5;">
-                  Rohan continues to be a cornerstone of Team Alpha. Showed great patience coaching junior keyers on tapering corner flashings. Recommended for supervisory relief training during Shift A peak cycles.
-                </div>
-              </div>
-            </div>
-          `}
         </div>
       `;
+
+      // Dynamic Tab Body Content
+      let tabBodyContent = '';
+
+      if (currentEmpTab === 'overview') {
+        tabBodyContent = `
+          <!-- 4 Core Overview Cards -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px;">
+            <div class="card" style="padding: 16px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Today's Attendance</div>
+              <div style="font-size: 22px; font-weight: 600; color: #79D2B7; font-family: var(--font-serif); margin: 4px 0;">${empHours}h</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">Clocked in at 05:54 AM</div>
+            </div>
+            <div class="card" style="padding: 16px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Orders Completed</div>
+              <div style="font-size: 22px; font-weight: 600; color: var(--gold); font-family: var(--font-serif); margin: 4px 0;">${dailyOrders} Orders</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">${dailyFlashings}m Flashings • ${dailyBits} Parts</div>
+            </div>
+            <div class="card" style="padding: 16px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Quality Accuracy</div>
+              <div style="font-size: 22px; font-weight: 600; color: #79D2B7; font-family: var(--font-serif); margin: 4px 0;">${empAcc}</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">First-Pass Verification</div>
+            </div>
+            <div class="card" style="padding: 16px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Double-Check Results</div>
+              <div style="font-size: 22px; font-weight: 600; color: var(--white); font-family: var(--font-serif); margin: 4px 0;">100%</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">All orders peer verified</div>
+            </div>
+          </div>
+
+          <!-- Skills Badges Card -->
+          <div class="card" style="margin-bottom: 20px;">
+            <div class="card-title">Sheetmetal Core Skills</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+              ${skillList.map(s => `
+                <span style="padding: 6px 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px; font-size: 12px; color: var(--porcelain); font-family: var(--font-mono);">
+                  ${s}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Summary Insight Card -->
+          <div class="card" style="border-left: 4px solid var(--gold);">
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 6px;">PERFORMANCE NOTE</div>
+            <p style="font-size: 13px; color: var(--porcelain); line-height: 1.6; margin: 0;">
+              <strong>${emp.name}</strong> is a high-accuracy operator in <strong>${emp.team}</strong>. Consistently meets daily production targets while maintaining exceptional double-check rigor and clean drawings for Australian site assembly.
+            </p>
+          </div>
+        `;
+      } else if (currentEmpTab === 'attendance') {
+        tabBodyContent = `
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+            <div class="card">
+              <div class="card-title">Biometric Entry & Exit Details</div>
+              <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">First Gate Entry:</span>
+                  <strong style="color: #79D2B7; font-family: var(--font-mono);">05:54 AM IST</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Assigned Shift Hours:</span>
+                  <strong style="color: var(--white); font-family: var(--font-mono);">06:00 AM — 14:30 PM IST</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Arrival Status:</span>
+                  <strong style="color: #79D2B7;">On-Time (6m early)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Total Time on Premises:</span>
+                  <strong style="color: var(--white); font-family: var(--font-mono);">8h 32m</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Total Break Duration:</span>
+                  <strong style="color: var(--amber); font-family: var(--font-mono);">45 minutes (Compliant)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--steel);">Net Attended Duration:</span>
+                  <strong style="color: var(--gold); font-family: var(--font-mono);">${empHours} hours</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Monthly Attendance Summary (November 2026)</div>
+              <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Working Days:</span>
+                  <strong style="color: var(--white);">23 Days Scheduled</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Days Present:</span>
+                  <strong style="color: #79D2B7;">22 Days Present</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Approved Leave:</span>
+                  <strong style="color: var(--porcelain);">1 Day (Annual Leave)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Late Arrivals:</span>
+                  <strong style="color: var(--porcelain);">0 Late (100% Punctual)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--steel);">Reliability Score:</span>
+                  <strong style="color: var(--gold);">99.1%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (currentEmpTab === 'work') {
+        tabBodyContent = `
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+            <div class="card">
+              <div class="card-title">Daily Work Completed (Shift A)</div>
+              <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Orders Keyed:</span>
+                  <strong style="color: var(--gold); font-size: 15px;">${dailyOrders} Orders</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Flashings Detailed:</span>
+                  <strong style="color: var(--white);">${dailyFlashings} linear metres</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Bits & Accessories:</span>
+                  <strong style="color: var(--white);">${dailyBits} individual parts</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--steel);">Shift Target Achievement:</span>
+                  <strong style="color: #79D2B7;">106% of Daily Target</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Double-Check Results</div>
+              <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Orders Verified by Colleague:</span>
+                  <strong style="color: #79D2B7;">${dailyOrders} / ${dailyOrders} (100%)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Peer Verification Partner:</span>
+                  <strong style="color: var(--white);">Ananya Sharma (Senior Keyer)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(147, 163, 174, 0.1);">
+                  <span style="color: var(--steel);">Double-Check Compliance:</span>
+                  <strong style="color: #79D2B7;">Full Compliance (No unverified jobs)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--steel);">Australian Cutoff Dispatch:</span>
+                  <strong style="color: var(--gold);">Ready for 15:00 Melbourne Transfer</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (currentEmpTab === 'quality') {
+        tabBodyContent = `
+          <div class="card" style="margin-bottom: 20px;">
+            <div class="card-title">Quality Assurance & Learning Record</div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px;">
+              <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+                <div style="font-size: 11px; color: var(--steel);">First-Pass Accuracy</div>
+                <div style="font-size: 20px; font-weight: 600; color: #79D2B7; font-family: var(--font-mono);">${empAcc}</div>
+                <div style="font-size: 11px; color: var(--steel-dim);">90-Day Rolling Average</div>
+              </div>
+              <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+                <div style="font-size: 11px; color: var(--steel);">Zero-Blame Cases Logged</div>
+                <div style="font-size: 20px; font-weight: 600; color: var(--porcelain); font-family: var(--font-mono);">1 Case</div>
+                <div style="font-size: 11px; color: var(--steel-dim);">Tooling angle variance</div>
+              </div>
+              <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+                <div style="font-size: 11px; color: var(--steel);">Resolution Turnaround</div>
+                <div style="font-size: 20px; font-weight: 600; color: var(--gold); font-family: var(--font-mono);">45 Minutes</div>
+                <div style="font-size: 11px; color: var(--steel-dim);">Drawing Rev B Published</div>
+              </div>
+            </div>
+            <div style="font-size: 12px; color: var(--steel-dim); line-height: 1.5; padding: 10px; background: var(--midnight); border-radius: 4px;">
+              *Zero-Blame Principle: When an error or resupply occurs, PULSE documents drawing markups and tooling clearances as team learning opportunities, never individual blame.
+            </div>
+          </div>
+        `;
+      } else if (currentEmpTab === 'growth') {
+        tabBodyContent = `
+          <!-- Skills Training & Development -->
+          <div class="card" style="margin-bottom: 20px;">
+            <div class="card-title">
+              <span>7 Sheetmetal Skill Levels</span>
+              <span style="font-size: 11px; color: var(--gold); font-family: var(--font-mono);">L1: Learning • L2: Independent • L3: Experienced • L4: Trainer</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+              <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--midnight); border-radius: 4px;">
+                <span style="color: var(--porcelain);">1. Order Keying:</span>
+                <strong style="color: #79D2B7; font-family: var(--font-mono);">Level 4: Can Train Others</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--midnight); border-radius: 4px;">
+                <span style="color: var(--porcelain);">2. Flashing Detailing:</span>
+                <strong style="color: #79D2B7; font-family: var(--font-mono);">Level 4: Can Train Others</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--midnight); border-radius: 4px;">
+                <span style="color: var(--porcelain);">3. Bits & Accessories:</span>
+                <strong style="color: var(--gold); font-family: var(--font-mono);">Level 3: Experienced</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--midnight); border-radius: 4px;">
+                <span style="color: var(--porcelain);">4. Double-Checking:</span>
+                <strong style="color: #79D2B7; font-family: var(--font-mono);">Level 4: Can Train Others</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--midnight); border-radius: 4px;">
+                <span style="color: var(--porcelain);">5. Quality Review:</span>
+                <strong style="color: var(--gold); font-family: var(--font-mono);">Level 3: Experienced</strong>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 8px 12px; background: var(--midnight); border-radius: 4px;">
+                <span style="color: var(--porcelain);">6. Customer RFI Handling:</span>
+                <strong style="color: var(--steel); font-family: var(--font-mono);">Level 2: Can Work Independently</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Confidential Leadership Mentorship Notes -->
+          <div class="card" style="position: relative; overflow: hidden;">
+            <div class="card-title">
+              <span>Confidential Leadership Mentorship Notes</span>
+              <span class="status-badge ${isRestrictedRole ? 'alert' : 'verified'}">
+                ${isRestrictedRole ? 'Privacy Protected (Locked)' : 'Authorized Access'}
+              </span>
+            </div>
+
+            ${isRestrictedRole ? `
+              <div style="padding: 24px; text-align: center; background: rgba(16, 25, 35, 0.9); border-radius: 6px; border: 1px dashed var(--slate-border);">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="margin-bottom: 8px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <div style="font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 4px;">
+                  Restricted Confidential Section
+                </div>
+                <div style="font-size: 12px; color: var(--steel); max-width: 480px; margin: 0 auto;">
+                  Individual supervisory mentorship notes, private development milestones, and salary reviews are restricted to Team Leaders, Management, and Operational Strategists.
+                </div>
+              </div>
+            ` : `
+              <div style="display: flex; flex-direction: column; gap: 12px; font-size: 13px;">
+                <div style="padding: 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <strong style="color: var(--white);">Supervisory Coaching Review (November 2026)</strong>
+                    <span style="color: var(--steel-dim); font-family: var(--font-mono);">Supervisor: Priya Nair</span>
+                  </div>
+                  <div style="color: var(--steel); line-height: 1.5;">
+                    ${emp.name} continues to show outstanding dedication. Mentoring junior detailers on curved flashings with patience. Recommended for supervisory relief training during Shift A peak cycles.
+                  </div>
+                </div>
+              </div>
+            `}
+          </div>
+        `;
+      }
+
+      container.innerHTML = headerCard + tabNavHtml + tabBodyContent;
     }
 
     /* ==========================================================================
@@ -676,68 +883,83 @@ JS_CONTENT = """
 
       container.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 20px;">
-          ${handovers.map(h => `
-            <div class="card" style="border: 1px solid ${h.acknowledged ? 'var(--slate-border)' : 'var(--gold-border)'};">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--slate-border);">
-                <div style="display: flex; align-items: center; gap: 12px;">
-                  <span class="status-badge ${h.acknowledged ? 'verified' : 'warning'}">
-                    ${h.acknowledged ? 'Acknowledged & Closed' : 'Pending Incoming Acknowledgment'}
-                  </span>
-                  <strong style="color: var(--white); font-size: 16px;">${h.outgoingShift} → ${h.incomingShift} Transfer Dossier</strong>
-                </div>
-                <div style="font-family: var(--font-mono); font-size: 12px; color: var(--gold);">
-                  Logged: ${h.timestamp}
-                </div>
-              </div>
+          ${handovers.map(h => {
+            const hId = h.id || 'HND-101';
+            const outShift = h.fromShift || h.outgoingShift || 'Shift A (Day)';
+            const inShift = h.toShift || h.incomingShift || 'Shift B (Afternoon)';
+            const outTL = h.outgoingLead || h.outgoingTL || 'Priya Nair';
+            const inTL = h.incomingLead || h.incomingTL || 'Rajesh Kumar';
+            const isAck = h.acknowledged === true || h.status === 'Acknowledged';
+            const ackAt = h.acknowledgedAt || '14:28 IST';
+            const timeStr = h.timestamp || 'Today 14:15 IST';
+            const urgent = h.urgentJobs || 'Standard batch orders in queue.';
+            const machine = h.machineryNotes || 'All machinery operational.';
+            const staffing = h.staffingNotes || 'All workstations attended.';
 
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 16px; font-size: 13px;">
-                <div>
-                  <div style="color: var(--steel); font-size: 11px; text-transform: uppercase;">Outgoing TL</div>
-                  <strong style="color: var(--white);">${h.outgoingTL}</strong>
+            return `
+              <div class="card" style="border: 1px solid ${isAck ? 'var(--slate-border)' : 'var(--gold-border)'};">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--slate-border);">
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <span class="status-badge ${isAck ? 'verified' : 'warning'}">
+                      ${isAck ? 'Acknowledged & Closed' : 'Pending Incoming Acknowledgment'}
+                    </span>
+                    <strong style="color: var(--white); font-size: 16px;">${outShift} → ${inShift} Transfer Dossier</strong>
+                  </div>
+                  <div style="font-family: var(--font-mono); font-size: 12px; color: var(--gold);">
+                    Logged: ${timeStr}
+                  </div>
                 </div>
-                <div>
-                  <div style="color: var(--steel); font-size: 11px; text-transform: uppercase;">Incoming TL</div>
-                  <strong style="color: var(--white);">${h.incomingTL}</strong>
-                </div>
-                <div>
-                  <div style="color: var(--steel); font-size: 11px; text-transform: uppercase;">Status</div>
-                  <strong style="color: ${h.acknowledged ? '#79D2B7' : 'var(--gold)'};">
-                    ${h.acknowledged ? `Acknowledged at ${h.acknowledgedAt}` : 'Awaiting Sign-Off'}
-                  </strong>
-                </div>
-              </div>
 
-              <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; margin-bottom: 18px;">
-                <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
-                  <strong style="color: var(--gold);">Urgent Melbourne Orders:</strong> ${h.urgentJobs}
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 16px; font-size: 13px;">
+                  <div>
+                    <div style="color: var(--steel); font-size: 11px; text-transform: uppercase;">Outgoing Team Leader</div>
+                    <strong style="color: var(--white);">${outTL}</strong>
+                  </div>
+                  <div>
+                    <div style="color: var(--steel); font-size: 11px; text-transform: uppercase;">Incoming Team Leader</div>
+                    <strong style="color: var(--white);">${inTL}</strong>
+                  </div>
+                  <div>
+                    <div style="color: var(--steel); font-size: 11px; text-transform: uppercase;">Status</div>
+                    <strong style="color: ${isAck ? '#79D2B7' : 'var(--gold)'};">
+                      ${isAck ? `Acknowledged at ${ackAt}` : 'Awaiting Sign-Off'}
+                    </strong>
+                  </div>
                 </div>
-                <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
-                  <strong style="color: var(--porcelain);">Machinery & Tooling:</strong> ${h.machineryNotes}
-                </div>
-                <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
-                  <strong style="color: var(--steel);">Staffing Observations:</strong> ${h.staffingNotes}
-                </div>
-              </div>
 
-              ${!h.acknowledged ? `
-                <div style="display: flex; justify-content: flex-end;">
-                  <button class="btn btn-gold btn-sm" onclick="acknowledgeHandover('${h.id}')">
-                    Acknowledge & Accept Handover
-                  </button>
+                <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px; margin-bottom: 18px;">
+                  <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                    <strong style="color: var(--gold);">Urgent Melbourne Orders:</strong> ${urgent}
+                  </div>
+                  <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                    <strong style="color: var(--porcelain);">Machinery & Tooling:</strong> ${machine}
+                  </div>
+                  <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                    <strong style="color: var(--steel);">Staffing Observations:</strong> ${staffing}
+                  </div>
                 </div>
-              ` : ''}
-            </div>
-          `).join('')}
+
+                ${!isAck ? `
+                  <div style="display: flex; justify-content: flex-end;">
+                    <button class="btn btn-gold btn-sm" onclick="acknowledgeHandover('${hId}')">
+                      Acknowledge & Accept Handover
+                    </button>
+                  </div>
+                ` : ''}
+              </div>
+            `;
+          }).join('')}
         </div>
       `;
     }
 
     function acknowledgeHandover(handoverId) {
-      const h = appState.handovers.find(item => item.id === handoverId);
+      const h = (appState.handovers || []).find(item => item.id === handoverId);
       if (h) {
         h.acknowledged = true;
+        h.status = 'Acknowledged';
         const now = new Date();
-        h.acknowledgedAt = `${now.getHours()}:${String(now.getMinutes()).padStart(2, '0')} IST`;
+        h.acknowledgedAt = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')} IST`;
         renderHandoverView();
         showToast(`Shift Handover #${handoverId} acknowledged by incoming Team Leader.`);
       }
@@ -751,14 +973,19 @@ JS_CONTENT = """
       const newH = {
         id: `HND-${Math.floor(100 + Math.random() * 900)}`,
         outgoingShift: 'Shift A (Day)',
+        fromShift: 'Shift A (Day)',
         incomingShift: 'Shift B (Afternoon)',
+        toShift: 'Shift B (Afternoon)',
         outgoingTL: 'Priya Nair',
+        outgoingLead: 'Priya Nair',
         incomingTL: 'Rajesh Kumar',
-        timestamp: 'Just Now',
+        incomingLead: 'Rajesh Kumar',
+        timestamp: 'Monday, 23 Nov 2026 • 14:15 IST',
         urgentJobs: urgentJobs || 'Standard batch orders in queue.',
         machineryNotes: machinery || 'All machines operating within normal parameters.',
         staffingNotes: staffing || 'Full complement clocked in.',
         acknowledged: false,
+        status: 'Pending',
         acknowledgedAt: ''
       };
 
@@ -769,57 +996,57 @@ JS_CONTENT = """
     }
 
     /* ==========================================================================
-       5. END-OF-SHIFT REPORT RENDERER
+       5. DAILY OPERATIONS SUMMARY RENDERER
        ========================================================================== */
     function renderShiftReportView() {
       const container = document.getElementById('shift-report-content-container');
       if (!container) return;
 
       container.innerHTML = `
-        <div class="card" style="padding: 36px; background: var(--slate-card); border: 1px solid var(--slate-border-light);">
+        <div class="card" style="padding: 32px; background: var(--slate-card); border: 1px solid var(--slate-border-light);">
           <!-- Header -->
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 24px; border-bottom: 2px solid var(--gold); margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 20px; border-bottom: 2px solid var(--gold); margin-bottom: 24px;">
             <div>
-              <div style="font-family: var(--font-serif); font-size: 24px; font-weight: 600; color: var(--white); margin-bottom: 4px;">
-                DESIGN SHEETMETAL • EXECUTIVE SHIFT RECONCILIATION DOSSIER
+              <div style="font-family: var(--font-serif); font-size: 22px; font-weight: 600; color: var(--white); margin-bottom: 4px;">
+                DESIGN SHEETMETAL • DAILY OPERATIONS SUMMARY
               </div>
               <div style="font-size: 13px; color: var(--steel);">
-                Operational Facility: Bengaluru det-01 • Shift Cycle: Shift A (06:00 — 14:30 IST)
+                Operational Facility: India Operations • Shift Cycle: Shift A (06:00 — 14:30 IST)
               </div>
             </div>
             <div style="text-align: right; font-family: var(--font-mono); font-size: 12px; color: var(--gold);">
-              <div>DATE: 2027-03-24</div>
+              <div>DATE: Monday, 23 November 2026</div>
               <div>CLASSIFICATION: EXECUTIVE OPERATIONS</div>
             </div>
           </div>
 
           <!-- Summary Metric Ribbon -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 28px;">
-            <div style="padding: 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Scheduled Operators</div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+            <div style="padding: 14px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Scheduled Staff</div>
               <div style="font-size: 24px; font-weight: 600; color: var(--white); font-family: var(--font-serif);">40</div>
-              <div style="font-size: 11px; color: #79D2B7;">34 Clocked In • 3 Leave • 1 Absent</div>
+              <div style="font-size: 11px; color: #79D2B7;">36 Present (2 Late) • 3 Leave • 1 Absent</div>
             </div>
-            <div style="padding: 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Total Output Volume</div>
+            <div style="padding: 14px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Orders Completed</div>
               <div style="font-size: 24px; font-weight: 600; color: var(--gold); font-family: var(--font-serif);">142 Orders</div>
               <div style="font-size: 11px; color: var(--steel-dim);">1,840m Flashings • 5,120 Bits</div>
             </div>
-            <div style="padding: 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Double-Check Completion</div>
+            <div style="padding: 14px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Double-Check Done</div>
               <div style="font-size: 24px; font-weight: 600; color: #79D2B7; font-family: var(--font-serif);">97.2%</div>
-              <div style="font-size: 11px; color: var(--steel-dim);">138 of 142 Formally Verified</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">138 of 142 Orders Verified</div>
             </div>
-            <div style="padding: 16px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
-              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Quality Variance Count</div>
-              <div style="font-size: 24px; font-weight: 600; color: #FFA5A2; font-family: var(--font-serif);">1 Case</div>
-              <div style="font-size: 11px; color: var(--steel-dim);">Tooling Angle (Rev B Corrected)</div>
+            <div style="padding: 14px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 6px;">
+              <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">Quality Cases</div>
+              <div style="font-size: 24px; font-weight: 600; color: var(--amber); font-family: var(--font-serif);">1 Case</div>
+              <div style="font-size: 11px; color: var(--steel-dim);">Tooling angle (Rev B corrected)</div>
             </div>
           </div>
 
           <!-- Section: Production Breakdown Table -->
-          <div style="margin-bottom: 28px;">
-            <h4 style="font-size: 15px; color: var(--white); margin-bottom: 12px;">1. Operational Output by Detailing Cell</h4>
+          <div style="margin-bottom: 24px;">
+            <h4 style="font-size: 14px; color: var(--white); margin-bottom: 10px;">1. Operational Output by Detailing Cell</h4>
             <div class="data-table-container">
               <table class="data-table">
                 <thead>
@@ -855,7 +1082,7 @@ JS_CONTENT = """
                   <tr>
                     <td><strong>Team Gamma</strong></td>
                     <td>Rainwater Goods & Downpipes</td>
-                    <td>8 / 10</td>
+                    <td>9 / 10</td>
                     <td>38</td>
                     <td>450m</td>
                     <td>36 (95%)</td>
@@ -864,7 +1091,7 @@ JS_CONTENT = """
                   <tr>
                     <td><strong>Team Delta</strong></td>
                     <td>Special Structural Assemblies</td>
-                    <td>7 / 10</td>
+                    <td>8 / 10</td>
                     <td>28</td>
                     <td>300m</td>
                     <td>27 (96%)</td>
@@ -876,7 +1103,7 @@ JS_CONTENT = """
           </div>
 
           <!-- Executive Sign-Off Signatures -->
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding-top: 24px; border-top: 1px solid var(--slate-border); font-size: 12px;">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding-top: 20px; border-top: 1px solid var(--slate-border); font-size: 12px;">
             <div>
               <div style="color: var(--steel-dim); margin-bottom: 4px;">Outgoing Shift Supervisor:</div>
               <div style="color: var(--white); font-weight: 600; font-family: var(--font-serif); font-size: 14px;">Priya Nair</div>
@@ -890,7 +1117,7 @@ JS_CONTENT = """
             <div>
               <div style="color: var(--steel-dim); margin-bottom: 4px;">Operations Director Sign-Off:</div>
               <div style="color: var(--white); font-weight: 600; font-family: var(--font-serif); font-size: 14px;">David Harrison</div>
-              <div style="color: var(--steel); font-family: var(--font-mono); font-size: 11px;">Status: Validated for Melbourne Release</div>
+              <div style="color: var(--steel); font-family: var(--font-mono); font-size: 11px;">Validated for Melbourne Transfer</div>
             </div>
           </div>
         </div>
@@ -903,24 +1130,24 @@ JS_CONTENT = """
 
     function exportShiftReportCSV() {
       const csvContent = "data:text/csv;charset=utf-8," +
-        "Shift,Date,Team,Scheduled,Present,OrdersKeyed,FlashingsMeters,Bits,DoubleChecks,FirstPassAccuracy\\n" +
-        "Shift A,2027-03-24,Team Alpha,10,10,42,680,1850,42,99.1%\\n" +
-        "Shift A,2027-03-24,Team Beta,10,9,34,410,1120,33,98.4%\\n" +
-        "Shift A,2027-03-24,Team Gamma,10,8,38,450,1250,36,98.0%\\n" +
-        "Shift A,2027-03-24,Team Delta,10,7,28,300,900,27,98.8%\\n";
+        "Shift,Date,Team,Scheduled,Present,OrdersKeyed,FlashingsMeters,Bits,DoubleChecks,FirstPassAccuracy\n" +
+        "Shift A,2026-11-23,Team Alpha,10,10,42,680,1850,42,99.1%\n" +
+        "Shift A,2026-11-23,Team Beta,10,9,34,410,1120,33,98.4%\n" +
+        "Shift A,2026-11-23,Team Gamma,10,9,38,450,1250,36,98.0%\n" +
+        "Shift A,2026-11-23,Team Delta,10,8,28,300,900,27,98.8%\n";
 
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "PULSE_ShiftA_Executive_Report.csv");
+      link.setAttribute("download", "PULSE_Daily_Operations_Summary_2026-11-23.csv");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast("Shift Dossier CSV exported successfully.");
+      showToast("Daily Summary CSV exported successfully.");
     }
 
     /* ==========================================================================
-       6. MANAGEMENT EXCEPTIONS & ALERTS INBOX RENDERER
+       6. ISSUES & ALERTS (MANAGEMENT EXCEPTIONS) RENDERER
        ========================================================================== */
     function renderExceptionsView() {
       const container = document.getElementById('exceptions-content-container');
@@ -972,7 +1199,7 @@ JS_CONTENT = """
     }
 
     function acknowledgeAlert(alertId) {
-      const a = appState.alerts.find(item => item.id === alertId);
+      const a = (appState.alerts || []).find(item => item.id === alertId);
       if (a) {
         a.status = 'Acknowledged';
         renderExceptionsView();
@@ -982,7 +1209,7 @@ JS_CONTENT = """
     }
 
     function openResolveAlertModal(alertId) {
-      const a = appState.alerts.find(item => item.id === alertId);
+      const a = (appState.alerts || []).find(item => item.id === alertId);
       if (!a) return;
       document.getElementById('resolve-alert-id').value = a.id;
       document.getElementById('resolve-alert-desc').textContent = `${a.type}: ${a.message}`;
@@ -992,7 +1219,7 @@ JS_CONTENT = """
     function submitResolveAlert() {
       const alertId = document.getElementById('resolve-alert-id').value;
       const notes = document.getElementById('resolve-alert-notes').value;
-      const a = appState.alerts.find(item => item.id === alertId);
+      const a = (appState.alerts || []).find(item => item.id === alertId);
       if (a) {
         a.status = 'Resolved';
         a.resolution = notes || 'Confirmed resolved by operational supervisor.';
@@ -1004,73 +1231,114 @@ JS_CONTENT = """
     }
 
     /* ==========================================================================
-       7. WORKFORCE CAPACITY & COVERAGE PLANNER RENDERER
+       7. STAFF AVAILABILITY (WORKFORCE CAPACITY) RENDERER
        ========================================================================== */
     function renderCapacityView() {
       const container = document.getElementById('capacity-content-container');
       if (!container) return;
 
+      const schedule = [
+        { day: 'Mon 23 Nov (Today)', count: '36 / 40', status: 'Optimal (36 Present)', isToday: true, isRisk: false },
+        { day: 'Tue 24 Nov', count: '37 / 40', status: 'Optimal Capacity', isToday: false, isRisk: false },
+        { day: 'Wed 25 Nov', count: '36 / 40', status: 'Optimal Capacity', isToday: false, isRisk: false },
+        { day: 'Thu 26 Nov', count: '35 / 40', status: 'Normal Operations', isToday: false, isRisk: false },
+        { day: 'Fri 27 Nov (Notice)', count: '31 / 40', status: 'Team Gamma Notice', isToday: false, isRisk: true },
+        { day: 'Sat 28 Nov', count: '38 / 40', status: 'Weekend Shift', isToday: false, isRisk: false },
+        { day: 'Sun 29 Nov', count: '36 / 40', status: 'Weekend Shift', isToday: false, isRisk: false }
+      ];
+
       container.innerHTML = `
         <div class="card" style="margin-bottom: 24px;">
           <div class="card-title">
-            <span>14-Day Forward Workforce Capacity & Threshold Heatmap</span>
-            <span class="status-badge warning">Min Staffing Threshold: 8 Operators / Team</span>
+            <span>7-Day Forward Staff Availability (23 Nov – 29 Nov 2026)</span>
+            <span class="status-badge warning">Minimum Staffing Threshold: 8 Operators / Team</span>
           </div>
           <p style="font-size: 13px; color: var(--steel); margin-bottom: 18px;">
-            Visual staffing risk model. Highlights under-staffed dates and recommends certified backup operators across teams.
+            Visual schedule showing expected attendance across all four detailing cells. Clearly identifies dates where staffing requires backup operators.
           </p>
 
           <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 24px;">
-            ${['Mon 22', 'Tue 23', 'Wed 24 (Today)', 'Thu 25', 'Fri 26 (Risk)', 'Sat 27', 'Sun 28'].map((day, idx) => {
-              const isToday = idx === 2;
-              const isRisk = idx === 4;
-              return `
-                <div style="padding: 12px; background: ${isToday ? 'rgba(198, 166, 117, 0.12)' : isRisk ? 'rgba(217, 83, 79, 0.12)' : 'var(--midnight)'}; border: 1px solid ${isToday ? 'var(--gold)' : isRisk ? 'var(--crimson)' : 'var(--slate-border)'}; border-radius: 6px; text-align: center;">
-                  <div style="font-family: var(--font-mono); font-size: 11px; color: ${isToday ? 'var(--gold)' : isRisk ? '#FFA5A2' : 'var(--steel)'}; margin-bottom: 4px;">
-                    ${day}
-                  </div>
-                  <div style="font-size: 18px; font-weight: 600; color: ${isRisk ? '#FFA5A2' : 'var(--white)'}; font-family: var(--font-serif);">
-                    ${isRisk ? '31 / 40' : isToday ? '34 / 40' : '36 / 40'}
-                  </div>
-                  <div style="font-size: 10px; color: ${isRisk ? '#FFA5A2' : '#79D2B7'};">
-                    ${isRisk ? 'Threshold Breach (Gamma)' : 'Optimal Capacity'}
-                  </div>
+            ${schedule.map(d => `
+              <div style="padding: 12px; background: ${d.isToday ? 'rgba(198, 166, 117, 0.12)' : d.isRisk ? 'rgba(217, 83, 79, 0.12)' : 'var(--midnight)'}; border: 1px solid ${d.isToday ? 'var(--gold)' : d.isRisk ? 'var(--crimson)' : 'var(--slate-border)'}; border-radius: 6px; text-align: center;">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: ${d.isToday ? 'var(--gold)' : d.isRisk ? '#FFA5A2' : 'var(--steel)'}; margin-bottom: 4px;">
+                  ${d.day}
                 </div>
-              `;
-            }).join('')}
+                <div style="font-size: 18px; font-weight: 600; color: ${d.isRisk ? '#FFA5A2' : 'var(--white)'}; font-family: var(--font-serif);">
+                  ${d.count}
+                </div>
+                <div style="font-size: 10px; color: ${d.isRisk ? '#FFA5A2' : '#79D2B7'};">
+                  ${d.status}
+                </div>
+              </div>
+            `).join('')}
           </div>
 
-          <!-- Cross-Training Backup Suggestion Card -->
-          <div style="padding: 16px; background: rgba(198, 166, 117, 0.08); border: 1px solid var(--gold-border); border-radius: 6px;">
-            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
-              <span class="pulse-dot"></span>
-              <strong style="color: var(--white); font-size: 13px;">Automated Skill-Based Backup Recommender</strong>
+          <!-- Plain Language Backup Suggestion Card -->
+          <div style="padding: 16px; background: rgba(198, 166, 117, 0.08); border: 1px solid var(--gold-border); border-radius: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 4px;">
+                <span class="pulse-dot"></span>
+                <strong style="color: var(--white); font-size: 13px;">Upcoming Staffing Notice: Friday, 27 November 2026</strong>
+              </div>
+              <div style="font-size: 12px; color: var(--porcelain); line-height: 1.5; max-width: 650px;">
+                Team Gamma may have fewer employees than required on Friday, 27 November (31 of 40 available due to approved annual leave). Recommended backup: <strong>Vikram Singh (EMP-102)</strong> from Team Alpha is certified in Rainwater Detailing.
+              </div>
             </div>
-            <div style="font-size: 12px; color: var(--porcelain); line-height: 1.6;">
-              On <strong>Friday March 26</strong>, Team Gamma faces a staffing dip due to medical leave. PULSE recommends temporarily reassigning <strong>Vikram Singh (EMP-107)</strong> from Team Alpha (certified in Downpipe Seaming & Press Brake Folding) to maintain minimum throughput.
-            </div>
+            <button class="btn btn-gold btn-sm" onclick="showToast('Backup reassignment scheduled for Friday, 27 November.')">
+              Confirm Backup Plan
+            </button>
           </div>
         </div>
       `;
     }
 
     /* ==========================================================================
-       8. SKILLS MATRIX RENDERER
+       8. SKILLS & TRAINING MATRIX RENDERER
        ========================================================================== */
     function renderSkillsMatrixView() {
       const container = document.getElementById('skills-content-container');
       if (!container) return;
 
-      const skills = appState.skillsDefinitions || [];
-      const emps = appState.employees.slice(0, 15); // showcase sample
+      const skills = [
+        { id: 'keying', name: 'Order Keying', desc: 'Accurately entering customer specifications and sheet dimensions into the order system.' },
+        { id: 'flashings', name: 'Flashing Detailing', desc: 'Calculating folds, hems, angles, and taper lengths for roof flashings.' },
+        { id: 'bits', name: 'Bits & Accessories', desc: 'Detailing clips, brackets, stop-ends, and specialized rainwater accessories.' },
+        { id: 'checking', name: 'Double-Checking', desc: 'Rigorously reviewing colleague drawings against original customer markups.' },
+        { id: 'quality', name: 'Quality Review', desc: 'Verifying bend tolerances, sheet thickness gauges, and finish coatings.' },
+        { id: 'rfi', name: 'Customer RFI', desc: 'Drafting clear technical clarification questions for Australian builders.' },
+        { id: 'drawings', name: 'Specialized Drawings', desc: 'Creating complex 3D CAD unfoldings for structural architectural panels.' }
+      ];
+
+      const emps = (appState.employees || []).slice(0, 15);
 
       container.innerHTML = `
+        <!-- Plain Language Explanation Card -->
+        <div class="card" style="margin-bottom: 20px;">
+          <div class="card-title">7 Core Sheetmetal Skills & 4 Experience Levels</div>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 12px;">
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+              <strong style="color: var(--steel-dim); font-size: 12px;">Level 1: Learning</strong>
+              <p style="font-size: 11px; color: var(--steel); margin: 4px 0 0 0;">Working under senior supervision.</p>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+              <strong style="color: var(--steel); font-size: 12px;">Level 2: Independent</strong>
+              <p style="font-size: 11px; color: var(--steel); margin: 4px 0 0 0;">Handles standard jobs independently.</p>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+              <strong style="color: var(--gold); font-size: 12px;">Level 3: Experienced</strong>
+              <p style="font-size: 11px; color: var(--steel); margin: 4px 0 0 0;">Handles complex profiles and custom folds.</p>
+            </div>
+            <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+              <strong style="color: #79D2B7; font-size: 12px;">Level 4: Trainer</strong>
+              <p style="font-size: 11px; color: var(--steel); margin: 4px 0 0 0;">Can train others and double-check orders.</p>
+            </div>
+          </div>
+        </div>
+
         <div class="card" style="margin-bottom: 24px;">
           <div class="card-title">
-            <span>7-Point Sheet-Metal Operational Skills Matrix</span>
-            <span style="font-size: 12px; color: var(--steel); font-family: var(--font-mono);">
-              Legend: L1 Trainee • L2 Competent • L3 Senior Specialist • L4 Master Trainer
-            </span>
+            <span>Team Skills Matrix</span>
+            <span style="font-size: 12px; color: var(--steel);">Showing 15 Sample Operators Across Teams</span>
           </div>
           <div class="data-table-container">
             <table class="data-table">
@@ -1092,7 +1360,7 @@ JS_CONTENT = """
                       if (level === 2) color = 'var(--steel)';
                       else if (level === 3) color = 'var(--gold)';
                       else if (level === 4) color = '#79D2B7';
-                      return `<td><span style="font-family: var(--font-mono); font-weight: 600; color: ${color};">L${level}</span></td>`;
+                      return `<td><span style="font-family: var(--font-mono); font-weight: 600; color: ${color};">Level ${level}</span></td>`;
                     }).join('')}
                   </tr>
                 `).join('')}
@@ -1104,7 +1372,7 @@ JS_CONTENT = """
     }
 
     /* ==========================================================================
-       9. CUSTOM REPORT BUILDER RENDERER
+       9. REPORTS & EXPORTS (REPORT BUILDER) RENDERER
        ========================================================================== */
     function renderReportBuilderView() {
       const container = document.getElementById('report-builder-content-container');
@@ -1113,59 +1381,60 @@ JS_CONTENT = """
       container.innerHTML = `
         <div class="card" style="margin-bottom: 24px;">
           <div class="card-title">
-            <span>Operational Query & Dossier Parameters</span>
+            <span>Create a Report</span>
           </div>
           <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px;">
             <div class="form-group">
-              <label class="form-label">Team Allocation</label>
+              <label class="form-label">Choose Team</label>
               <select class="form-select" id="rep-filter-team">
                 <option value="ALL">All Teams (Alpha, Beta, Gamma, Delta)</option>
                 <option value="Team Alpha">Team Alpha (Flashings & Trims)</option>
                 <option value="Team Beta">Team Beta (Cladding Panels)</option>
+                <option value="Team Gamma">Team Gamma (Rainwater Goods)</option>
+                <option value="Team Delta">Team Delta (Special Assemblies)</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Shift Window</label>
+              <label class="form-label">Choose Shift</label>
               <select class="form-select" id="rep-filter-shift">
                 <option value="ALL">All Shifts (A Day, B Afternoon, C Night)</option>
-                <option value="Shift A">Shift A (Day: 06:00 — 14:30)</option>
-                <option value="Shift B">Shift B (Afternoon: 14:00 — 22:30)</option>
-                <option value="Shift C">Shift C (Night: 22:00 — 06:30)</option>
+                <option value="Shift A">Shift A (Day: 06:00 — 14:30 IST)</option>
+                <option value="Shift B">Shift B (Afternoon: 14:00 — 22:30 IST)</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">Metric Focus</label>
+              <label class="form-label">Select Information</label>
               <select class="form-select" id="rep-filter-metric">
-                <option value="ALL">Comprehensive Operational Dossier</option>
-                <option value="ATTENDANCE">Biometric Attendance Regularity</option>
-                <option value="OUTPUT">Daily Production & Keying Volume</option>
-                <option value="QUALITY">First-Pass Accuracy & Resupply Rates</option>
+                <option value="ALL">All Operations (Attendance, Output, Quality)</option>
+                <option value="ATTENDANCE">Attendance & Hours Only</option>
+                <option value="OUTPUT">Orders Completed & Volume</option>
+                <option value="QUALITY">Quality Accuracy & Resupplies</option>
               </select>
             </div>
             <div class="form-group">
               <label class="form-label">Date Range</label>
               <select class="form-select" id="rep-filter-date">
-                <option value="TODAY">Current Shift Cycle (Today)</option>
-                <option value="WEEK">Last 7 Operating Days</option>
-                <option value="MONTH">Current Month to Date</option>
+                <option value="TODAY">Monday, 23 November 2026 (Today)</option>
+                <option value="WEEK">Last 7 Days</option>
+                <option value="MONTH">Full Month (November 2026)</option>
               </select>
             </div>
           </div>
           <div style="display: flex; justify-content: flex-end; gap: 10px;">
             <button class="btn btn-outline btn-sm" onclick="exportCustomReportCSV()">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Export CSV Dossier
+              Export CSV File
             </button>
             <button class="btn btn-gold btn-sm" onclick="runCustomReport()">
-              Run Query & Generate Report
+              Generate Report
             </button>
           </div>
         </div>
 
         <div class="card" id="custom-report-output">
           <div class="card-title">
-            <span>Query Results: Active India Workforce Operations</span>
-            <span class="status-badge verified">40 Records Matched</span>
+            <span>Report Results: India Operations Workforce</span>
+            <span class="status-badge verified">40 Records Found</span>
           </div>
           <div class="data-table-container">
             <table class="data-table">
@@ -1176,20 +1445,20 @@ JS_CONTENT = """
                   <th>Team</th>
                   <th>Shift</th>
                   <th>Attended Hours</th>
-                  <th>Orders Keyed</th>
+                  <th>Orders Completed</th>
                   <th>Quality Accuracy</th>
                 </tr>
               </thead>
               <tbody>
-                ${appState.employees.slice(0, 8).map(e => `
+                ${(appState.employees || []).slice(0, 10).map(e => `
                   <tr>
                     <td><span style="font-family: var(--font-mono); color: var(--gold);">${e.id}</span></td>
                     <td><strong>${e.name}</strong></td>
                     <td>${e.team}</td>
                     <td>${e.shift}</td>
-                    <td>${e.hours}h</td>
-                    <td>${e.dailyTarget ? e.dailyTarget.orders : 14}</td>
-                    <td><span style="color: #79D2B7;">99.2%</span></td>
+                    <td>${e.hours != null ? e.hours : 7.5}h</td>
+                    <td>${(e.dailyTarget && e.dailyTarget.orders) ? e.dailyTarget.orders : 16}</td>
+                    <td><span style="color: #79D2B7;">${e.accuracyText || e.accuracy || '99.2%'}</span></td>
                   </tr>
                 `).join('')}
               </tbody>
@@ -1200,26 +1469,26 @@ JS_CONTENT = """
     }
 
     function runCustomReport() {
-      showToast('Query executed across 40 workforce records.');
+      showToast('Report generated successfully across 40 employee records.');
     }
 
     function exportCustomReportCSV() {
       const csvContent = "data:text/csv;charset=utf-8," +
-        "EmpID,Name,Team,Shift,AttendedHours,OrdersKeyed,QualityAccuracy\\n" +
-        appState.employees.map(e => `${e.id},${e.name},${e.team},${e.shift},${e.hours},${e.dailyTarget ? e.dailyTarget.orders : 14},99.2%`).join('\\n');
+        "EmpID,Name,Team,Shift,AttendedHours,OrdersCompleted,QualityAccuracy\n" +
+        (appState.employees || []).map(e => `${e.id},${e.name},${e.team},${e.shift},${e.hours != null ? e.hours : 7.5},${(e.dailyTarget && e.dailyTarget.orders) ? e.dailyTarget.orders : 16},${e.accuracyText || e.accuracy || '99.2%'}`).join('\n');
 
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
-      link.setAttribute("download", "PULSE_Custom_Report.csv");
+      link.setAttribute("download", "PULSE_Custom_Report_2026-11-23.csv");
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      showToast("Custom Query CSV exported successfully.");
+      showToast("Custom Report CSV exported successfully.");
     }
 
     /* ==========================================================================
-       10. CSV / EXCEL IMPORT CENTRE RENDERER
+       10. IMPORT DATA (CSV / EXCEL INGESTION) RENDERER
        ========================================================================== */
     function renderImportView() {
       const container = document.getElementById('import-content-container');
@@ -1228,15 +1497,15 @@ JS_CONTENT = """
       container.innerHTML = `
         <div class="card" style="margin-bottom: 24px;">
           <div class="card-title">
-            <span>Biometric Hardware CSV / Excel Ingestion</span>
+            <span>Import Biometric Attendance or Production CSV</span>
           </div>
           <div style="border: 2px dashed var(--slate-border); border-radius: 8px; padding: 36px; text-align: center; background: var(--midnight); margin-bottom: 20px;">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" style="margin-bottom: 12px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             <div style="font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 6px;">
-              Drop Biometric CSV Export File Here
+              Drop Attendance or Output CSV Here
             </div>
             <div style="font-size: 12px; color: var(--steel); margin-bottom: 16px;">
-              Supports standard TCP/IP machine punch formats (Emp ID, Timestamp, Event Type, Device ID)
+              Supports standard machine punch files (Employee ID, Timestamp, Event Type, Terminal ID)
             </div>
             <div style="display: flex; justify-content: center; gap: 12px;">
               <input type="file" id="csv-file-input" accept=".csv" style="display: none;" onchange="handleCSVFileSelected(event)" />
@@ -1244,7 +1513,7 @@ JS_CONTENT = """
                 Select Local CSV File
               </button>
               <button class="btn btn-gold btn-sm" onclick="loadSampleCSVData()">
-                Load Sample Turnstile Feed
+                Load Sample Machine Data
               </button>
             </div>
           </div>
@@ -1252,9 +1521,9 @@ JS_CONTENT = """
           <!-- Parsed Rows Preview -->
           <div id="import-preview-container" style="display: none;">
             <div class="card-title">
-              <span>Parsed Punch Records (Validation: 5 Passed, 0 Errors)</span>
+              <span>Preview Parsed Records (Validation: 5 Passed, 0 Errors)</span>
               <button class="btn btn-gold btn-sm" onclick="executeCSVImport()">
-                Execute Ingestion into Live State
+                Import Records into Live System
               </button>
             </div>
             <div class="data-table-container">
@@ -1298,7 +1567,7 @@ JS_CONTENT = """
           </tr>
         `).join('');
         previewContainer.style.display = 'block';
-        showToast('Sample biometric records parsed. Click Execute Ingestion to commit.');
+        showToast('Sample attendance records loaded. Click Import to add to live feed.');
       }
     }
 
@@ -1309,10 +1578,9 @@ JS_CONTENT = """
       const reader = new FileReader();
       reader.onload = function(e) {
         const text = e.target.result;
-        const lines = text.split('\\n').filter(l => l.trim().length > 0);
+        const lines = text.split('\n').filter(l => l.trim().length > 0);
         parsedImportRows = [];
 
-        // Skip header if present
         const startIndex = lines[0].toLowerCase().includes('emp') ? 1 : 0;
         for (let i = startIndex; i < lines.length; i++) {
           const cols = lines[i].split(',').map(c => c.trim().replace(/"/g, ''));
@@ -1352,11 +1620,14 @@ JS_CONTENT = """
       parsedImportRows.forEach(r => {
         appState.biometricPunches.unshift({
           id: `PUN-${Math.floor(1000 + Math.random() * 9000)}`,
+          punchId: `PUN-${Math.floor(1000 + Math.random() * 9000)}`,
           empId: r.empId,
           empName: r.empName,
           timestamp: r.timestamp,
+          timeIST: r.timestamp,
           type: r.type,
           device: r.device,
+          source: 'Ingested File Import',
           method: 'Ingested File Import',
           status: 'Verified'
         });
@@ -1364,12 +1635,12 @@ JS_CONTENT = """
 
       renderPunchTable();
       document.getElementById('import-preview-container').style.display = 'none';
-      showToast(`${parsedImportRows.length} records successfully committed to live biometric feed.`);
+      showToast(`${parsedImportRows.length} records successfully imported into live attendance feed.`);
       parsedImportRows = [];
     }
 
     /* ==========================================================================
-       11. EXISTING VIEWS (DASHBOARD, ATTENDANCE, LEAVE, PRODUCTION, QUALITY, AWARDS)
+       11. PERFORMANCE OVERVIEW (FORMERLY OPERATIONS DASHBOARD)
        ========================================================================== */
     function renderDashboard() {
       const container = document.getElementById('dashboard-content-container');
@@ -1377,42 +1648,45 @@ JS_CONTENT = """
       container.innerHTML = `
         <div class="metric-grid">
           <div class="metric-card">
-            <div class="metric-label">Active Attendance</div>
-            <div class="metric-value">34 / 40</div>
-            <div class="metric-context" style="color: var(--emerald);">85% Floor Presence</div>
+            <div class="metric-label">Staff Present Today</div>
+            <div class="metric-value">36 / 40</div>
+            <div class="metric-context" style="color: var(--emerald);">90% Floor Presence (3 Leave, 1 Absent)</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Keying Output</div>
+            <div class="metric-label">Orders Keyed</div>
             <div class="metric-value">142 Orders</div>
-            <div class="metric-context" style="color: var(--gold);">Target: 135</div>
+            <div class="metric-context" style="color: var(--gold);">Target: 135 (+5.2% ahead)</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Double-Check Rigor</div>
+            <div class="metric-label">Double-Check Results</div>
             <div class="metric-value">97.2%</div>
-            <div class="metric-context" style="color: #79D2B7;">Verified Compliant</div>
+            <div class="metric-context" style="color: #79D2B7;">138 Orders Formally Peer Verified</div>
           </div>
           <div class="metric-card">
-            <div class="metric-label">Melbourne Dispatch SLA</div>
-            <div class="metric-value">99.4%</div>
-            <div class="metric-context">On-Time Transfer</div>
+            <div class="metric-label">Quality Accuracy</div>
+            <div class="metric-value">98.6%</div>
+            <div class="metric-context">First-Pass Manufacturing Fit</div>
           </div>
         </div>
       `;
     }
 
+    /* ==========================================================================
+       12. ATTENDANCE REGISTER
+       ========================================================================== */
     function renderAttendanceTable() {
       const tbody = document.getElementById('attendance-tbody');
       if (!tbody) return;
 
-      tbody.innerHTML = appState.employees.map(e => `
+      tbody.innerHTML = (appState.employees || []).map(e => `
         <tr>
           <td><span style="font-family: var(--font-mono); color: var(--gold);">${e.id}</span></td>
           <td><strong>${e.name}</strong></td>
           <td>${e.team}</td>
           <td>${e.shift}</td>
-          <td><span style="font-family: var(--font-mono);">${e.lateMinutes > 0 ? '06:18 AM' : '05:54 AM'}</span></td>
-          <td><span style="font-family: var(--font-mono);">${e.status === 'Present' ? 'In Progress' : '14:26 PM'}</span></td>
-          <td><span style="font-family: var(--font-mono);">${e.hours}h</span></td>
+          <td><span style="font-family: var(--font-mono);">${e.checkin || (e.lateMinutes > 0 ? '06:18 AM' : '05:54 AM')}</span></td>
+          <td><span style="font-family: var(--font-mono);">${e.checkout || (e.status === 'Present' ? 'In Progress' : '14:26 PM')}</span></td>
+          <td><span style="font-family: var(--font-mono);">${e.hours != null ? e.hours : 7.5}h</span></td>
           <td><span class="status-badge ${e.status === 'Present' ? 'verified' : e.status === 'On Leave' ? 'warning' : 'out'}">${e.status}</span></td>
         </tr>
       `).join('');
@@ -1431,6 +1705,9 @@ JS_CONTENT = """
       });
     }
 
+    /* ==========================================================================
+       13. LEAVE REQUESTS
+       ========================================================================== */
     function renderLeaveTables() {
       const container = document.getElementById('leave-content-container');
       if (!container) return;
@@ -1445,7 +1722,7 @@ JS_CONTENT = """
                 <th>Employee Name</th>
                 <th>Leave Type</th>
                 <th>Requested Date</th>
-                <th>Reason (HR Protected)</th>
+                <th>Reason</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -1456,7 +1733,7 @@ JS_CONTENT = """
                   <td><strong style="color: var(--steel); font-family: var(--font-mono);">${l.id}</strong></td>
                   <td><strong>${l.empName}</strong> (${l.empId})</td>
                   <td>${l.type}</td>
-                  <td style="font-family: var(--font-mono);">${l.date}</td>
+                  <td style="font-family: var(--font-mono);">${l.dates || l.date || '2026-11-23'}</td>
                   <td>${l.reason}</td>
                   <td><span class="status-badge ${l.status === 'Approved' ? 'verified' : 'warning'}">${l.status}</span></td>
                   <td>
@@ -1473,10 +1750,11 @@ JS_CONTENT = """
     }
 
     function approveLeave(leaveId) {
-      const l = appState.leaveRequests.find(item => item.id === leaveId);
+      const l = (appState.leaveRequests || []).find(item => item.id === leaveId);
       if (l) {
         l.status = 'Approved';
         renderLeaveTables();
+        updateBadgeCounts();
         showToast(`Leave request #${leaveId} approved.`);
       }
     }
@@ -1487,13 +1765,15 @@ JS_CONTENT = """
       const date = document.getElementById('leave-date-input').value;
       const reason = document.getElementById('leave-reason-input').value;
 
-      const emp = appState.employees.find(e => e.id === empId);
+      const emp = (appState.employees || []).find(e => e.id === empId);
       const newLeave = {
         id: `LR-${Math.floor(100 + Math.random() * 900)}`,
         empId: empId,
         empName: emp ? emp.name : 'Unknown',
         type: type,
-        date: date,
+        date: date || '2026-11-24',
+        dates: date || '2026-11-24',
+        days: 1,
         reason: reason || 'Personal Leave',
         status: 'Pending'
       };
@@ -1501,9 +1781,13 @@ JS_CONTENT = """
       appState.leaveRequests.unshift(newLeave);
       closeModal('modal-apply-leave');
       renderLeaveTables();
+      updateBadgeCounts();
       showToast('Leave request submitted successfully.');
     }
 
+    /* ==========================================================================
+       14. DAILY WORK REPORT (PRODUCTION ENTRY & FLOOR LOG)
+       ========================================================================== */
     function renderProductionTable() {
       const container = document.getElementById('production-content-container');
       if (!container) return;
@@ -1517,11 +1801,11 @@ JS_CONTENT = """
                 <th>Record ID</th>
                 <th>Team / Cell</th>
                 <th>Shift</th>
-                <th>Orders Keyed</th>
-                <th>Flashings (m)</th>
+                <th>Orders Completed</th>
+                <th>Flashings (metres)</th>
                 <th>Bits & Parts</th>
                 <th>Double Checks</th>
-                <th>Accuracy</th>
+                <th>First-Pass Accuracy</th>
               </tr>
             </thead>
             <tbody>
@@ -1534,7 +1818,7 @@ JS_CONTENT = """
                   <td>${r.flashings}m</td>
                   <td>${r.bits}</td>
                   <td>${r.doubleChecks}</td>
-                  <td><span style="color: #79D2B7;">${r.accuracy}</span></td>
+                  <td><span style="color: #79D2B7;">${r.accuracy || '99.0%'}</span></td>
                 </tr>
               `).join('')}
             </tbody>
@@ -1558,43 +1842,78 @@ JS_CONTENT = """
         flashings: flashings,
         bits: bits,
         doubleChecks: checks,
-        accuracy: '99.0%'
+        accuracy: '99.1%'
       };
 
       appState.productionRecords.unshift(newRecord);
       closeModal('modal-production-entry');
       renderProductionTable();
-      showToast(`Recorded output for ${team} (${orders} orders, ${flashings}m flashings).`);
+      showToast(`Work recorded for ${team} (${orders} orders, ${flashings}m flashings).`);
     }
 
+    /* ==========================================================================
+       15. ERRORS & RESUPPLIES (ZERO-BLAME RCA)
+       ========================================================================== */
     function renderQualityCases() {
       const container = document.getElementById('quality-content-container');
       if (!container) return;
 
       const cases = appState.qualityCases || [];
       container.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 14px;">
-          ${cases.map(c => `
-            <div class="card" style="border-left: 4px solid ${c.status === 'Resolved' ? 'var(--emerald)' : 'var(--amber)'};">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                  <strong style="color: var(--white); font-size: 14px;">${c.id}: ${c.title}</strong>
-                  <span class="status-badge ${c.status === 'Resolved' ? 'verified' : 'warning'}">${c.status}</span>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          ${cases.map(c => {
+            const caseId = c.id || 'QC-084';
+            const problem = c.problem || c.title || 'Tooling angle variance on radius flashing';
+            const orderRef = c.orderRef || 'DSM-MEL-8841';
+            const client = c.client || 'ProBuild Melbourne';
+            const spec = c.spec || '0.9mm Colorbond Monument Flashing';
+            const reported = c.jobDate || c.reportedDate || '23 Nov 2026';
+            const investigator = c.investigator || 'Manoj Tiwari (Quality Lead)';
+            const rootCause = c.rootCause || 'Drawing markup did not account for 3mm press-brake springback on thick gauge.';
+            const cost = c.confirmedCost || '$185 AUD';
+            const action = c.preventiveAction || c.action || 'Updated folding template library to automatically compensate for gauge springback.';
+            const status = c.status || 'Action Taken';
+
+            return `
+              <div class="card" style="border-left: 4px solid ${status === 'Closed' || status === 'Resolved' ? 'var(--emerald)' : 'var(--amber)'};">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--slate-border);">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <strong style="color: var(--white); font-size: 15px;">${caseId}: ${problem}</strong>
+                      <span class="status-badge ${status === 'Closed' ? 'verified' : 'warning'}">${status}</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--steel); margin-top: 4px;">
+                      Order: <strong>${orderRef}</strong> • Client: <strong>${client}</strong> • Spec: <strong>${spec}</strong>
+                    </div>
+                  </div>
+                  <div style="text-align: right; font-family: var(--font-mono); font-size: 11px; color: var(--gold);">
+                    Reported: ${reported}
+                  </div>
                 </div>
-                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--gold);">Reported: Melbourne Dry-Fit</span>
+
+                <!-- Question and Answer Diagnostic Format -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; font-size: 13px; margin-bottom: 12px;">
+                  <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                    <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">1. Root Cause Analysis</div>
+                    <div style="color: var(--porcelain); margin-top: 4px; line-height: 1.5;">${rootCause}</div>
+                    <div style="font-size: 11px; color: var(--steel-dim); margin-top: 4px;">Investigator: ${investigator}</div>
+                  </div>
+                  <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px;">
+                    <div style="font-size: 11px; color: var(--steel); text-transform: uppercase;">2. Preventive Action (Zero-Blame Learning)</div>
+                    <div style="color: #79D2B7; margin-top: 4px; line-height: 1.5;">${action}</div>
+                    <div style="font-size: 11px; color: var(--gold); margin-top: 4px;">Cost: ${cost} (absorbed via drawing fix)</div>
+                  </div>
+                </div>
               </div>
-              <div style="font-size: 13px; color: var(--porcelain); margin-bottom: 8px; line-height: 1.5;">
-                ${c.description}
-              </div>
-              <div style="padding: 10px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px; font-size: 12px; color: var(--steel);">
-                <strong style="color: var(--gold);">Zero-Blame Learning Action:</strong> ${c.action}
-              </div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       `;
     }
 
+    /* ==========================================================================
+       16. EMPLOYEE RECOGNITION (AWARDS)
+       ========================================================================== */
     function renderAwards() {
       const container = document.getElementById('recognition-content-container');
       if (!container) return;
@@ -1602,14 +1921,22 @@ JS_CONTENT = """
       const awards = appState.awards || [];
       container.innerHTML = `
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-          ${awards.map(a => `
-            <div class="card" style="border-top: 3px solid var(--gold);">
-              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 6px;">${a.category}</div>
-              <h3 style="font-size: 17px; color: var(--white); margin-bottom: 4px;">${a.empName}</h3>
-              <div style="font-size: 12px; color: var(--steel); margin-bottom: 12px;">${a.team} • Nominated by ${a.nominatedBy}</div>
-              <p style="font-size: 13px; color: var(--porcelain); line-height: 1.6;">"${a.citation}"</p>
-            </div>
-          `).join('')}
+          ${awards.map(a => {
+            const name = a.empName || a.name || 'Team Colleague';
+            const team = a.team || 'India Operations';
+            const cat = a.category || 'Quality Excellence';
+            const citation = a.citation || a.achievement || 'Demonstrated outstanding dedication.';
+            const nomBy = a.nominatedBy || 'Peer Colleague';
+
+            return `
+              <div class="card" style="border-top: 3px solid var(--gold);">
+                <div style="font-family: var(--font-mono); font-size: 11px; color: var(--gold); margin-bottom: 6px;">${cat}</div>
+                <h3 style="font-size: 17px; color: var(--white); margin-bottom: 4px;">${name}</h3>
+                <div style="font-size: 12px; color: var(--steel); margin-bottom: 12px;">${team} • Nominated by ${nomBy}</div>
+                <p style="font-size: 13px; color: var(--porcelain); line-height: 1.6;">"${citation}"</p>
+              </div>
+            `;
+          }).join('')}
         </div>
       `;
     }
@@ -1619,14 +1946,16 @@ JS_CONTENT = """
       const category = document.getElementById('nominate-category').value;
       const citation = document.getElementById('nominate-citation').value;
 
-      const emp = appState.employees.find(e => e.id === empId);
+      const emp = (appState.employees || []).find(e => e.id === empId);
       const newAward = {
         id: `AWD-${Math.floor(100 + Math.random() * 900)}`,
         empId: empId,
         empName: emp ? emp.name : 'Unknown',
+        name: emp ? emp.name : 'Unknown',
         team: emp ? emp.team : 'India Operations',
         category: category,
         citation: citation || 'Demonstrated outstanding teamwork and craftsmanship.',
+        achievement: citation || 'Demonstrated outstanding teamwork and craftsmanship.',
         nominatedBy: currentRole === 'PRESENTER' ? 'Rakshith' : 'Team Colleague'
       };
 
@@ -1636,23 +1965,29 @@ JS_CONTENT = """
       showToast(`Nomination recorded for ${emp ? emp.name : empId}.`);
     }
 
+    /* ==========================================================================
+       17. USERS & PERMISSIONS (ROLES VIEW)
+       ========================================================================== */
     function renderRolesView() {
       const container = document.getElementById('roles-content-container');
       if (!container) return;
 
       container.innerHTML = `
         <div class="card">
-          <div class="card-title">Role Permissions & Privacy Governance Matrix</div>
+          <div class="card-title">User Roles & Access Permissions</div>
+          <p style="font-size: 13px; color: var(--steel); margin-bottom: 16px;">
+            PULSE includes role-based access control to protect sensitive individual information while ensuring everyone has the operational visibility they need.
+          </p>
           <div class="data-table-container">
             <table class="data-table">
               <thead>
                 <tr>
-                  <th>Role</th>
+                  <th>User Role</th>
                   <th>Attendance & Clocks</th>
                   <th>Production Logs</th>
-                  <th>Quality RCA Cases</th>
-                  <th>Confidential Mentorship</th>
-                  <th>Export Controls</th>
+                  <th>Errors & Quality RCA</th>
+                  <th>Mentorship Notes</th>
+                  <th>Export Reports</th>
                 </tr>
               </thead>
               <tbody>
@@ -1665,7 +2000,7 @@ JS_CONTENT = """
                   <td><span class="status-badge verified">Enabled</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Management (MD)</strong></td>
+                  <td><strong>Management (David Harrison)</strong></td>
                   <td><span class="status-badge verified">Full Visibility</span></td>
                   <td><span class="status-badge verified">Full Access</span></td>
                   <td><span class="status-badge verified">Full Access</span></td>
@@ -1673,19 +2008,19 @@ JS_CONTENT = """
                   <td><span class="status-badge verified">Enabled</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Team Leader</strong></td>
+                  <td><strong>Team Leader (Priya Nair)</strong></td>
                   <td><span class="status-badge verified">Team Scope</span></td>
-                  <td><span class="status-badge verified">Log Output</span></td>
+                  <td><span class="status-badge verified">Record Work</span></td>
                   <td><span class="status-badge verified">Participate</span></td>
                   <td><span class="status-badge verified">Unlocked</span></td>
                   <td><span class="status-badge verified">Enabled</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Employee</strong></td>
+                  <td><strong>Employee (Rohan Sharma)</strong></td>
                   <td><span class="status-badge verified">Personal & Feed</span></td>
                   <td><span class="status-badge verified">Personal View</span></td>
                   <td><span class="status-badge verified">Learning View</span></td>
-                  <td><span class="status-badge alert">Restricted / Locked</span></td>
+                  <td><span class="status-badge alert">Protected / Locked</span></td>
                   <td><span class="status-badge warning">View Only</span></td>
                 </tr>
               </tbody>
@@ -1736,5 +2071,3 @@ JS_CONTENT = """
       showToast('Master demo data reset: All simulated records restored to pristine showcase state.');
     }
 """
-
-print("parts_js.py created successfully.")

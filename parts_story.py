@@ -149,7 +149,7 @@ def get_story_html(dsm_logo_b64):
             <p style="font-size: 13px; color: var(--steel); line-height: 1.7; margin-bottom: 18px;">
               PULSE is engineered to empower operators and team leaders with instant self-awareness, seamless handovers, and transparent operational data — not fear-driven rankings.
             </p>
-            <div style="font-size: 12px; color: var(--gold); font-family: var(--font-mono);">Design Sheetmetal India • 2027 Strategic Roadmap</div>
+            <div style="font-size: 12px; color: var(--gold); font-family: var(--font-mono);">Design Sheetmetal India • Strategic Operations Roadmap</div>
           </div>
         </div>
       </section>
