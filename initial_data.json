@@ -1,0 +1,576 @@
+{
+  "employees": [
+    {
+      "id": "EMP-101",
+      "name": "Rohan Sharma",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift A",
+      "role": "Senior Keying Specialist",
+      "status": "Present",
+      "checkin": "05:54 AM",
+      "accuracy": 99.4,
+      "avatar": "RS"
+    },
+    {
+      "id": "EMP-102",
+      "name": "Priya Nair",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift A",
+      "role": "Team Leader",
+      "status": "Present",
+      "checkin": "05:48 AM",
+      "accuracy": 99.8,
+      "avatar": "PN"
+    },
+    {
+      "id": "EMP-103",
+      "name": "Vikram Patel",
+      "team": "Team Beta (Architectural Panels)",
+      "shift": "Shift B",
+      "role": "Panel Detailer",
+      "status": "Approved Leave",
+      "checkin": "--",
+      "accuracy": 98.6,
+      "avatar": "VP"
+    },
+    {
+      "id": "EMP-104",
+      "name": "Ananya Sen",
+      "team": "Team Gamma (Double-Check & Audit)",
+      "shift": "Shift A",
+      "role": "Senior Checking Auditor",
+      "status": "Present",
+      "checkin": "05:58 AM",
+      "accuracy": 99.9,
+      "avatar": "AS"
+    },
+    {
+      "id": "EMP-105",
+      "name": "Rajesh Kumar",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift A",
+      "role": "Keying Specialist",
+      "status": "Present",
+      "checkin": "06:02 AM",
+      "accuracy": 98.9,
+      "avatar": "RK"
+    },
+    {
+      "id": "EMP-106",
+      "name": "Sneha Reddy",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift B",
+      "role": "Keying Specialist",
+      "status": "Present",
+      "checkin": "13:50 PM",
+      "accuracy": 99.1,
+      "avatar": "SR"
+    },
+    {
+      "id": "EMP-107",
+      "name": "Karthik Sundaram",
+      "team": "Team Gamma (Double-Check & Audit)",
+      "shift": "Shift B",
+      "role": "Double-Check Specialist",
+      "status": "Present",
+      "checkin": "13:55 PM",
+      "accuracy": 99.7,
+      "avatar": "KS"
+    },
+    {
+      "id": "EMP-108",
+      "name": "Meera Joshi",
+      "team": "Team Beta (Architectural Panels)",
+      "shift": "Shift A",
+      "role": "Panel Detailer",
+      "status": "Present",
+      "checkin": "05:51 AM",
+      "accuracy": 99.2,
+      "avatar": "MJ"
+    },
+    {
+      "id": "EMP-109",
+      "name": "Amit Verma",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift C",
+      "role": "Keying Specialist",
+      "status": "Present",
+      "checkin": "21:50 PM",
+      "accuracy": 98.7,
+      "avatar": "AV"
+    },
+    {
+      "id": "EMP-110",
+      "name": "Pooja Gupta",
+      "team": "Team Beta (Architectural Panels)",
+      "shift": "Shift A",
+      "role": "Team Leader",
+      "status": "Present",
+      "checkin": "05:45 AM",
+      "accuracy": 99.6,
+      "avatar": "PG"
+    },
+    {
+      "id": "EMP-111",
+      "name": "Arjun Nair",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift A",
+      "role": "Keying Specialist",
+      "status": "Present",
+      "checkin": "05:59 AM",
+      "accuracy": 99.0,
+      "avatar": "AN"
+    },
+    {
+      "id": "EMP-112",
+      "name": "Neha Iyer",
+      "team": "Team Beta (Architectural Panels)",
+      "shift": "Shift B",
+      "role": "Panel Detailer",
+      "status": "Approved Leave",
+      "checkin": "--",
+      "accuracy": 98.4,
+      "avatar": "NI"
+    },
+    {
+      "id": "EMP-113",
+      "name": "Sanjay Menon",
+      "team": "Team Gamma (Double-Check & Audit)",
+      "shift": "Shift C",
+      "role": "Double-Check Auditor",
+      "status": "Present",
+      "checkin": "21:52 PM",
+      "accuracy": 99.8,
+      "avatar": "SM"
+    },
+    {
+      "id": "EMP-114",
+      "name": "Kavita Patil",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift B",
+      "role": "Keying Specialist",
+      "status": "Late",
+      "checkin": "14:18 PM",
+      "accuracy": 98.2,
+      "avatar": "KP"
+    },
+    {
+      "id": "EMP-115",
+      "name": "Rahul Deshmukh",
+      "team": "Team Beta (Architectural Panels)",
+      "shift": "Shift C",
+      "role": "Night Operations Lead",
+      "status": "Present",
+      "checkin": "21:44 PM",
+      "accuracy": 99.5,
+      "avatar": "RD"
+    },
+    {
+      "id": "EMP-116",
+      "name": "Deepa Krishnan",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift A",
+      "role": "Keying Specialist",
+      "status": "Present",
+      "checkin": "05:56 AM",
+      "accuracy": 99.3,
+      "avatar": "DK"
+    },
+    {
+      "id": "EMP-117",
+      "name": "Manoj Tiwari",
+      "team": "Team Gamma (Double-Check & Audit)",
+      "shift": "Shift A",
+      "role": "Quality Lead",
+      "status": "Present",
+      "checkin": "05:40 AM",
+      "accuracy": 100.0,
+      "avatar": "MT"
+    },
+    {
+      "id": "EMP-118",
+      "name": "Sunita Rao",
+      "team": "Team Beta (Architectural Panels)",
+      "shift": "Shift B",
+      "role": "Panel Detailer",
+      "status": "Absent",
+      "checkin": "--",
+      "accuracy": 97.9,
+      "avatar": "SR"
+    },
+    {
+      "id": "EMP-119",
+      "name": "Aditya Bhat",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift C",
+      "role": "Keying Specialist",
+      "status": "Present",
+      "checkin": "21:55 PM",
+      "accuracy": 98.8,
+      "avatar": "AB"
+    },
+    {
+      "id": "EMP-120",
+      "name": "Divya Hegde",
+      "team": "Team Beta (Architectural Panels)",
+      "shift": "Shift A",
+      "role": "Panel Detailer",
+      "status": "Present",
+      "checkin": "06:01 AM",
+      "accuracy": 99.2,
+      "avatar": "DH"
+    },
+    {
+      "id": "EMP-121",
+      "name": "Suresh Nair",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift B",
+      "role": "Keying Specialist",
+      "status": "Present",
+      "checkin": "13:58 PM",
+      "accuracy": 99.0,
+      "avatar": "SN"
+    },
+    {
+      "id": "EMP-122",
+      "name": "Radhika Das",
+      "team": "Team Gamma (Double-Check & Audit)",
+      "shift": "Shift B",
+      "role": "Double-Check Specialist",
+      "status": "Present",
+      "checkin": "13:52 PM",
+      "accuracy": 99.6,
+      "avatar": "RD"
+    },
+    {
+      "id": "EMP-123",
+      "name": "Harish Pillai",
+      "team": "Team Beta (Architectural Panels)",
+      "shift": "Shift C",
+      "role": "Panel Detailer",
+      "status": "Present",
+      "checkin": "21:49 PM",
+      "accuracy": 98.5,
+      "avatar": "HP"
+    },
+    {
+      "id": "EMP-124",
+      "name": "Swati Kulkarni",
+      "team": "Team Alpha (Flashings & Trims)",
+      "shift": "Shift A",
+      "role": "Keying Specialist",
+      "status": "Present",
+      "checkin": "05:52 AM",
+      "accuracy": 99.5,
+      "avatar": "SK"
+    }
+  ],
+  "leaveRequests": [
+    {
+      "id": "LR-401",
+      "empId": "EMP-103",
+      "empName": "Vikram Patel",
+      "team": "Team Beta",
+      "type": "Annual Leave",
+      "dates": "2027-03-24 to 2027-03-26",
+      "days": 3,
+      "reason": "Family wedding in Ahmedabad (Confidential)",
+      "status": "Approved",
+      "submittedAt": "2027-03-20"
+    },
+    {
+      "id": "LR-402",
+      "empId": "EMP-112",
+      "empName": "Neha Iyer",
+      "team": "Team Beta",
+      "type": "Medical Leave",
+      "dates": "2027-03-24 to 2027-03-25",
+      "days": 2,
+      "reason": "Doctor appointment and recovery (Confidential)",
+      "status": "Approved",
+      "submittedAt": "2027-03-22"
+    },
+    {
+      "id": "LR-403",
+      "empId": "EMP-116",
+      "empName": "Deepa Krishnan",
+      "team": "Team Alpha",
+      "type": "Comp-Off",
+      "dates": "2027-03-25",
+      "days": 1,
+      "reason": "Compensatory day off for weekend overtime support",
+      "status": "Pending",
+      "submittedAt": "2027-03-23"
+    },
+    {
+      "id": "LR-404",
+      "empId": "EMP-111",
+      "empName": "Arjun Nair",
+      "team": "Team Alpha",
+      "type": "Casual Leave",
+      "dates": "2027-03-26",
+      "days": 1,
+      "reason": "Personal family commitment (Private)",
+      "status": "Pending",
+      "submittedAt": "2027-03-23"
+    }
+  ],
+  "qualityCases": [
+    {
+      "id": "QC-2027-084",
+      "orderRef": "ORD-AU-89421",
+      "jobDate": "2027-03-22",
+      "client": "Melbourne Roofing & Facades Pty Ltd",
+      "spec": "Ridge Flashing 0.55mm Colorbond Monument (L: 3200mm, Girth: 450mm, 4 Bends)",
+      "problem": "Length variance (+35mm over length on bend 3) discovered during site dry-fit in Dandenong South.",
+      "stageIndex": 1,
+      "issueCategory": "Dimension Mismatch",
+      "possibleCauses": [
+        "Keying oversight",
+        "Unclear customer drawing",
+        "Checking oversight",
+        "Customer spec change",
+        "Machine calibration tolerance"
+      ],
+      "selectedCause": "Unclear customer drawing",
+      "evidence": "Customer hand-markup Rev B showed conflicting dimension 3235mm vs CAD titleblock 3200mm.",
+      "notes": "Keying specialist followed hand notation without confirmation RFI. Auditor missed titleblock clash.",
+      "correctiveAction": "Implemented automated drawing clash prompt in Pulse keying module for manual markups.",
+      "lossMaterial": 145,
+      "lossLabour": 60,
+      "lossFreight": 75,
+      "currency": "AUD"
+    },
+    {
+      "id": "QC-2027-085",
+      "orderRef": "ORD-AU-89390",
+      "jobDate": "2027-03-21",
+      "client": "Apex Commercial Sheetmetal Victoria",
+      "spec": "Barge Roll Corner Capping - 0.55mm Surfmist (Angle: 135 deg vs 125 deg)",
+      "problem": "Corner capping angle mismatch during installation on industrial warehouse portal frame.",
+      "stageIndex": 2,
+      "issueCategory": "Angle Discrepancy",
+      "possibleCauses": [
+        "Keying oversight",
+        "Customer spec change",
+        "Software/system issue",
+        "Unclear customer drawing"
+      ],
+      "selectedCause": "Keying oversight",
+      "evidence": "Input field typed 125 deg instead of 135 deg; secondary double-checker verified quantity but missed angle check.",
+      "notes": "Zero-blame review: Keyer was processing high-rush queue. Enhanced double-check checklist to highlight non-90 deg bends.",
+      "correctiveAction": "Pulse now flags acute and obtuse angles exceeding 15 deg variance for mandatory dual verification.",
+      "lossMaterial": 90,
+      "lossLabour": 40,
+      "lossFreight": 50,
+      "currency": "AUD"
+    },
+    {
+      "id": "QC-2027-086",
+      "orderRef": "ORD-AU-89312",
+      "jobDate": "2027-03-19",
+      "client": "Bayside Architectural Cladding",
+      "spec": "Valley Gutter with 15mm Safety Hem - 0.55mm Basalt",
+      "problem": "Hemming clearance insufficient for standard bracket fastening.",
+      "stageIndex": 3,
+      "issueCategory": "Manufacturing Specification",
+      "possibleCauses": [
+        "Manufacturing issue",
+        "Customer spec change",
+        "Drawing ambiguity"
+      ],
+      "selectedCause": "Customer spec change",
+      "evidence": "Architect revised bracket spacing without updating gutter drawing revision number.",
+      "notes": "Verified client revised framing specs after drafting release. Melbourne project manager confirmed.",
+      "correctiveAction": "Resupply expedited with priority tag; client billed standard variation fee.",
+      "lossMaterial": 210,
+      "lossLabour": 55,
+      "lossFreight": 90,
+      "currency": "AUD"
+    },
+    {
+      "id": "QC-2027-087",
+      "orderRef": "ORD-AU-89240",
+      "jobDate": "2027-03-17",
+      "client": "Geelong Metal Solutions",
+      "spec": "Custom Apron Flashing - 0.55mm Woodland Grey",
+      "problem": "Slight paint scuff along fold line during Melbourne factory handling.",
+      "stageIndex": 4,
+      "issueCategory": "Factory Handling",
+      "possibleCauses": [
+        "Manufacturing issue",
+        "Packaging oversight"
+      ],
+      "selectedCause": "Manufacturing issue",
+      "evidence": "Inspection report at Tullamarine warehouse showed protective film peel during bending.",
+      "notes": "No keying or drafting error. Sheetmetal folding machine die surface inspected and polished.",
+      "correctiveAction": "Closed. Preventative maintenance logged on Melbourne brake press #3.",
+      "lossMaterial": 70,
+      "lossLabour": 30,
+      "lossFreight": 0,
+      "currency": "AUD"
+    }
+  ],
+  "productionRecords": [
+    {
+      "id": "PR-1001",
+      "date": "2027-03-24",
+      "empId": "EMP-101",
+      "empName": "Rohan Sharma",
+      "team": "Team Alpha",
+      "shift": "Shift A",
+      "orders": 28,
+      "flashings": 194,
+      "bits": 58,
+      "doubleChecks": 27,
+      "status": "Approved",
+      "remarks": "Monument ridge flashings completed without rework"
+    },
+    {
+      "id": "PR-1002",
+      "date": "2027-03-24",
+      "empId": "EMP-105",
+      "empName": "Rajesh Kumar",
+      "team": "Team Alpha",
+      "shift": "Shift A",
+      "orders": 24,
+      "flashings": 165,
+      "bits": 44,
+      "doubleChecks": 22,
+      "status": "Approved",
+      "remarks": "High-complexity custom tapered valley gutters"
+    },
+    {
+      "id": "PR-1003",
+      "date": "2027-03-24",
+      "empId": "EMP-108",
+      "empName": "Meera Joshi",
+      "team": "Team Beta",
+      "shift": "Shift A",
+      "orders": 21,
+      "flashings": 142,
+      "bits": 38,
+      "doubleChecks": 20,
+      "status": "Approved",
+      "remarks": "Standing seam architectural facade panels"
+    },
+    {
+      "id": "PR-1004",
+      "date": "2027-03-24",
+      "empId": "EMP-111",
+      "empName": "Arjun Nair",
+      "team": "Team Alpha",
+      "shift": "Shift A",
+      "orders": 26,
+      "flashings": 180,
+      "bits": 52,
+      "doubleChecks": 25,
+      "status": "Approved",
+      "remarks": "Standard Colorbond barge rolls and apron flashings"
+    },
+    {
+      "id": "PR-1005",
+      "date": "2027-03-24",
+      "empId": "EMP-116",
+      "empName": "Deepa Krishnan",
+      "team": "Team Alpha",
+      "shift": "Shift A",
+      "orders": 25,
+      "flashings": 172,
+      "bits": 49,
+      "doubleChecks": 24,
+      "status": "Approved",
+      "remarks": "Commercial parapet capping order bundle"
+    },
+    {
+      "id": "PR-1006",
+      "date": "2027-03-24",
+      "empId": "EMP-120",
+      "empName": "Divya Hegde",
+      "team": "Team Beta",
+      "shift": "Shift A",
+      "orders": 22,
+      "flashings": 150,
+      "bits": 42,
+      "doubleChecks": 21,
+      "status": "Approved",
+      "remarks": "Corrugated roof penetration flashings"
+    },
+    {
+      "id": "PR-1007",
+      "date": "2027-03-24",
+      "empId": "EMP-124",
+      "empName": "Swati Kulkarni",
+      "team": "Team Alpha",
+      "shift": "Shift A",
+      "orders": 27,
+      "flashings": 188,
+      "bits": 55,
+      "doubleChecks": 26,
+      "status": "Approved",
+      "remarks": "Custom box gutters with expansion joints"
+    }
+  ],
+  "awards": [
+    {
+      "category": "Employee of the Day",
+      "name": "Rohan Sharma",
+      "role": "Senior Keying Specialist",
+      "team": "Team Alpha (Flashings & Trims)",
+      "achievement": "Keyed 194 flashings with zero drawing discrepancies across 28 complex multi-bend orders.",
+      "scores": {
+        "Quality": "99.4%",
+        "Productivity": "194 units",
+        "Complexity": "Tier 3 Custom",
+        "Reliability": "100%"
+      },
+      "avatar": "RS",
+      "badge": "Gold Precision Star"
+    },
+    {
+      "category": "Employee of the Week",
+      "name": "Ananya Sen",
+      "role": "Senior Checking Auditor",
+      "team": "Team Gamma (Audit)",
+      "achievement": "Audited 182 orders, identifying 4 subtle architectural drawing ambiguities before fabrication.",
+      "scores": {
+        "Quality": "99.9%",
+        "Productivity": "182 audits",
+        "Complexity": "Multi-tier Facades",
+        "Reliability": "100%"
+      },
+      "avatar": "AS",
+      "badge": "Shield of Accuracy"
+    },
+    {
+      "category": "Employee of the Month",
+      "name": "Manoj Tiwari",
+      "role": "Quality Lead",
+      "team": "Team Gamma (Audit)",
+      "achievement": "Pioneered standardized double-check checklist for complex tapered valley gutters, dropping resupplies by 30%.",
+      "scores": {
+        "Quality": "100%",
+        "Productivity": "Leadership",
+        "Complexity": "Process Design",
+        "Reliability": "100%"
+      },
+      "avatar": "MT",
+      "badge": "Operational Master"
+    },
+    {
+      "category": "Employee of the Year",
+      "name": "Priya Nair",
+      "role": "Shift A Team Leader",
+      "team": "Team Alpha (Flashings & Trims)",
+      "achievement": "Led Shift A to an unblemished 99.7% delivery SLA across 14,200 Australian sheet-metal orders.",
+      "scores": {
+        "Quality": "99.8%",
+        "Productivity": "Shift SLA 99.7%",
+        "Complexity": "Operational Command",
+        "Reliability": "Flawless"
+      },
+      "avatar": "PN",
+      "badge": "Grand Laureate 2026"
+    }
+  ]
+}
