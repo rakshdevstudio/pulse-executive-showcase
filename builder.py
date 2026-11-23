@@ -1945,7 +1945,7 @@ html_template = """<!DOCTYPE html>
           <div style="display: inline-flex; align-items: center; gap: 10px; padding: 7px 18px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border); border-radius: 20px; font-size: 13px; color: var(--porcelain); margin-bottom: 24px;">
             <span style="color: var(--gold);">Presented by</span>
             <strong>Rakshith</strong>
-            <span style="color: var(--steel);">| Lead Systems Architect & Operational Strategist</span>
+            <span style="color: var(--steel);">| Operational Strategist</span>
           </div>
           <div class="scene-1-cta">
             <button class="btn-gold" onclick="nextScene()">
@@ -2362,7 +2362,7 @@ html_template = """<!DOCTYPE html>
           <div class="proposal-banner">
             <div class="proposal-banner-title">STRATEGIC TECHNOLOGY & OPERATIONS PROPOSAL — 2027</div>
             <div class="proposal-banner-subtitle">PULSE: Workforce Operations & Performance Intelligence Platform</div>
-            <div class="proposal-presenter-badge">Prepared & Presented by <strong>Rakshith</strong> • Lead Systems Architect & Operational Strategist</div>
+            <div class="proposal-presenter-badge">Prepared & Presented by <strong>Rakshith</strong> • Operational Strategist</div>
           </div>
 
           <div class="proposal-asks-grid">
@@ -2455,7 +2455,7 @@ html_template = """<!DOCTYPE html>
         <div class="role-switcher-wrap">
           <span class="role-label">Active Role:</span>
           <select class="role-select" id="role-select" onchange="onRoleChange(this.value)">
-            <option value="PRESENTER" selected>Presenter (Rakshith, Systems Architect)</option>
+            <option value="PRESENTER" selected>Presenter (Rakshith, Operational Strategist)</option>
             <option value="MANAGEMENT">Management (David Harrison, MD)</option>
             <option value="TEAM_LEADER">Team Leader (Priya Nair, Shift A)</option>
             <option value="EMPLOYEE">Employee (Rohan Sharma, Keying)</option>
@@ -2476,7 +2476,7 @@ html_template = """<!DOCTYPE html>
           <div class="user-avatar" id="user-avatar-badge" style="background: var(--gold-dim); color: var(--gold); border-color: var(--gold);">RK</div>
           <div class="user-meta">
             <span class="user-name" id="user-name-display">Rakshith</span>
-            <span class="user-role-title" id="user-role-display">Lead Systems Architect & Operational Strategist</span>
+            <span class="user-role-title" id="user-role-display">Operational Strategist</span>
           </div>
         </div>
 
@@ -3548,7 +3548,7 @@ html_template = """<!DOCTYPE html>
     function onRoleChange(role) {
       currentRole = role;
       const roleProfiles = {
-        'PRESENTER': { name: 'Rakshith', title: 'Lead Systems Architect & Operational Strategist', avatar: 'RK' },
+        'PRESENTER': { name: 'Rakshith', title: 'Operational Strategist', avatar: 'RK' },
         'MANAGEMENT': { name: 'David Harrison', title: 'Managing Director', avatar: 'DH' },
         'TEAM_LEADER': { name: 'Priya Nair', title: 'Shift A Team Leader', avatar: 'PN' },
         'EMPLOYEE': { name: 'Rohan Sharma', title: 'Senior Keying Specialist', avatar: 'RS' },

@@ -245,7 +245,7 @@ JS_CONTENT = """
     function onRoleChange(role) {
       currentRole = role;
       const profiles = {
-        'PRESENTER': { name: 'Rakshith', title: 'Lead Systems Architect & Operational Strategist', avatar: 'RK' },
+        'PRESENTER': { name: 'Rakshith', title: 'Operational Strategist', avatar: 'RK' },
         'MANAGEMENT': { name: 'David Harrison', title: 'Managing Director', avatar: 'DH' },
         'TEAM_LEADER': { name: 'Priya Nair', title: 'Shift A Team Leader', avatar: 'PN' },
         'EMPLOYEE': { name: 'Rohan Sharma', title: 'Senior Keying Specialist', avatar: 'RS' },
@@ -645,7 +645,7 @@ JS_CONTENT = """
                 Restricted Confidential Section
               </div>
               <div style="font-size: 12px; color: var(--steel); max-width: 480px; margin: 0 auto;">
-                Individual supervisory mentorship notes, private development milestones, and salary reviews are restricted to Team Leaders, Management, and Systems Architects.
+                Individual supervisory mentorship notes, private development milestones, and salary reviews are restricted to Team Leaders, Management, and Operational Strategists.
               </div>
             </div>
           ` : `

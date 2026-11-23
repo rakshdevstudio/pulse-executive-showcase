@@ -59,7 +59,7 @@ def get_story_html(dsm_logo_b64):
           <div style="display: inline-flex; align-items: center; gap: 10px; padding: 7px 18px; background: rgba(24, 38, 49, 0.7); border: 1px solid var(--gold-border); border-radius: 20px; font-size: 13px; color: var(--porcelain); margin-bottom: 24px;">
             <span style="color: var(--gold);">Presented by</span>
             <strong>Rakshith</strong>
-            <span style="color: var(--steel);">| Lead Systems Architect & Operational Strategist</span>
+            <span style="color: var(--steel);">| Operational Strategist</span>
           </div>
           <div>
             <button class="btn btn-gold" onclick="nextScene()" style="padding: 12px 28px; font-size: 14px;">
@@ -331,7 +331,7 @@ def get_story_html(dsm_logo_b64):
         <div class="scene-title-badge">Leadership Decision</div>
         <h2 class="scene-headline">Strategic Proposal & <span class="gold-highlight">Implementation Directives</span></h2>
         <p class="scene-narrative">
-          Presented by <strong>Rakshith</strong> (Lead Systems Architect & Operational Strategist) to the Managing Director and Executive Leadership of Design Sheetmetal.
+          Presented by <strong>Rakshith</strong> (Operational Strategist) to the Managing Director and Executive Leadership of Design Sheetmetal.
         </p>
         <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px;">
           <div class="card" style="padding: 16px; border-top: 3px solid var(--gold);">

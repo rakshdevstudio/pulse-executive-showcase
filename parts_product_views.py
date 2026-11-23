@@ -33,7 +33,7 @@ def get_product_views_html(dsm_logo_b64):
         <div class="role-badge-container">
           <span class="role-label">Active Role:</span>
           <select class="role-select" id="role-select" onchange="onRoleChange(this.value)">
-            <option value="PRESENTER" selected>Presenter (Rakshith, Systems Architect)</option>
+            <option value="PRESENTER" selected>Presenter (Rakshith, Operational Strategist)</option>
             <option value="MANAGEMENT">Management (David Harrison, MD)</option>
             <option value="TEAM_LEADER">Team Leader (Priya Nair, Shift A)</option>
             <option value="EMPLOYEE">Employee (Rohan Sharma, Keying Specialist)</option>
@@ -45,7 +45,7 @@ def get_product_views_html(dsm_logo_b64):
           <div class="user-avatar" id="user-avatar-badge">RK</div>
           <div class="user-meta">
             <span class="user-name" id="user-name-display">Rakshith</span>
-            <span class="user-role-title" id="user-role-display">Lead Systems Architect & Operational Strategist</span>
+            <span class="user-role-title" id="user-role-display">Operational Strategist</span>
           </div>
         </div>
 
