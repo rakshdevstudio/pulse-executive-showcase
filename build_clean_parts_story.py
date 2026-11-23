@@ -75,54 +75,122 @@ def get_story_html(dsm_logo_b64):
 
       <!-- SCENE 2: THE CURRENT CHALLENGE -->
       <section class="scene-slide" id="scene-2">
-        <div class="scene-title-badge">Current Operations</div>
+        <div class="scene-title-badge">Current Operational Reality</div>
         <h2 class="scene-headline">Our Teams Work Hard. <span class="gold-highlight">Our Reports Work Separately.</span></h2>
         <p class="scene-narrative">
           Every day, our team leaders track attendance, order keying, flashings, double-checking, leave and quality issues. Much of this information is maintained through separate manual reports.
         </p>
 
-        <!-- 3 Visual Report Cards -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 24px;">
-          <div class="card" style="border-top: 3px solid var(--amber); background: rgba(24, 38, 49, 0.7);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--amber);">01 — ATTENDANCE & LEAVE</span>
-              <span style="font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">Daily Shift Sheets</span>
+        <!-- Floating Disconnected Sheets & Interactive Transformation Stage -->
+        <div class="sheets-stage" id="sheets-stage-container">
+          <!-- Sheet 1: Attendance -->
+          <div class="floating-sheet" style="top: 8px; left: 30px; transform: rotate(-3deg);">
+            <div class="sheet-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             </div>
-            <h3 style="font-size: 17px; margin-bottom: 8px; color: var(--white);">Who is present? Who is away?</h3>
-            <p style="font-size: 13px; color: var(--steel); line-height: 1.6; margin-bottom: 12px;">
-              Who is present today? Who is on approved leave? Who is available for the next shift?
-            </p>
-            <div style="padding: 8px 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px; font-size: 11px; color: var(--porcelain);">
-              Current: Separate time clock entries & manual supervisor logs.
-            </div>
+            <div class="sheet-name">Attendance Register</div>
+            <div class="sheet-desc">Manual physical sign-in & disconnected spreadsheet logs.</div>
+            <span class="sheet-status">Manual Entry</span>
           </div>
 
-          <div class="card" style="border-top: 3px solid var(--gold); background: rgba(24, 38, 49, 0.7);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--gold);">02 — DAILY WORK REPORTS</span>
-              <span style="font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">End-of-Shift Logs</span>
+          <!-- Sheet 2: Daily Orders Keyed -->
+          <div class="floating-sheet" style="top: 5px; left: 380px; transform: rotate(2deg);">
+            <div class="sheet-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </div>
-            <h3 style="font-size: 17px; margin-bottom: 8px; color: var(--white);">What was completed today?</h3>
-            <p style="font-size: 13px; color: var(--steel); line-height: 1.6; margin-bottom: 12px;">
-              How many orders, flashings, bits and double-checks were completed across detailing cells?
-            </p>
-            <div style="padding: 8px 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px; font-size: 11px; color: var(--porcelain);">
-              Current: Disconnected end-of-shift spreadsheets and keying tallies.
-            </div>
+            <div class="sheet-name">Daily Orders Keyed</div>
+            <div class="sheet-desc">Shift emails and nightly handovers sent to Melbourne.</div>
+            <span class="sheet-status">Email Chain</span>
           </div>
 
-          <div class="card" style="border-top: 3px solid #79D2B7; background: rgba(24, 38, 49, 0.7);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <span style="font-family: var(--font-mono); font-size: 11px; color: #79D2B7;">03 — ERRORS & RESUPPLIES</span>
-              <span style="font-size: 11px; color: var(--steel-dim); font-family: var(--font-mono);">Quality Tracking</span>
+          <!-- Sheet 3: Flashings & Bits Log -->
+          <div class="floating-sheet" style="top: 10px; right: 30px; transform: rotate(-2deg);">
+            <div class="sheet-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/></svg>
             </div>
-            <h3 style="font-size: 17px; margin-bottom: 8px; color: var(--white);">What went wrong and why?</h3>
-            <p style="font-size: 13px; color: var(--steel); line-height: 1.6; margin-bottom: 12px;">
-              What went wrong, what caused it, and what action was taken to prevent it from happening again?
+            <div class="sheet-name">Flashings & Bits Log</div>
+            <div class="sheet-desc">Separate shared folder workbook tracking units & meters.</div>
+            <span class="sheet-status">Excel Workbook</span>
+          </div>
+
+          <!-- Sheet 4: Double-Check Records -->
+          <div class="floating-sheet" style="bottom: 8px; left: 60px; transform: rotate(3deg);">
+            <div class="sheet-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div class="sheet-name">Double-Check Records</div>
+            <div class="sheet-desc">Auditor notes on physical printouts and CAD sign-offs.</div>
+            <span class="sheet-status">Paper Checklists</span>
+          </div>
+
+          <!-- Sheet 5: Resupply & Errors Log -->
+          <div class="floating-sheet" style="bottom: 5px; left: 400px; transform: rotate(-1deg);">
+            <div class="sheet-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div class="sheet-name">Resupply & Errors Log</div>
+            <div class="sheet-desc">Urgent WhatsApp alerts when Melbourne installation halts.</div>
+            <span class="sheet-status">Ad-Hoc Messaging</span>
+          </div>
+
+          <!-- Sheet 6: Leaves & Holidays -->
+          <div class="floating-sheet" style="bottom: 8px; right: 50px; transform: rotate(2deg);">
+            <div class="sheet-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="sheet-name">Leaves & Holidays</div>
+            <div class="sheet-desc">Separate email threads, paper slips and calendar notices.</div>
+            <span class="sheet-status">Unlinked Records</span>
+          </div>
+
+          <!-- Central Hub Transformation Card (Unified Operational Core) -->
+          <div class="central-hub-reveal" id="central-hub-reveal">
+            <div class="pulse-dot" style="margin: 0 auto 10px;"></div>
+            <h3 style="font-size: 20px; color: var(--gold); margin-bottom: 6px; font-weight: 700; letter-spacing: 0.05em;">ONE CONSOLIDATED OPERATIONAL CORE</h3>
+            <p style="font-size: 13px; color: var(--porcelain); margin-bottom: 14px; line-height: 1.45;">
+              One real-time data pipeline replacing disconnected spreadsheets, email handovers, and paper sign-offs with universal operational visibility.
             </p>
-            <div style="padding: 8px 12px; background: var(--midnight); border: 1px solid var(--slate-border); border-radius: 4px; font-size: 11px; color: var(--porcelain);">
-              Current: Isolated email threads and informal chat handovers.
-            </div>
+            <span class="status-badge verified">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              All Operational Channels Unified
+            </span>
+          </div>
+        </div>
+
+        <!-- Interactive Consolidation Toggle -->
+        <div style="display: flex; justify-content: center; margin-bottom: 14px;">
+          <button class="btn btn-gold btn-sm" onclick="toggleConsolidateSheets()" style="gap: 8px; box-shadow: 0 0 20px rgba(198, 166, 117, 0.25); cursor: pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+            <span>Toggle Consolidation Animation</span>
+          </button>
+        </div>
+
+        <!-- 5 Friction Callout Cards -->
+        <div class="friction-grid">
+          <div class="friction-card">
+            <div class="friction-tag">Friction 01</div>
+            <div class="friction-title">Information Scattered</div>
+            <div class="friction-body">Data lives across 6+ unconnected formats, Excel workbooks, and folders.</div>
+          </div>
+          <div class="friction-card">
+            <div class="friction-tag">Friction 02</div>
+            <div class="friction-title">Manual Consolidation</div>
+            <div class="friction-body">Team leaders spend 1.5+ hours nightly copying rows and rekeying tallies.</div>
+          </div>
+          <div class="friction-card">
+            <div class="friction-tag">Friction 03</div>
+            <div class="friction-title">Limited Visibility</div>
+            <div class="friction-body">Historical performance comparisons require manual searches across past logs.</div>
+          </div>
+          <div class="friction-card">
+            <div class="friction-tag">Friction 04</div>
+            <div class="friction-title">Administrative Burden</div>
+            <div class="friction-body">Repeated data entry creates fatigue, burnout, and transcription errors.</div>
+          </div>
+          <div class="friction-card">
+            <div class="friction-tag">Friction 05</div>
+            <div class="friction-title">Delayed Action</div>
+            <div class="friction-body">Leadership sees operational problems and resupply trends 24–48 hours late.</div>
           </div>
         </div>
 

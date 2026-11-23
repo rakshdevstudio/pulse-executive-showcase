@@ -208,6 +208,17 @@ JS_CONTENT = r"""
       }
     }
 
+    function toggleConsolidateSheets() {
+      const stage = document.getElementById('sheets-stage-container');
+      if (!stage) return;
+      stage.classList.toggle('sheets-consolidated');
+      if (typeof showToast === 'function') {
+        showToast(stage.classList.contains('sheets-consolidated') ? 
+          'Information unified into single operational hub' : 
+          'Demonstrating fragmented reporting silos');
+      }
+    }
+
     function openSceneModal() {
       openModal('modal-scene-overview');
     }
@@ -2093,7 +2104,7 @@ JS_CONTENT = r"""
 
       setTimeout(() => {
         toast.style.animation = 'toastOut 0.3s ease forwards';
-        setTimeout(() => toast.remove(), 300);
+        setTimeout(() => { if (toast.remove) toast.remove(); }, 300);
       }, 3400);
     }
 

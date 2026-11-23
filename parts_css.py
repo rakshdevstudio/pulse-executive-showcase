@@ -386,9 +386,9 @@ CSS_CONTENT = """
     }
 
     .scene-headline {
-      font-size: 44px;
+      font-size: 40px;
       line-height: 1.15;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
       color: var(--white);
       max-width: 980px;
     }
@@ -397,12 +397,139 @@ CSS_CONTENT = """
     }
 
     .scene-narrative {
-      font-size: 18px;
-      line-height: 1.6;
+      font-size: 16px;
+      line-height: 1.5;
       color: var(--steel);
       max-width: 840px;
-      margin-bottom: 36px;
+      margin-bottom: 14px;
       font-weight: 300;
+    }
+
+    /* Scene 2: Floating Disconnected Sheets & Central Hub Consolidation */
+    .sheets-stage {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      height: 250px;
+      margin: 6px auto 14px;
+      perspective: 1000px;
+    }
+    .floating-sheet {
+      position: absolute;
+      width: 235px;
+      padding: 12px 14px;
+      background: var(--slate-card);
+      border: 1px solid var(--slate-border);
+      border-radius: 8px;
+      box-shadow: 0 10px 24px -5px rgba(0, 0, 0, 0.55);
+      transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+      text-align: left;
+      z-index: 5;
+    }
+    .floating-sheet:hover {
+      transform: translateY(-6px) scale(1.04) !important;
+      border-color: var(--gold);
+      box-shadow: 0 0 25px rgba(198, 166, 117, 0.3);
+      z-index: 30 !important;
+    }
+    .sheet-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 5px;
+      background: var(--gold-dim);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .sheet-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--porcelain);
+      margin-bottom: 3px;
+    }
+    .sheet-desc {
+      font-size: 11px;
+      color: var(--steel);
+      line-height: 1.35;
+    }
+    .sheet-status {
+      display: inline-block;
+      margin-top: 6px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: rgba(217, 83, 79, 0.16);
+      color: #E68280;
+      border: 1px solid rgba(217, 83, 79, 0.3);
+    }
+    .sheets-consolidated .floating-sheet {
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) scale(0.6) !important;
+      opacity: 0.1 !important;
+      pointer-events: none;
+    }
+    .central-hub-reveal {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.6);
+      width: 480px;
+      padding: 22px 28px;
+      background: linear-gradient(145deg, #182631, #101923);
+      border: 2px solid var(--gold);
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 50px rgba(198, 166, 117, 0.38);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 25;
+    }
+    .sheets-consolidated .central-hub-reveal {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .friction-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      width: 100%;
+      margin: 10px 0 14px;
+    }
+    .friction-card {
+      background: rgba(24, 38, 49, 0.6);
+      border: 1px solid var(--slate-border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      text-align: left;
+      transition: var(--transition-smooth);
+    }
+    .friction-card:hover {
+      border-color: var(--gold-border);
+      transform: translateY(-2px);
+    }
+    .friction-tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--amber);
+      margin-bottom: 3px;
+    }
+    .friction-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--porcelain);
+      margin-bottom: 3px;
+    }
+    .friction-body {
+      font-size: 11px;
+      color: var(--steel);
+      line-height: 1.35;
     }
 
     /* =========================================================================
